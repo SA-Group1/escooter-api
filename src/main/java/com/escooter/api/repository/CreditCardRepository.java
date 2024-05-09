@@ -13,7 +13,7 @@ public class CreditCardRepository {
 	private JdbcTemplate jdbcTemplate;
 	
 	public void addCard(CreditCardModel creditCardModel){
-	    System.out.println("EXCUTE INSERT MEMBER");
+        System.out.println("EXCUTE INSERT MEMBER");
 		jdbcTemplate.update("INSERT INTO escooter_rental.credit_card (creditcard_id) VALUES (10)");
 		/*
 		

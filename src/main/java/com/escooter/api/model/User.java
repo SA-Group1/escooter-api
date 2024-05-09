@@ -8,4 +8,16 @@ public class User {
     private CreditCard creditCard;
     private MemberCard memberCard;
     private List<RentalRecord> rentalRecords;
+    
+    public String getAccount() {
+        return account;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getuserName() {
+        return userName;
+    }
 }
