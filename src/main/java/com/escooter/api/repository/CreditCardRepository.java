@@ -14,7 +14,9 @@ public class CreditCardRepository {
 	
 	public void addCard(CreditCardModel creditCardModel){
 	    System.out.println("EXCUTE INSERT MEMBER");
-		jdbcTemplate.update("INSERT INTO escooter_rental.credit_card (creditcard_id) VALUES (10)");
+		
+		jdbcTemplate.update(String.format("INSERT INTO escooter_rental.credit_card (creditcard_id,expiration_date) VALUES ('%s','%s')",
+		creditCardModel.getCreditCard_ID(),creditCardModel.getExpiration_Data()));
 		/*
 		
 		jdbcTemplate.update("INSERT INTO escooter_rental.credit_card (creditcard_id)"
