@@ -4,16 +4,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CreditCardModel {
-    private int creditcard_id;
-    private int expiration_data;
+    private String creditcard_id;
+    private String expiration_data;
 
-    public int getCreditCard_ID(){
+    public String getCreditCard_ID(){
         return creditcard_id;
     }
-    public int getExpiration_Data(){
+    public String getExpiration_Data(){
         return expiration_data;
     }
-    public void setCreditCard_ID(int creditcard_id){
+    public void setCreditCard_ID(String creditcard_id, String expiration_data){
         this.creditcard_id = creditcard_id;
+        this.expiration_data = expiration_data;
     }
 }

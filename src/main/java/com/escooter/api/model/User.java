@@ -5,7 +5,7 @@ public class User {
     private String userName;
     private String password;
     private Escooter rentingEscooter;
-    private CreditCard creditCard;
+    private CreditCardModel creditCard;
     private MemberCard memberCard;
     private List<RentalRecord> rentalRecords;
     

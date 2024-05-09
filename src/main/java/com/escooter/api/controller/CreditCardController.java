@@ -19,7 +19,7 @@ public class CreditCardController {
 	    @RequestMapping("/addCard")
 	    public String hello(){
             creditCardModel = new CreditCardModel();
-            creditCardModel.setCreditCard_ID(10);
+            creditCardModel.setCreditCard_ID("0001250030004512","24 07");
             creditCardService.addCard(creditCardModel);
 	        return "New Card added";
 	    }
