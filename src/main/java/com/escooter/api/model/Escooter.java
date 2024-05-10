@@ -5,7 +5,7 @@ import java.util.List;
 @Component
 public class Escooter {
     private String escooterId;
-    private String modelName;
+    private String modelId;
     private String status;
     private int betteryLevel;
     private int feePerMinutes;
@@ -18,7 +18,7 @@ public class Escooter {
         return status;
     }
     public String getModelName(){
-        return modelName;
+        return modelId;
     }
     public int getBetteryLevel(){
         return betteryLevel;
