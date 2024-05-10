@@ -23,22 +23,15 @@ public class RentalRecord {
         return isPaid;
     }
 
-    public void setUserAccount(String userAccount)
-    {
-        this.userAccount = userAccount;
+    public boolean setEndTime(LocalTime endTime){
+        if(endTime!= null){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
-    public void setEscooterId(String escooterId)
-    {
-        this.escooterId = escooterId;
-    }
-    public void setStartTime(LocalTime startTime)
-    {
-        this.startTime = startTime;
-    }
-    public void setEndTime(LocalTime endTime)
-    {
-        this.endTime = endTime;
-    }
+
     public void setIsPaid(boolean isPaid)
     {
         this.isPaid = isPaid;
