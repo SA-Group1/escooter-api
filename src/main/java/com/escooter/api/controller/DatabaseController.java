@@ -10,7 +10,7 @@ import com.escooter.api.model.User;
 @RestController
 public class DatabaseController {
     @Autowired
-    User user;
+    //User user;
 
     @GetMapping("/api/addUser")
     public void addUser() {
