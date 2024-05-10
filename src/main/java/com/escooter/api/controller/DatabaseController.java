@@ -9,8 +9,8 @@ import com.escooter.api.model.User;
 
 @RestController
 public class DatabaseController {
-    @Autowired
-    User user;
+    // @Autowired
+    // User user;
 
     @GetMapping("/api/addUser")
     public void addUser() {

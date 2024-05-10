@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class HolaController {
     @GetMapping("/hola")
     String hola(){
-        return "Hello";
+        return "{\"account\":\"1234123412341234\",\"password\":\"1234\"}";
     }
 }

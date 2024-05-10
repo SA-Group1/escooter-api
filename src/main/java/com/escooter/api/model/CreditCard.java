@@ -1,20 +1,21 @@
 package com.escooter.api.model;
-import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class MemberCard {
-    private String carId;
+public class CreditCard {
+    private String cardNumber;
     private String expirationDate;
+    private String cvv;
     
-    public MemberCard(String carId, String expirationDate) {
-        this.carId = carId;
+    public CreditCard(String cardNumber, String expirationDate, String cvv) {
+        this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
+        this.cvv = cvv;
     }
 
     public String getCardNumber() {
-        return carId;
+        return cardNumber;
     }
     public String getExpirationDate() {
         return expirationDate;
