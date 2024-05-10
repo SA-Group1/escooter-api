@@ -11,16 +11,15 @@ import com.escooter.api.service.CreditCardService;
 public class CreditCardController {
 
 		@Autowired
-        CreditCard creditCardModel;
+        CreditCard creditCard;
 		
 		@Autowired
         CreditCardService creditCardService;
 
-	    // @RequestMapping("/addCard")
-	    // public String hello(){
-        //     creditCardModel = new CreditCard();
-        //     creditCardModel.setCreditCard_ID("0001250030004512","24 07");
-        //     creditCardService.addCard(creditCardModel);
-	    //     return "New Card added";
-	    // }
+	    @RequestMapping("/addCard")
+	    public String hello() {
+            creditCard = new CreditCard("01234567891234","24 07", "1234");
+            creditCardService.addCard(creditCard);
+	        return "New Card added";
+	    }
 }
