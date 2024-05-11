@@ -7,7 +7,6 @@ import java.util.List;
 import com.escooter.api.model.*;
 @Service
 public class RentalService {
-    @Autowired
     private List<Escooter> escooters;
     private String memberName;
     /*public Escooter getEscooter(String scooterId){

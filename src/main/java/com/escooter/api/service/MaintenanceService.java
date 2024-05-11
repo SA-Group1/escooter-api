@@ -7,7 +7,6 @@ import com.escooter.api.model.Escooter;
 import com.escooter.api.model.MaintenanceRecord;
 @Service
 public class MaintenanceService {
-    @Autowired
     public boolean report(String message, Escooter escooter){
         return true;
     }

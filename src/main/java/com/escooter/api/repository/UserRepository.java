@@ -12,6 +12,10 @@ public class UserRepository {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	// public User queryUserByAccount() {
+	// 	jdbcTemplate.
+	// }
+
 	// public void addUser(User user) {
 	// 	System.out.println("新增使用者成功");
 	// 	jdbcTemplate.update("INSERT INTO escooter_rental.user (account, password, registration_time, username) VALUES (?, ?, NOW(), ?)",

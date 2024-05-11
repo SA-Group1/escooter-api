@@ -2,7 +2,6 @@ package com.escooter.api.model;
 
 import org.springframework.stereotype.Component;
 
-@Component
 public class CreditCard {
     private String cardNumber;
     private String expirationDate;

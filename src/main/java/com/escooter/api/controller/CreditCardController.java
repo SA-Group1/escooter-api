@@ -11,9 +11,6 @@ import com.escooter.api.service.CreditCardService;
 public class CreditCardController {
 
 		@Autowired
-        CreditCard creditCard;
-		
-		@Autowired
         CreditCardService creditCardService;
 
 	    @RequestMapping("/addCard")

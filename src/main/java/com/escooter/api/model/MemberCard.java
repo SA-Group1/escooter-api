@@ -3,7 +3,6 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
-@Component
 public class MemberCard {
     private String carId;
     private String expirationDate;

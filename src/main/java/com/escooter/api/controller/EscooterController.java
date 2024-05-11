@@ -11,8 +11,6 @@ import com.escooter.api.service.*;
 @RestController
 public class EscooterController {
     @Autowired
-    Escooter escooter;
-    @Autowired
     EscooterService escooterService;
 
     //未完成
