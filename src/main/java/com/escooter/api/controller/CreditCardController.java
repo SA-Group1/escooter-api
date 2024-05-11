@@ -18,7 +18,7 @@ public class CreditCardController {
 
 	    @RequestMapping("/addCard")
 	    public String hello() {
-            creditCard = new CreditCard("01234567891234","24 07", "1234");
+            CreditCard creditCard = new CreditCard("01234567891234","24 07", "1234");
             creditCardService.addCard(creditCard);
 	        return "New Card added";
 	    }

@@ -10,9 +10,9 @@ public class RentalService {
     @Autowired
     private List<Escooter> escooters;
     private String memberName;
-    public Escooter getEscooter(String scooterId){
+    /*public Escooter getEscooter(String scooterId){
         return new Escooter();
-    }
+    }*/
     /*public List<Escooter> showAvailableEscooter(GPS gps){
         return 我不知道怎麼寫
     }*/

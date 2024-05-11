@@ -27,10 +27,10 @@ public class User {
         return true;
     }
 
-    public Escooter getRentingEscooter() {
+    /*public Escooter getRentingEscooter() {
         // 
         return new Escooter();
-    }
+    }*/
 
     public boolean setRentEscooter(Escooter escooter) {
         // 
