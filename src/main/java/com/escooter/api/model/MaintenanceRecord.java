@@ -30,7 +30,7 @@ public class MaintenanceRecord {
         return remark;
     }
 
-    public void setEscooterId(String escooterId)
+    /*public void setEscooterId(String escooterId)
     {
         this.escooterId = escooterId;
     }
@@ -54,5 +54,5 @@ public class MaintenanceRecord {
     }
     public void setRemark(String remark){
         this.remark = remark;
-    }
+    }*/
 }
