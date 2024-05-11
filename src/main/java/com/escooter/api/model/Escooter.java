@@ -1,6 +1,5 @@
 package com.escooter.api.model;
 
-import org.springframework.stereotype.Component;
 import java.util.List;
 public class Escooter {
     private int escooterId;
