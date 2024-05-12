@@ -1,23 +1,26 @@
-package com.escooter.api.model;
+package com.escooter.api.dto;
 
 /**
- * Represents a credit card.
+ * DTO (Data Transfer Object) for representing credit card information.
  */
-public class CreditCard {
+public class CreditCardDTO {
     private String cardNumber;
     private String expirationDate;
     private String cardHolderName;
+    private String cvv;
     
     /**
-     * Constructs a new CreditCard with the specified card details.
+     * Constructs a new CreditCardDTO with the specified card details.
      * @param cardNumber The credit card number.
      * @param expirationDate The expiration date of the credit card.
      * @param cardHolderName The name of the card holder.
+     * @param cvv The CVV (Card Verification Value) of the credit card.
      */
-    public CreditCard(String cardNumber, String expirationDate , String cardHolderName) {
+    public CreditCardDTO(String cardNumber, String expirationDate , String cardHolderName , String cvv) {
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
         this.cardHolderName = cardHolderName;
+        this.cvv = cvv;
     }
 
     /**
@@ -45,12 +48,10 @@ public class CreditCard {
     }
 
     /**
-     * Checks if the credit card is valid.
-     * @param cvv The CVV (Card Verification Value) of the credit card.
-     * @return True if the credit card is valid, false otherwise.
+     * Returns the CVV (Card Verification Value) of the credit card.
+     * @return The CVV.
      */
-    public boolean isVaild(String cvv) {
-        // Logic of vaild credit card
-        return true;
+    public String getCvv(){
+        return cvv;
     }
 }
