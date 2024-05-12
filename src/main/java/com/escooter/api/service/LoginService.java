@@ -1,5 +1,6 @@
 package com.escooter.api.service;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,14 +15,28 @@ public class LoginService {
 
     private List<User> userList;
 
-    public User login(String account, String password) {
-        // 
-        return new User();
-    }
-
     public boolean register(String account, String password, String userName) {
-        
-        return true;
+        User user = userRepository.queryUserByAccount(account);
+        boolean res;
+        if (user == null) {
+            res = userRepository.createUser(account, password, userName);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public User login(String account, String password) {
+        User user = userRepository.queryUserByAccount(account);
+        if (user != null) {
+            if (password.equals(user.getPassword())) {
+                return user;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
     // 查詢所有使用者

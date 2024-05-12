@@ -13,12 +13,36 @@ public class User {
     private MemberCard memberCard;
     private List<RentalRecord> rentalRecords;
     
+    public User() {}
+
+    public User(String account, String userName, String password) {
+        this.account = account;
+        this.userName = userName;
+        this.password = password;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public void setUserName(String username) {
+        this.userName = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getAccount() {
         return account;
     }
 
     public String getUserName() {
         return userName;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public boolean verifyPassword(String password) {
