@@ -3,7 +3,7 @@ package com.escooter.api.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -29,8 +29,8 @@ public class CreditCardController {
 	 * @return A ResponseEntity with http status and message
 	 */
 
-	@PutMapping("/addCard")
-	public ResponseEntity<String> addCard(@RequestBody CreditCardDTO creditCardDTO){
+	@PostMapping("/addCreditCard")
+	public ResponseEntity<String> addCreditCard(@RequestBody CreditCardDTO creditCardDTO){
 
 		// call service to add credit card
 		CreditCard creditCard = new CreditCard(creditCardDTO.getCardNumber(), creditCardDTO.getExpirationDate(), creditCardDTO.getCardHolderName());
