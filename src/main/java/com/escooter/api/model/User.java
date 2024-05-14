@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+/*
+* Represents a User.
+*/
 public class User {
     private String account;
     private String userName;
@@ -12,9 +15,9 @@ public class User {
     private CreditCard creditCard;
     private MemberCard memberCard;
     private List<RentalRecord> rentalRecords;
-    
-    public User() {}
 
+    public User() {}
+    
     public User(String account, String userName, String password) {
         this.account = account;
         this.userName = userName;
@@ -32,19 +35,31 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    /**
+     * Returns the user account.
+     * @return the user account.
+     */
     public String getAccount() {
         return account;
     }
-
+    /**
+     * Returns the user name.
+     * @return the user name.
+     */
     public String getUserName() {
         return userName;
     }
-
+    /**
+     * Returns the user password.
+     * @return the user password.
+     */
     public String getPassword() {
         return password;
     }
-
+    /**
+     * Returns the password verify.
+     * @return the password verify.
+     */
     public boolean verifyPassword(String password) {
         // 如何驗證
         return true;
