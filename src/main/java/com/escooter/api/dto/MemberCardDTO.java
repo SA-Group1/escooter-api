@@ -1,18 +1,18 @@
-package com.escooter.api.model;
+package com.escooter.api.dto;
 
 /**
- * Represents a member card.
+ * DTO (Data Transfer Object) for representing member card information.
  */
-public class MemberCard {
+public class MemberCardDTO {
     private String cardNumber;
     private String expirationDate;
     
     /**
-     * Constructs a new MemberCard with the specified card details.
+     * Constructs a new MemberCardDTO with the specified card details.
      * @param cardNumber The member card number.
      * @param expirationDate The expiration date of the member card.
      */
-    public MemberCard(String cardNumber, String expirationDate) {
+    public MemberCardDTO(String cardNumber, String expirationDate) {
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
     }
@@ -31,14 +31,5 @@ public class MemberCard {
      */
     public String getExpirationDate() {
         return expirationDate;
-    }
-
-    /**
-     * Checks if the member card is valid.
-     * @return True if the member card is valid, false otherwise.
-     */
-    public boolean isVaild() {
-        // Logic of vaild member card
-        return true;
     }
 }
