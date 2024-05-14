@@ -32,14 +32,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController {
     @Autowired
     LoginService loginService;
-
+/*
+ * Adding user info to database and returns a successful message
+ */
+    //User register
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
-        boolean rs = loginService.register(userDTO.getAccount(), userDTO.getPassword(), userDTO.getUserName());
+        // Calls service return the user register is sucess or fail
+        boolean res = loginService.register(userDTO.getAccount(), userDTO.getPassword(), userDTO.getUserName());
         
         // create return message
 		JSONObject message = new JSONObject();
-        if (rs) {
+        if (res) {
             try {
                 message.put("status", true);
                 message.put("message", "create user success");
@@ -57,8 +61,10 @@ public class UserController {
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
 
+    //User login
     @PostMapping("login")
     public ResponseEntity<String> login(@RequestBody UserDTO userDTO) {
+        // Calls service return the user login is sucess or fail
         User user = loginService.login(userDTO.getAccount(), userDTO.getPassword());
         
         // create return message
@@ -74,6 +80,7 @@ public class UserController {
             }
             return new ResponseEntity<>(message.toString(), HttpStatus.OK);
         }
+        // Converts the User object to a JSON string
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = "{}";
         try {
@@ -83,7 +90,9 @@ public class UserController {
             e.printStackTrace();
         }
 
+        // Converts the JSON string to a JSONObject
         try {
+        
             JSONObject jsonObject = new JSONObject(jsonString);
 			message.put("status", true);
 			message.put("message", "login success");
@@ -91,6 +100,7 @@ public class UserController {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+        // Returns a successful response with user info
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
 

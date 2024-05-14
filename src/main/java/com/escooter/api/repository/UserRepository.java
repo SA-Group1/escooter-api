@@ -11,13 +11,20 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.escooter.api.model.User;
-
+/**
+ * Repository for managing user data in the database.
+ */
 @Repository
 public class UserRepository {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+	/**
+     * Queries the user by account from the database.
+     * 
+     * @param account the account identifier
+     * @return the User object if found, otherwise null
+     */
 	public User queryUserByAccount(String account) {
 		String sql = "SELECT * FROM escooter_rental.user WHERE account = ?";
         RowMapper<User> rowMapper = (rs, rowNum) -> {
@@ -35,7 +42,9 @@ public class UserRepository {
 		}
         return user;
 	}
-
+	/**
+     * Adds a new User to the database.
+     */
 	public boolean createUser(String account, String userName, String password) {
 		String sql = "INSERT INTO escooter_rental.user (account, password, registration_time, username) VALUES (?, ?, NOW(), ?)";
 			jdbcTemplate.update(sql, account, userName, password);
