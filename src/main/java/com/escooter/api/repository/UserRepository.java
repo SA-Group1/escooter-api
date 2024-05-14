@@ -62,6 +62,18 @@ public class UserRepository {
 		return true;
 	}
 
+	/**
+     * Bind a credit card to user.
+	 * @param account The user's account.
+	 * @param cardNumber The credit card number.
+     * @return True if binding is successful, false otherwise.
+     */
+	public boolean bindCreditCard(String account, String cardNumber){
+		String sql = "UPDATE `escooter_rental`.`user` SET `creditcard_id` = ? WHERE (`account` = ?)";
+		jdbcTemplate.update(sql, cardNumber, account);
+		return true;
+	}
+
 
 	// public void addUser(User user) {
 	// 	System.out.println("新增使用者成功");

@@ -1,6 +1,7 @@
 package com.escooter.api.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -18,11 +19,15 @@ public class CreditCardRepository {
 	/**
      * Adds a new credit card to the database.
      * @param creditCard The credit card to add.
+	 * @return True if adding is successful, false otherwise.
+	 * @throws DuplicateKeyException Throws when the credit card is already in the database.
      */
-	public void addCard(CreditCard creditCard){
+	public boolean addCard(CreditCard creditCard) throws DuplicateKeyException {
 		System.out.println("EXCUTE INSERT MEMBER");
 		
-		jdbcTemplate.update(String.format("INSERT INTO escooter_rental.credit_card (creditcard_id,expiration_date,card_holder_name) VALUES ('%s','%s','%s')",
-		creditCard.getCardNumber(),creditCard.getExpirationDate(),creditCard.getCardHolderName()));
+		String sql = "INSERT INTO escooter_rental.credit_card (creditcard_id,expiration_date,card_holder_name) VALUES (?,?,?)";
+		jdbcTemplate.update(sql,creditCard.getCardNumber(),creditCard.getExpirationDate(),creditCard.getCardHolderName());
+	
+		return true;
 	}
 }

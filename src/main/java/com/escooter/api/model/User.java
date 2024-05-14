@@ -21,6 +21,10 @@ public class User {
     private List<RentalRecord> rentalRecords;
 
     public User() {}
+
+    public User(String account) {
+        this.account = account;
+    }
     
     public User(String account, String userName, String password) {
         this.account = account;

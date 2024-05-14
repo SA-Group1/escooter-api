@@ -30,6 +30,10 @@ public class UserDTO {
 
     public UserDTO() {}
 
+    public UserDTO(String account){
+        this.account = account;
+    }
+
     public UserDTO(String account, String userName, String password, String email) {
         this.account = account;
         this.userName = userName;
