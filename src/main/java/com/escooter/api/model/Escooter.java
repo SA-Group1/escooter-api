@@ -8,12 +8,33 @@ public class Escooter {
     private int betteryLevel;
     private int feePerMinutes;
     private List<MaintenanceRecord> maintenanceRecords;
+    private GPS gps;
 
-    public Escooter(int escooterId, String modelId, String status){
+    public void setEscooterId(int escooterId){
         this.escooterId = escooterId;
+    }
+
+    public void setModelId(String modelId){
         this.modelId = modelId;
+    }
+
+    public void setStatus(String status){
         this.status = status;
     }
+
+    public void setBetteryLevel(int betteryLevel){
+        this.betteryLevel = betteryLevel;
+    }
+
+    public void setFeePerMinutes(int feePerMinutes){
+        feePerMinutes = 10;     // if
+        this.feePerMinutes = feePerMinutes;
+    }
+
+    public void setGPS(double longitude, double latitude) {
+        this.gps = new GPS(longitude, latitude);
+    }
+
     public int getEscooterId(){
         return escooterId;
     }
@@ -33,6 +54,9 @@ public class Escooter {
         return maintenanceRecords;
     }
     
+    public GPS getGPS() {
+        return gps;
+    }
 }
 
 

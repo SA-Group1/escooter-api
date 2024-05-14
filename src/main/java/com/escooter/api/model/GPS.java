@@ -4,6 +4,11 @@ public class GPS {
     private double longitude;
     private double latitude;
 
+    public GPS(double longitude, double latitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
     public double getLongitude(){
         return longitude;
     }

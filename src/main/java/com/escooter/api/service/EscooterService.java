@@ -3,14 +3,19 @@ package com.escooter.api.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.escooter.api.repository.*;
+import com.escooter.api.model.GPS;
+import com.escooter.api.repository.EscooterRepository;
 
 @Service
 public class EscooterService {
     @Autowired
     EscooterRepository escooterRepository;
-    public void addEscooter(int escooterId,String modelName,String status){
+    
+    public void addEscooter(int escooterId, String modelName, String status) {
         escooterRepository.addEscooter(escooterId, modelName, status);
     }
 
+    public void updateGps(int escooterId, GPS gps) {
+        escooterRepository.updateGps(escooterId, gps);
+    }
 }
