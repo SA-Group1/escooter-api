@@ -5,11 +5,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import com.escooter.api.model.*;
+import com.escooter.api.repository.RentalRecordRepository;
 @Service
 public class RentalHistoryService {
+    @Autowired
+    private RentalRecordRepository recordRepository;
+
+    private List<RentalRecord> rentalRecords;
     
-    /*public List<RentalRecord> serchHistory(User user){
-        return ;
-    }*/
-    
+    public void getRentRecordList(){
+        
+    }
 }
