@@ -1,20 +1,18 @@
 package com.escooter.api.model;
-import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 
 /*
 * Represents a User.
 */
 public class User {
+    private int userId;
     private String account;
     private String userName;
     private String password;
     private String email;
-    private LocalDateTime registrationTime;
+    private String registrationTime;
     private Escooter rentingEscooter;
     private CreditCard creditCard;
     private MemberCard memberCard;
@@ -26,6 +24,15 @@ public class User {
         this.account = account;
         this.userName = userName;
         this.password = password;
+    }
+
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 
     public void setAccount(String account) {
@@ -44,7 +51,7 @@ public class User {
         this.email = email;
     }
 
-    public void setRegistrationTime(LocalDateTime registrationTime) {
+    public void setRegistrationTime(String registrationTime) {
         this.registrationTime = registrationTime;
     }
 
@@ -117,6 +124,11 @@ public class User {
     public boolean setMemberCard(MemberCard memberCard) {
         // 
         return true;
+    }
+
+    public String getRegistrationTime() {
+        // 
+        return registrationTime;
     }
 
     public List<RentalRecord> getRentalRecords() {

@@ -1,10 +1,10 @@
 package com.escooter.api.model;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 public class RentalRecord {
     private String userAccount;
     private String escooterId;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private String startTime;
+    private String endTime;
     private boolean isPaid;
 
     
@@ -14,10 +14,10 @@ public class RentalRecord {
     public String getEscooterId(){
         return escooterId;
     }
-    public LocalTime getStartTime(){
+    public String getStartTime(){
         return startTime;
     }
-    public LocalTime getEndTime(){
+    public String getEndTime(){
         return endTime;
     }
     public boolean getIsPaid(){
@@ -32,11 +32,11 @@ public class RentalRecord {
         this.escooterId = escooterId;
     }
 
-    public void setStartTime(LocalTime startTime){
+    public void setStartTime(String startTime){
         this.startTime = startTime;
     }
 
-    public void setEndTime(LocalTime endTime){
+    public void setEndTime(String endTime){
         this.endTime = endTime;
     }
 

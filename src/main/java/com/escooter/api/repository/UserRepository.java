@@ -36,7 +36,8 @@ public class UserRepository {
             user.setUserName(rs.getString("username"));
             user.setPassword(rs.getString("password"));
             user.setEmail(rs.getString("email"));
-            user.setRegistrationTime(rs.getTimestamp("registration_time").toLocalDateTime());
+			System.out.println(rs.getTimestamp("registration_time").toLocalDateTime());
+            user.setRegistrationTime(rs.getTimestamp("registration_time").toLocalDateTime().toString());
             return user;
         };
 		User user;
