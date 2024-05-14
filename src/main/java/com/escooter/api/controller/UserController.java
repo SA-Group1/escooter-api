@@ -27,19 +27,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 
+/**
+ * Adding user info to database and returns a successful message
+ */
 @RestController
 @RequestMapping("/api")
 public class UserController {
     @Autowired
     LoginService loginService;
-/*
- * Adding user info to database and returns a successful message
- */
-    //User register
+    /**
+	 * Adding user data to database and returns a successful message
+	 *
+	 * @param userDTO user data
+	 * @return A ResponseEntity with http status and message
+	 */
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
         // Calls service return the user register is sucess or fail
-        boolean res = loginService.register(userDTO.getAccount(), userDTO.getPassword(), userDTO.getUserName());
+        boolean res = loginService.register(userDTO.getAccount(), userDTO.getPassword(), userDTO.getUserName(), userDTO.getEmail());
         
         // create return message
 		JSONObject message = new JSONObject();
@@ -104,29 +109,55 @@ public class UserController {
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
 
-    // @GetMapping("/users")
-    // public List<User> queryUsers() {
-    //     return loginService.queryUsers();
-    // }
-
-    // @GetMapping("/users/{id}")
-    // public User queryUserById(@PathVariable Integer id) {
-    //     return loginService.queryUserById(id);
-    // }
-
-    // @PostMapping("users")
-    // public User createUser(@RequestBody User user) {
+    // @PostMapping("getUserData")
+    // public ResponseEntity<String> getUserData(@RequestBody UserDTO userDTO) {
+    //     // Calls service return the user login is sucess or fail
+    //     User user = loginService.login(userDTO.getAccount(), userDTO.getPassword());
         
-    //     return loginService.createUser(user);
-    // }
-
-    // @PutMapping("users/{id}")
-    // public void updateUser(@RequestBody User user) {        
+    //     // create return message
+	// 	JSONObject message = new JSONObject();
         
+    //     if (user == null) {
+    //         try {
+    //             message.put("status", false);
+    //             message.put("message", "Authentication failed");
+    //             message.put("user", new JSONObject("{}"));
+    //         } catch (JSONException e) {
+    //             e.printStackTrace();
+    //         }
+    //         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+    //     }
+    //     // Converts the User object to a JSON string
+    //     ObjectMapper objectMapper = new ObjectMapper();
+
+    //     JSONObject userMessage = new JSONObject();
+    //     // Converts the JSON string to a JSONObject
+    //     try {
+        
+	// 		message.put("status", true);
+	// 		message.put("message", "Authentication successful");
+    //         // userMessage.put("user_id", userId);
+    //         userMessage.put("account", user.getAccount());
+    //         message.put("user", userMessage);
+	// 	} catch (JSONException e) {
+	// 		e.printStackTrace();
+	// 	}
+    //     // Returns a successful response with user info
+    //     return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     // }
 
-    // @DeleteMapping("users/{id}")
-    // public void deleteUser(@PathVariable Integer id) {
-    //     loginService.deleteUser(id);
-    // }
+    @PutMapping("updateUserData")
+    public ResponseEntity<String> updateUserData(@RequestBody UserDTO userDTO) {
+        boolean res = loginService.updateUserData(userDTO);
+        
+        JSONObject message = new JSONObject();
+		try {
+			message.put("status", res);
+			message.put("message", res ? "update success":"update failed");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+        return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+    }
 }

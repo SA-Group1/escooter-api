@@ -1,4 +1,6 @@
 package com.escooter.api.model;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,8 @@ public class User {
     private String account;
     private String userName;
     private String password;
+    private String email;
+    private LocalDateTime registrationTime;
     private Escooter rentingEscooter;
     private CreditCard creditCard;
     private MemberCard memberCard;
@@ -35,6 +39,15 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setRegistrationTime(LocalDateTime registrationTime) {
+        this.registrationTime = registrationTime;
+    }
+
     /**
      * Returns the user account.
      * @return the user account.
@@ -42,6 +55,7 @@ public class User {
     public String getAccount() {
         return account;
     }
+
     /**
      * Returns the user name.
      * @return the user name.
@@ -49,6 +63,7 @@ public class User {
     public String getUserName() {
         return userName;
     }
+
     /**
      * Returns the user password.
      * @return the user password.
@@ -56,6 +71,15 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    /**
+     * Returns the user email.
+     * @return the user email.
+     */
+    public String getEmail() {
+        return email;
+    }
+
     /**
      * Returns the password verify.
      * @return the password verify.

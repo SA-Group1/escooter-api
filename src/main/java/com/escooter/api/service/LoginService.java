@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.escooter.api.dto.UserDTO;
 import com.escooter.api.model.User;
 import com.escooter.api.repository.UserRepository;
 
@@ -14,11 +15,11 @@ public class LoginService {
 
     private List<User> userList;
 
-    public boolean register(String account, String password, String userName) {
+    public boolean register(String account, String password, String userName, String email) {
         User user = userRepository.queryUserByAccount(account);
         boolean res;
         if (user == null) {
-            res = userRepository.createUser(account, password, userName);
+            res = userRepository.createUser(account, password, userName, email);
             return true;
         } else {
             return false;
@@ -29,6 +30,7 @@ public class LoginService {
         User user = userRepository.queryUserByAccount(account);
         if (user != null) {
             if (password.equals(user.getPassword())) {
+                
                 return user;
             } else {
                 return null;
@@ -36,6 +38,11 @@ public class LoginService {
         } else {
             return null;
         }
+    }
+
+    public boolean updateUserData(UserDTO userDTO) {
+        // 判斷
+        return userRepository.updateUserData(userDTO);
     }
 
     // 查詢所有使用者
