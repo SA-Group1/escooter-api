@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.escooter.api.model.*;
 import com.escooter.api.repository.EscooterRepository;
+import com.escooter.api.repository.RentalRecordRepository;
+import com.escooter.api.repository.UserRepository;
 /**
  * Service class for managing rental service.
  */
@@ -14,6 +16,10 @@ import com.escooter.api.repository.EscooterRepository;
 public class RentalService {
     @Autowired
 	private EscooterRepository escooterRepository;
+    @Autowired
+    private RentalRecordRepository rentalRecordRepository;
+    @Autowired
+    private UserRepository userRepository;
     
     private List<Escooter> escooters;
     
@@ -22,7 +28,7 @@ public class RentalService {
      * @param scooterId The ID of the e-scooter.
      * @return The e-scooter if found, null otherwise.
      */
-    public Escooter getEscooter(String scooterId){
+    public Escooter getEscooter(int scooterId){
         Escooter escooter = escooterRepository.queryEscooterById(scooterId);
         return escooter;
     }
@@ -46,15 +52,27 @@ public class RentalService {
         }
         return escootersWithinRadius;
     }
+    
     /**
      * Rents an e-scooter to a user.
      * @param user The user renting the e-scooter.
      * @param escooter The e-scooter to be rented.
      * @return A rental record of the transaction.
      */
-    public RentalRecord rentEscooter(User user, Escooter escooter){
-        return new RentalRecord();
+    public Escooter rentEscooter(User user, int escooterId) {
+        Escooter escooter = escooterRepository.queryEscooterById(escooterId);
+        if (!escooter.getStatus().equals("Available")) {
+            return null;
+        } else {
+            user = userRepository.queryUserByAccount(user.getAccount());
+            rentalRecordRepository.createRentalRecord(user.getUserId(), escooter.getEscooterId());
+            escooterRepository.updateStatus(escooter.getEscooterId(), "Rented");
+            escooter.setStatus("Rented");
+            return escooter;
+        }
     }
+
+
     /**
      * Returns a rented e-scooter.
      * @param user The user returning the e-scooter.

@@ -9,7 +9,7 @@ public class Escooter {
     private int escooterId;
     private String modelId;
     private String status;
-    private int betteryLevel;
+    private int batteryLevel;
     private int feePerMinutes;
     private List<MaintenanceRecord> maintenanceRecords;
     private GPS gps;
@@ -42,8 +42,8 @@ public class Escooter {
      * Sets the battery level of the electric scooter.
      * @param batteryLevel The battery level.
      */
-    public void setBetteryLevel(int betteryLevel){
-        this.betteryLevel = betteryLevel;
+    public void setBatteryLevel(int batteryLevel){
+        this.batteryLevel = batteryLevel;
     }
 
     /**
@@ -92,8 +92,8 @@ public class Escooter {
      * Returns the battery level of the electric scooter.
      * @return The battery level.
      */
-    public int getBetteryLevel(){
-        return betteryLevel;
+    public int getBatteryLevel(){
+        return batteryLevel;
     }
 
     /**

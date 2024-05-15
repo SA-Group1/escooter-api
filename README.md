@@ -99,10 +99,13 @@ Example Response
 ```
 PUT /api/updateUserData
 ```
-| Parameter |  Type  | Description   |
-| --------- | :----: | ------------- |
-| account   | String | **Required.** |
-| password  | String | **Required.** |
+| Parameter  |  Type  | Description   |
+| ---------- | :----: | ------------- |
+| account    | String | **Required.** |
+| password   | String | **Required.** |
+| userName   | String | **Required.** |
+| email      | String | **Required.** |
+| phoneNumber| String | **Required.** |
 
 Example input
 
@@ -133,8 +136,7 @@ POST /api/bindCreditCard
 ```
 | Parameter  |     Type      | Description   |
 | ---------  | :-----------: | ------------- |
-| user       | UserDTO       | **Required.** |
-| creditCard | CreditCardDTO | **Required.** |
+| account    |    String     | **Required.** |
 
 Example Input
 ```json
@@ -172,8 +174,8 @@ POST /api/getRentalRecordList
 ```
 | Parameter  |     Type      | Description   |
 | ---------  | :-----------: | ------------- |
-| user       | UserDTO       | **Required.** |
-| creditCard | CreditCardDTO | **Required.** |
+| account    |    String     | **Required.** |
+
 
 Example Input
 ```json
@@ -213,8 +215,8 @@ POST /api/getRentableEscooterList
 ```
 | Parameter  |     Type      | Description   |
 | ---------  | :-----------: | ------------- |
-| user       | UserDTO       | **Required.** |
-| creditCard | CreditCardDTO | **Required.** |
+| longitude  | double        | **Required.** |
+| latitude   | double        | **Required.** |
 
 Example Input
 ```json

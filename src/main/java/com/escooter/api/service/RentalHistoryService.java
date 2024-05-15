@@ -36,6 +36,6 @@ public class RentalHistoryService {
      * @return A list of rental records associated with the user.
      */
     public List<RentalRecord> getRentalRecordList(String account, String password) {
-        return rentalRecordRepository.queryRentalRecordsByUserId(account);
+        return rentalRecordRepository.queryRentalRecordsByUserAccount(account);
     }
 }

@@ -2,9 +2,14 @@ package com.escooter.api.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.escooter.api.dto.EscooterDTO;
 import com.escooter.api.dto.GPSDTO;
+import com.escooter.api.dto.RentEscooterDTO;
+import com.escooter.api.dto.UserDTO;
 import com.escooter.api.model.Escooter;
 import com.escooter.api.model.GPS;
+import com.escooter.api.model.RentalRecord;
+import com.escooter.api.model.User;
 import com.escooter.api.service.EscooterService;
 import com.escooter.api.service.RentalService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -80,4 +85,38 @@ public class RentalController {
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
     
+
+    /**
+     * Rents an e-scooter.
+     *
+     * @param rentEscooterDTO DTO containing e-scooter and user data.
+     * @return A ResponseEntity with HTTP status and rental information.
+     */
+    @PostMapping("/rentEscooter")
+    public ResponseEntity<String> rentEscooter(@RequestBody RentEscooterDTO rentEscooterDTO) {
+        int escooterId = rentEscooterDTO.getEscooterDTO().getEscooterId();
+        UserDTO userDTO = rentEscooterDTO.getUserDTO();
+        User user = new User(userDTO.getAccount(), userDTO.getPassword());
+
+        Escooter escooter = rentalService.rentEscooter(user, escooterId);
+
+        // create return message
+		JSONObject message = new JSONObject();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonString = "{}";
+
+		try {
+			message.put("status", escooter != null);
+			message.put("message", escooter != null ? "rent escooter success" : "rent escooter failed");
+            jsonString = objectMapper.writeValueAsString(escooter);
+            JSONObject jsonObject = new JSONObject(jsonString);
+            message.put("escooter", escooter != null ? jsonObject : new JSONObject("{}"));
+		} catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+        return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+    }
 }
