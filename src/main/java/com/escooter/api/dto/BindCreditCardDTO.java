@@ -3,7 +3,7 @@ package com.escooter.api.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * DTO (Data Transfer Object) for binding credit card to user.
+ * DTO (Data Transfer Object) for binding credit card to a user.
  */
 public class BindCreditCardDTO {
 

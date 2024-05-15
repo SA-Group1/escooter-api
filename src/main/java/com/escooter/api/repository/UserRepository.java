@@ -13,6 +13,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.escooter.api.dto.UserDTO;
+import com.escooter.api.model.CreditCard;
+import com.escooter.api.model.MemberCard;
 import com.escooter.api.model.User;
 /**
  * Repository for managing user data in the database.
@@ -76,16 +78,65 @@ public class UserRepository {
 	}
 
 	/**
-     * Binds a credit card to the user.
-     * 
-     * @param account the user's account
-     * @param cardNumber the credit card number
-     * @return True if binding is successful, false otherwise.
-     */
-	public boolean bindCreditCard(String account, String cardNumber){
+	 * Binds a credit card to the user.
+	 * 
+	 * @param account the user's account.
+	 * @param cardNumber the credit card number.
+	 * @return True if binding is successful.
+	 */
+	public boolean bindCreditCard(String account, String cardNumber) {
 		String sql = "UPDATE `escooter_rental`.`user` SET `creditcard_id` = ? WHERE (`account` = ?)";
 		jdbcTemplate.update(sql, cardNumber, account);
 		return true;
+	}
+
+	/**
+	 * Unbinds a credit card for the user.
+	 * 
+	 * @param account the user's account.
+	 * @return True if unbinding is successful.
+	 */
+	public boolean unbindCreditCard(String account) {
+		String sql = "UPDATE `escooter_rental`.`user` SET `creditcard_id` = NULL WHERE (`account` = ?)";
+		jdbcTemplate.update(sql, account);
+		return true;
+	}
+
+	/**
+	 * Binds a member card to the user.
+	 * 
+	 * @param account the user's account.
+	 * @param cardNumber the member card number.
+	 * @return True if binding is successful.
+	 */
+	public boolean bindMemberCard(String account, String cardNumber) {
+		String sql = "UPDATE `escooter_rental`.`user` SET `membercard_id` = ? WHERE (`account` = ?)";
+		jdbcTemplate.update(sql, cardNumber, account);
+		return true;
+	}
+
+	/**
+	 * Unbinds a member card for the user.
+	 * 
+	 * @param account the user's account.
+	 * @return True if unbinding is successful.
+	 */
+	public boolean unbindMemberCard(String account) {
+		String sql = "UPDATE `escooter_rental`.`user` SET `membercard_id` = NULL WHERE (`account` = ?)";
+		jdbcTemplate.update(sql, account);
+		return true;
+	}
+
+	public CreditCard getCreditCard(String account) {
+		String sql = "SELECT `creditcard_id` FROM escooter_rental.user WHERE (`account` = ?)";
+		
+		CreditCard creditCard = new CreditCard(null, null, null);
+		return creditCard;
+	}
+
+	public MemberCard getMemberCard(String account) {
+		MemberCard memberCard = new MemberCard(null, null);
+		return memberCard;
 	}
 
 

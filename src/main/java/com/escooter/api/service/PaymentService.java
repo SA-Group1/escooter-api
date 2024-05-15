@@ -38,16 +38,16 @@ public class PaymentService {
 	 * @throws CardExpirationExpection Throws when it passes its expiration date.
 	 * @throws DateTimeParseException Throws when the expiration date is in the wrong format.
      */
-	public boolean addCreditCard(CreditCard creditCard , String cvv) throws CardExpirationException{
+	public boolean addCreditCard(CreditCard creditCard , String cvv) throws CardExpirationException {
 
 		// check if the card is expiration or not.
 		YearMonth expirationDate = YearMonth.parse(creditCard.getExpirationDate(),DateTimeFormatter.ofPattern("MMyy"));
-		if(LocalDate.now().isAfter(expirationDate.atDay(1))){
+		if(LocalDate.now().isAfter(expirationDate.atDay(1))) {
 			throw new CardExpirationException();
 		}
 
 		// vaild the credit card with cvv.
-		if(!creditCard.isVaild(cvv)){
+		if(!creditCard.isVaild(cvv)) {
 			return false;
 		}
 		
@@ -57,28 +57,73 @@ public class PaymentService {
 	}
 
 	/**
-     * Bind a credit card to user.
+	 * Bind a credit card to the user.
 	 * @param user The user who wants to bind a credit card.
 	 * @param creditCard The credit card to bind.
-     * @return True if binding is successful, false otherwise.
-     */
-	public boolean bindCreditCard(User user, CreditCard creditCard){
+	 * @return True if binding is successful.
+	 */
+	public boolean bindCreditCard(User user, CreditCard creditCard) {
 		userRepository.bindCreditCard(user.getAccount(),creditCard.getCardNumber());
 		return true;
 	}
 
 	/**
-     * Adds a new member card if it is valid.
-     * @param memberCard The member card to add.
-     * @return True if the member card is valid and added successfully, false otherwise.
-     */
-	public boolean bindMemberCard(MemberCard memberCard){
+	 * Unbinds a credit card for the user.
+	 * @param user The user who wants to unbind a credit card.
+	 * @return True if unbinding is successful.
+	 */
+	public boolean unbindCreditCard(User user) {
+		userRepository.unbindCreditCard(user.getAccount());
+		return true;
+	}
 
-		if(!memberCard.isVaild()){
+	/**
+	 * Adds a new member card if it is valid.
+	 * @param memberCard The member card to add.
+	 * @return True if the member card is valid and added successfully, false otherwise.
+	 */
+	public boolean addMemberCard(MemberCard memberCard) throws CardExpirationException {
+
+		// check if the card is expiration or not.
+		YearMonth expirationDate = YearMonth.parse(memberCard.getExpirationDate(),DateTimeFormatter.ofPattern("MMyy"));
+		if(LocalDate.now().isAfter(expirationDate.atDay(1))) {
+			throw new CardExpirationException();
+		}
+		
+		// vaild the member card.
+		if(!memberCard.isVaild()) {
 			return false;
 		}
-
+		
+		// add member card to the repository.
 		memberCardRepository.addCard(memberCard);
+		return true;
+	}
+
+	/**
+	 * Bind a member card to the user.
+	 * @param user The user who wants to bind a member card.
+	 * @param memberCard The member card to bind.
+	 * @return True if binding is successful.
+	 */
+	public boolean bindMemberCard(User user, MemberCard memberCard) {
+		userRepository.bindMemberCard(user.getAccount(),memberCard.getCardNumber());
+		return true;
+	}
+
+	/**
+	 * Unbinds a member card for the user.
+	 * @param user The user who wants to unbind a member card.
+	 * @return True if unbinding is successful.
+	 */
+	public boolean unbindMemberCard(User user) {
+		userRepository.unbindMemberCard(user.getAccount());
+		return true;
+	}
+
+	public boolean getCards() {
+		userRepository.getCreditCard(null);
+		userRepository.getMemberCard(null);
 		return true;
 	}
 }
