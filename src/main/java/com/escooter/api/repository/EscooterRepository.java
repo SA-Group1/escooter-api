@@ -22,15 +22,12 @@ public class EscooterRepository {
     /**
      * Adds a new e-scooter to the database.
      * 
-     * @param escooterId the e-scooter identifier
-     * @param modelName the model name of the e-scooter
-     * @param status the status of the e-scooter
+     * @param modelId the model name of the e-scooter
      */
-    public void addEscooter(int escooterId,String modelName,String status){
-        System.out.println("EXCUTE INSERT MEMBER");
-
-        jdbcTemplate.update(String.format("INSERT INTO escooter_rental.escooter (escooter_id,model_id,status) VALUES ('%d','%s','%s')",
-        escooterId,modelName,status));
+    public boolean addEscooter(String modelId){
+        String sql = "INSERT INTO escooter_rental.escooter (model_id) VALUES (?)";
+        jdbcTemplate.update(sql, modelId);
+        return true;
     }
 
     /**
@@ -53,14 +50,14 @@ public class EscooterRepository {
      * @param escooterId the e-scooter identifier
      * @return the Escooter object if found, otherwise null
      */
-    public Escooter queryEscooterById(String escooterId) {
+    public Escooter queryEscooterById(int escooterId) {
 		String sql = "SELECT * FROM escooter_rental.escooter WHERE escooter_id = ?";
         RowMapper<Escooter> rowMapper = (rs, rowNum) -> {
 			Escooter escooter = new Escooter();
             escooter.setEscooterId(rs.getInt("escooter_id"));
             escooter.setModelId(rs.getString("model_id"));
             escooter.setStatus(rs.getString("escooter_status"));
-            escooter.setBetteryLevel(rs.getInt("battert_level"));
+            escooter.setBatteryLevel(rs.getInt("battery_level"));
             escooter.setGPS(rs.getDouble("escooter_gps_longitude"), rs.getDouble("escooter_gps_latitude"));
             return escooter;
         };
@@ -83,7 +80,7 @@ public class EscooterRepository {
             escooter.setEscooterId(rs.getInt("escooter_id"));
             escooter.setModelId(rs.getString("model_id"));
             escooter.setStatus(rs.getString("escooter_status"));
-            escooter.setBetteryLevel(rs.getInt("battert_level"));
+            escooter.setBatteryLevel(rs.getInt("battery_level"));
             escooter.setGPS(rs.getDouble("escooter_gps_longitude"), rs.getDouble("escooter_gps_latitude"));
             return escooter;
         };
@@ -92,5 +89,18 @@ public class EscooterRepository {
 		} catch (EmptyResultDataAccessException e) {
             return null;
         }
+    }
+
+    /**
+     * Updates the GPS coordinates of an e-scooter in the database.
+     * 
+     * @param escooterId the e-scooter identifier
+     * @param gps the GPS coordinates to update
+     * @return true if updating is successful, false otherwise
+     */
+    public boolean updateStatus(int escooterId, String status) {
+        String sql = "UPDATE escooter_rental.escooter SET escooter_status = ? WHERE escooter_id = ?";
+        jdbcTemplate.update(sql, status, escooterId);
+        return true;
     }
 }

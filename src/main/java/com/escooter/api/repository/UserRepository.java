@@ -32,6 +32,7 @@ public class UserRepository {
 		String sql = "SELECT * FROM escooter_rental.user WHERE account = ?";
         RowMapper<User> rowMapper = (rs, rowNum) -> {
 			User user = new User();
+            user.setUserId(rs.getInt("user_id"));
             user.setAccount(rs.getString("account"));
             user.setUserName(rs.getString("username"));
             user.setPassword(rs.getString("password"));

@@ -20,8 +20,8 @@ public class EscooterService {
      * @param modelName The model name of the e-scooter.
      * @param status The status of the e-scooter.
      */
-    public void addEscooter(int escooterId, String modelName, String status) {
-        escooterRepository.addEscooter(escooterId, modelName, status);
+    public boolean addEscooter(String modelId) {
+        return escooterRepository.addEscooter(modelId);
     }
 
     /**

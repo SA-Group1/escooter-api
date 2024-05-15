@@ -1,12 +1,11 @@
 package com.escooter.api.model;
-import java.time.LocalDateTime;
 
 /**
  * Represents a rental record for an e-scooter.
  */
 public class RentalRecord {
-    private String userAccount;
-    private String escooterId;
+    private int userId;
+    private int escooterId;
     private String startTime;
     private String endTime;
     private boolean isPaid;
@@ -15,15 +14,15 @@ public class RentalRecord {
      * Returns the user account associated with this rental.
      * @return The user account.
      */
-    public String getUserAccount(){
-        return userAccount;
+    public int getUserId(){
+        return userId;
     }
 
     /**
      * Returns the e-scooter ID associated with this rental.
      * @return The e-scooter ID.
      */
-    public String getEscooterId(){
+    public int getEscooterId(){
         return escooterId;
     }
 
@@ -55,15 +54,15 @@ public class RentalRecord {
      * Sets the user account associated with this rental.
      * @param userAccount The user account.
      */
-    public void setUserAccount(String userAccount){
-        this.userAccount = userAccount;
+    public void setUserId(int userId){
+        this.userId = userId;
     }
 
     /**
      * Sets the e-scooter ID associated with this rental.
      * @param escooterId The e-scooter ID.
      */
-    public void setEscooterId(String escooterId){
+    public void setEscooterId(int escooterId){
         this.escooterId = escooterId;
     }
 
