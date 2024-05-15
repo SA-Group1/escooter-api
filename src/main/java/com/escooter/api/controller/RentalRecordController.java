@@ -24,12 +24,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-
+/**
+ * Controller for handling rental record-related requests.
+ */
 @RestController
 @RequestMapping("/api")
 public class RentalRecordController {
     @Autowired
     private RentalHistoryService rentalHistoryService;
+    
+    /**
+     * Retrieves rental records for a user.
+     *
+     * @param userDTO User data.
+     * @return A ResponseEntity with HTTP status and rental records.
+     */
     @PostMapping("/getRentalRecordList")
     public ResponseEntity<String> getRentalRecordList(@RequestBody UserDTO userDTO) {
         List<RentalRecord> rentalRecords = rentalHistoryService.getRentalRecordList(userDTO.getAccount(), userDTO.getPassword());

@@ -18,50 +18,90 @@ public class User {
     private MemberCard memberCard;
     private List<RentalRecord> rentalRecords;
 
+    /**
+     * Default constructor.
+     */
     public User() {}
 
+    /**
+     * Constructs a User with the specified account.
+     * @param account The user account.
+     */
     public User(String account) {
         this.account = account;
     }
     
+    /**
+     * Constructs a User with the specified account, userName, and password.
+     * @param account The user account.
+     * @param userName The user name.
+     * @param password The user password.
+     */
     public User(String account, String userName, String password) {
         this.account = account;
         this.userName = userName;
         this.password = password;
     }
 
-
+    /**
+     * Sets the user ID.
+     * @param userId The user ID.
+     */
     public void setUserId(int userId) {
         this.userId = userId;
     }
 
+    /**
+     * Returns the user ID.
+     * @return The user ID.
+     */
     public int getUserId() {
         return userId;
     }
 
+    /**
+     * Sets the user account.
+     * @param account The user account.
+     */
     public void setAccount(String account) {
         this.account = account;
     }
 
+    /**
+     * Sets the user name.
+     * @param userName The user name.
+     */
     public void setUserName(String username) {
         this.userName = username;
     }
 
+    /**
+     * Sets the user password.
+     * @param password The user password.
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Sets the user email.
+     * @param email The user email.
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Sets the registration time.
+     * @param registrationTime The registration time.
+     */
     public void setRegistrationTime(String registrationTime) {
         this.registrationTime = registrationTime;
     }
 
     /**
      * Returns the user account.
-     * @return the user account.
+     * @return The user account.
      */
     public String getAccount() {
         return account;
@@ -69,7 +109,7 @@ public class User {
 
     /**
      * Returns the user name.
-     * @return the user name.
+     * @return The user name.
      */
     public String getUserName() {
         return userName;
@@ -77,7 +117,7 @@ public class User {
 
     /**
      * Returns the user password.
-     * @return the user password.
+     * @return The user password.
      */
     public String getPassword() {
         return password;
@@ -85,15 +125,16 @@ public class User {
 
     /**
      * Returns the user email.
-     * @return the user email.
+     * @return The user email.
      */
     public String getEmail() {
         return email;
     }
 
     /**
-     * Returns the password verify.
-     * @return the password verify.
+     * Verifies the user password.
+     * @param password The password to verify.
+     * @return True if the password is correct, false otherwise.
      */
     public boolean verifyPassword(String password) {
         // 如何驗證
@@ -129,9 +170,12 @@ public class User {
         // 
         return true;
     }
-
+    /**
+     * Returns the registration time.
+     * @return The registration time.
+     */
     public String getRegistrationTime() {
-        // 
+        //
         return registrationTime;
     }
 

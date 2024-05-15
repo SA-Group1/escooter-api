@@ -8,6 +8,9 @@ import com.escooter.api.dto.UserDTO;
 import com.escooter.api.model.User;
 import com.escooter.api.repository.UserRepository;
 
+/**
+ * Service class for managing user login and registration.
+ */
 @Service
 public class LoginService {
     @Autowired
@@ -15,6 +18,14 @@ public class LoginService {
 
     private List<User> userList;
 
+    /**
+     * Registers a new user.
+     * @param account The account identifier for the user.
+     * @param password The password for the user's account.
+     * @param userName The name of the user.
+     * @param email The email address of the user.
+     * @return True if registration is successful, false if the account already exists.
+     */
     public boolean register(String account, String password, String userName, String email) {
         User user = userRepository.queryUserByAccount(account);
         boolean res;
@@ -25,7 +36,13 @@ public class LoginService {
             return false;
         }
     }
-    
+
+    /**
+     * Logs in a user.
+     * @param account The account identifier for the user.
+     * @param password The password for the user's account.
+     * @return The user if login is successful, null otherwise.
+     */
     public User login(String account, String password) {
         User user = userRepository.queryUserByAccount(account);
         if (user != null) {
@@ -40,18 +57,30 @@ public class LoginService {
         }
     }
 
+    /**
+     * Updates user data.
+     * @param userDTO The data transfer object containing updated user information.
+     * @return True if the update is successful, false otherwise.
+     */
     public boolean updateUserData(UserDTO userDTO) {
         // 判斷
         return userRepository.updateUserData(userDTO);
     }
 
-    // 查詢所有使用者
+    /**
+     * Queries all users.
+     * @return A list of all users.
+     */
     public List<User> queryUsers() {
         User user = new User();
         return this.userList;
     }
 
-    // 查詢使用者
+    /**
+     * Queries a user by their ID.
+     * @param id The ID of the user.
+     * @return The user if found, null otherwise.
+     */
     public User queryUserById(Integer id) {
         User user = new User();
         return user;

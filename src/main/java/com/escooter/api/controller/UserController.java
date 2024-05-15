@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 /**
- * Adding user info to database and returns a successful message
+ * Controller for handling user-related requests.
  */
 @RestController
 @RequestMapping("/api")
@@ -36,10 +36,10 @@ public class UserController {
     @Autowired
     LoginService loginService;
     /**
-	 * Adding user data to database and returns a successful message
+	 * Adds user data to the database and returns a success message.
 	 *
-	 * @param userDTO user data
-	 * @return A ResponseEntity with http status and message
+	 * @param userDTO User data.
+	 * @return A ResponseEntity with HTTP status and message.
 	 */
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
@@ -66,13 +66,18 @@ public class UserController {
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
 
-    //User login
+    /**
+     * Authenticates user login.
+     *
+     * @param userDTO User data.
+     * @return A ResponseEntity with HTTP status and message.
+     */
     @PostMapping("login")
     public ResponseEntity<String> login(@RequestBody UserDTO userDTO) {
-        // Calls service return the user login is sucess or fail
+        // Calls service to authenticate user login
         User user = loginService.login(userDTO.getAccount(), userDTO.getPassword());
         
-        // create return message
+        // Create return message
 		JSONObject message = new JSONObject();
         
         if (user == null) {
@@ -146,6 +151,12 @@ public class UserController {
     //     return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     // }
 
+    /**
+     * Updates user data.
+     *
+     * @param userDTO User data.
+     * @return A ResponseEntity with HTTP status and message.
+     */
     @PutMapping("updateUserData")
     public ResponseEntity<String> updateUserData(@RequestBody UserDTO userDTO) {
         boolean res = loginService.updateUserData(userDTO);

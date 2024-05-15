@@ -22,18 +22,25 @@ public class UserDTO {
     private MemberCard memberCard;
 
     /**
-     * @param account
-     * @param userName
-     * @param password
-     * @param email
-    */
-
+     * Default constructor for UserDTO.
+     */
     public UserDTO() {}
 
+    /**
+     * Constructs a UserDTO with the specified account.
+     * @param account The user account.
+     */
     public UserDTO(String account){
         this.account = account;
     }
 
+    /**
+     * Constructs a UserDTO with the specified account, username, password, and email.
+     * @param account The user account.
+     * @param userName The user username.
+     * @param password The user password.
+     * @param email The user email.
+     */
     public UserDTO(String account, String userName, String password, String email) {
         this.account = account;
         this.userName = userName;
@@ -41,26 +48,46 @@ public class UserDTO {
         this.email = email;
     }
 
+    /**
+     * Sets the user account.
+     * @param account The user account.
+     */
     public void setAccount(String account) {
         this.account = account;
     }
 
+    /**
+     * Sets the user username.
+     * @param userName The user username.
+     */
     public void setUserName(String username) {
         this.userName = username;
     }
 
+    /**
+     * Sets the user password.
+     * @param password The user password.
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Sets the user email.
+     * @param email The user email.
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Sets the registration time.
+     * @param registrationTime The registration time.
+     */
     public void setRegistrationTime(LocalDateTime registrationTime) {
         this.registrationTime = registrationTime;
     }
-
+    
     /**
      * return the user account.
      * @return The user account.

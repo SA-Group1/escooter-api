@@ -50,6 +50,12 @@ public class UserRepository {
 	}
 	/**
      * Adds a new User to the database.
+     * 
+     * @param account the user's account identifier
+     * @param password the user's password
+     * @param userName the user's name
+     * @param email the user's email
+     * @return True if adding is successful, false otherwise.
      */
 	public boolean createUser(String account, String password, String userName, String email) {
 		String sql = "INSERT INTO escooter_rental.user (account, password, username, email, registration_time) VALUES (?, ?, ?, ?, NOW())";
@@ -57,6 +63,12 @@ public class UserRepository {
 		return true;
 	}
 
+	/**
+     * Updates user data in the database.
+     * 
+     * @param userDTO the user data transfer object containing updated user information
+     * @return True if updating is successful, false otherwise.
+     */
 	public boolean updateUserData(UserDTO userDTO) {
 		String sql = "UPDATE escooter_rental.user SET password = ?, email = ?, username = ?, phone_number = ? WHERE account = ?";
 		jdbcTemplate.update(sql, userDTO.getPassword(), userDTO.getEmail(), userDTO.getUserName(), userDTO.getPhoneNumber(), userDTO.getAccount());
@@ -64,9 +76,10 @@ public class UserRepository {
 	}
 
 	/**
-     * Bind a credit card to user.
-	 * @param account The user's account.
-	 * @param cardNumber The credit card number.
+     * Binds a credit card to the user.
+     * 
+     * @param account the user's account
+     * @param cardNumber the credit card number
      * @return True if binding is successful, false otherwise.
      */
 	public boolean bindCreditCard(String account, String cardNumber){

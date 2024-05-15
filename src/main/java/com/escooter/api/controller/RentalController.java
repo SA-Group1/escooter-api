@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
-
-
-
+/**
+ * Controller for handling rental related requests.
+ */
 @RestController
 @RequestMapping("/api")
 public class RentalController {
@@ -34,8 +34,15 @@ public class RentalController {
     @Autowired
     EscooterService escooterService;
 
+    /**
+	 * Adding rental data to database and returns a successful message
+	 *
+	 * @param GPSDTO Credit GPS data 
+	 * @return A ResponseEntity with http status and message
+	 */
     @PostMapping("getRentableEscooterList")
     public ResponseEntity<String> postMethodName(@RequestBody GPSDTO gpsDTO) {
+        // call service to show the avaliable escooter list
         List<Escooter> escooters = rentalService.showAvailableEscooter(new GPS(gpsDTO.getLongitude(), gpsDTO.getLatitude()));
         JSONObject message = new JSONObject();
         
@@ -49,7 +56,7 @@ public class RentalController {
             }
             return new ResponseEntity<>(message.toString(), HttpStatus.OK);
         }
-
+        //creat return message
         JSONObject escooterMessage = new JSONObject();
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = "{}";

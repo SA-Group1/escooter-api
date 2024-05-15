@@ -1,6 +1,10 @@
 package com.escooter.api.model;
 
 import java.util.List;
+
+/**
+ * Represents an electric scooter.
+ */
 public class Escooter {
     private int escooterId;
     private String modelId;
@@ -10,50 +14,108 @@ public class Escooter {
     private List<MaintenanceRecord> maintenanceRecords;
     private GPS gps;
 
+    /**
+     * Sets the ID of the electric scooter.
+     * @param escooterId The electric scooter ID.
+     */
     public void setEscooterId(int escooterId){
         this.escooterId = escooterId;
     }
 
+    /**
+     * Sets the model ID of the electric scooter.
+     * @param modelId The model ID.
+     */
     public void setModelId(String modelId){
         this.modelId = modelId;
     }
 
+    /**
+     * Sets the status of the electric scooter.
+     * @param status The status.
+     */
     public void setStatus(String status){
         this.status = status;
     }
 
+    /**
+     * Sets the battery level of the electric scooter.
+     * @param batteryLevel The battery level.
+     */
     public void setBetteryLevel(int betteryLevel){
         this.betteryLevel = betteryLevel;
     }
 
+    /**
+     * Sets the fee per minute for using the electric scooter.
+     * @param feePerMinute The fee per minute.
+     */
     public void setFeePerMinutes(int feePerMinutes){
         feePerMinutes = 10;     // if
         this.feePerMinutes = feePerMinutes;
     }
 
+    /**
+     * Sets the GPS coordinates of the electric scooter.
+     * @param longitude The longitude.
+     * @param latitude The latitude.
+     */
     public void setGPS(double longitude, double latitude) {
         this.gps = new GPS(longitude, latitude);
     }
 
+    /**
+     * Returns the electric scooter ID.
+     * @return The electric scooter ID.
+     */
     public int getEscooterId(){
         return escooterId;
     }
+    
+    /**
+     * Returns the status of the electric scooter.
+     * @return The status.
+     */
     public String getStatus(){
         return status;
     }
+
+    /**
+     * Returns the model ID of the electric scooter.
+     * @return The model ID.
+     */
     public String getModelName(){
         return modelId;
     }
+
+    /**
+     * Returns the battery level of the electric scooter.
+     * @return The battery level.
+     */
     public int getBetteryLevel(){
         return betteryLevel;
     }
+
+    /**
+     * Returns the fee per minute for using the electric scooter.
+     * @return The fee per minute.
+     */
     public int getFeePerMinutes(){
         return feePerMinutes;
     }
+
+    /**
+     * Returns the maintenance records of the electric scooter.
+     * @return The maintenance records.
+     */
     public List<MaintenanceRecord> getMaintenanceRecords(){
         return maintenanceRecords;
     }
     
+    /**
+     * Returns the GPS coordinates of the electric scooter.
+     * @return The GPS coordinates.
+     */
     public GPS getGPS() {
         return gps;
     }

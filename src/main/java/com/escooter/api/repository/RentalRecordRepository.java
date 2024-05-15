@@ -10,12 +10,20 @@ import org.springframework.stereotype.Repository;
 
 import com.escooter.api.model.RentalRecord;
 
+/**
+ * Repository for managing rental record data in the database.
+ */
 @Repository
 public class RentalRecordRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-
+    /**
+     * Queries rental records by the user's account.
+     * 
+     * @param account the user's account identifier
+     * @return a list of RentalRecord objects if found, otherwise null
+     */
     public List<RentalRecord> queryRentalRecordsByUserId(String account){
         String sql = "SELECT * FROM escooter_rental.rental_record WHERE user_id = (SELECT user_id FROM escooter_rental.user WHERE account = ?)";
         RowMapper<RentalRecord> rowMapper = (rs,rowNum) -> {

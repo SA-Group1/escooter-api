@@ -8,13 +8,17 @@ public class GPSDTO {
     private double latitude;
 
     /**
-     * Constructs a new GPSDTO with the GPS details.
-     * @param longitude
-     * @param latitude
-    */
+     * Returns the GPS Longitude.
+     * @return the GPS Longitude.
+     */
     public double getLongitude() {
         return longitude;
     }
+
+    /**
+     * Returns the GPS Latitude.
+     * @return the GPS Latitude.
+     */
     public double getLatitude() {
         return latitude;
     }
