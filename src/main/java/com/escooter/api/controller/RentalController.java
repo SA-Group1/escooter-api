@@ -85,6 +85,13 @@ public class RentalController {
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
     
+
+    /**
+     * Rents an e-scooter.
+     *
+     * @param rentEscooterDTO DTO containing e-scooter and user data.
+     * @return A ResponseEntity with HTTP status and rental information.
+     */
     @PostMapping("/rentEscooter")
     public ResponseEntity<String> rentEscooter(@RequestBody RentEscooterDTO rentEscooterDTO) {
         int escooterId = rentEscooterDTO.getEscooterDTO().getEscooterId();

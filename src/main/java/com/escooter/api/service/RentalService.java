@@ -52,6 +52,7 @@ public class RentalService {
         }
         return escootersWithinRadius;
     }
+    
     /**
      * Rents an e-scooter to a user.
      * @param user The user renting the e-scooter.
@@ -70,6 +71,8 @@ public class RentalService {
             return escooter;
         }
     }
+
+
     /**
      * Returns a rented e-scooter.
      * @param user The user returning the e-scooter.
