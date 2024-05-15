@@ -90,9 +90,15 @@ public class UserController {
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
 
+    /**
+     * get user data.
+     *
+     * @param userDTO User data.
+     * @return A ResponseEntity with HTTP status and user data.
+     */
     @PostMapping("getUserData")
     public ResponseEntity<String> getUserData(@RequestBody UserDTO userDTO) {
-        // Calls service to authenticate user login
+        // Calls service to retrieve user data
         User user = loginService.getUserData(userDTO.getAccount(), userDTO.getPassword());
         
         // Create return message
