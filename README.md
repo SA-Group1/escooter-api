@@ -51,3 +51,34 @@ Example Response
     }
 }
 ```
+
+### bindCreditCard
+```
+POST /api/bindCreditCard
+```
+| Parameter  |     Type      | Description   |
+| ---------  | :-----------: | ------------- |
+| user       | UserDTO       | **Required.** |
+| creditCard | CreditCardDTO | **Required.** |
+
+Example Input
+```json
+{
+    "user":{
+        "account": "acc001"
+    },
+    "creditCard":{
+        "cardNumber": "0000111100001111",
+        "expirationDate": "0425",
+        "cardHolderName": "acc001",
+        "cvv": "000"
+    }
+}
+```
+Example Response
+```json
+{
+    "status": true,
+    "message":"Binding credit card success."
+}
+```
