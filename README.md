@@ -48,14 +48,38 @@ Example Response
 ```json
 {
     "status": true,
-    "message": "login success",
+    "message": "login success"
+}
+```
+
+### get user data
+```
+POST /api/getUserData
+```
+| Parameter |  Type  | Description   |
+| --------- | :----: | ------------- |
+| account   | String | **Required.** |
+| password  | String | **Required.** |
+Example input
+```json
+{
+    "account": "acc001",
+    "password": "pwd001"
+}
+```
+
+Example Response
+```json
+{
+    "status": true,
+    "message": "get user data success",
     "user": {
         "userId": 0,
-        "account": "acc004",
-        "userName": "user444",
-        "password": "pwd004",
-        "email": "user444@test.com",
-        "registrationTime": "2024-05-15T23:36:01",
+        "account": "acc001",
+        "userName": "user111",
+        "password": "pwd001",
+        "email": "user001@test.com",
+        "registrationTime": "2024-05-13T12:07:40",
         "creditCard": {
             "cardNumber": "",
             "expirationDate": "",
@@ -100,36 +124,7 @@ Example Response
     "message": "update success"
 }
 ```
-### bindCreditCard
-```
-POST /api/bindCreditCard
-```
-| Parameter  |     Type      | Description   |
-| ---------  | :-----------: | ------------- |
-| user       | UserDTO       | **Required.** |
-| creditCard | CreditCardDTO | **Required.** |
 
-Example Input
-```json
-{
-    "user":{
-        "account": "acc001"
-    },
-    "creditCard":{
-        "cardNumber": "0000111100001111",
-        "expirationDate": "0425",
-        "cardHolderName": "acc001",
-        "cvv": "000"
-    }
-}
-```
-Example Response
-```json
-{
-    "status": true,
-    "message":"Binding credit card success."
-}
-```
 ## API Reference Payment
 
 ### bindCreditCard
@@ -262,4 +257,52 @@ Example Response
 }
 ```
 
+### rent escooter 
+```
+POST /api/rentEscooter
+```
+| Parameter  |     Type      | Description   |
+| ---------  | :-----------: | ------------- |
+| user       | UserDTO       | **Required.** |
+| creditCard | CreditCardDTO | **Required.** |
 
+Example Input
+```json
+{
+    "longitude": 122,
+    "latitude": 23.5
+}
+```
+Example Response
+```json
+{
+    "status": true,
+    "message": "return escooters",
+    "escooters": {
+        "escooter1": {
+            "escooterId": 1,
+            "status": "Available",
+            "betteryLevel": 0,
+            "feePerMinutes": 0,
+            "maintenanceRecords": null,
+            "gps": {
+                "longitude": 122.000000001,
+                "latitude": 23.49999999999
+            },
+            "modelName": "LCE151"
+        },
+        "escooter2": {
+            "escooterId": 2,
+            "status": "Available",
+            "betteryLevel": 0,
+            "feePerMinutes": 0,
+            "maintenanceRecords": null,
+            "gps": {
+                "longitude": 122,
+                "latitude": 23.5
+            },
+            "modelName": "LCE151"
+        }
+    }
+}
+```
