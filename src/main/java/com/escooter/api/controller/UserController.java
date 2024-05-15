@@ -75,7 +75,25 @@ public class UserController {
     @PostMapping("login")
     public ResponseEntity<String> login(@RequestBody UserDTO userDTO) {
         // Calls service to authenticate user login
-        User user = loginService.login(userDTO.getAccount(), userDTO.getPassword());
+        boolean res = loginService.login(userDTO.getAccount(), userDTO.getPassword());
+        
+        // Create return message
+		JSONObject message = new JSONObject();
+        
+        try {
+            message.put("status", res);
+            message.put("message", res ? "login success":"login failed");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        // Returns a successful response with user info
+        return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+    }
+
+    @PostMapping("getUserData")
+    public ResponseEntity<String> getUserData(@RequestBody UserDTO userDTO) {
+        // Calls service to authenticate user login
+        User user = loginService.getUserData(userDTO.getAccount(), userDTO.getPassword());
         
         // Create return message
 		JSONObject message = new JSONObject();
@@ -83,7 +101,7 @@ public class UserController {
         if (user == null) {
             try {
                 message.put("status", false);
-                message.put("message", "login failed");
+                message.put("message", "get user data failed");
                 message.put("user", new JSONObject("{}"));
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -102,10 +120,9 @@ public class UserController {
 
         // Converts the JSON string to a JSONObject
         try {
-        
             JSONObject jsonObject = new JSONObject(jsonString);
 			message.put("status", true);
-			message.put("message", "login success");
+			message.put("message", "get user data success");
             message.put("user", jsonObject);
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -113,43 +130,6 @@ public class UserController {
         // Returns a successful response with user info
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
-
-    // @PostMapping("getUserData")
-    // public ResponseEntity<String> getUserData(@RequestBody UserDTO userDTO) {
-    //     // Calls service return the user login is sucess or fail
-    //     User user = loginService.login(userDTO.getAccount(), userDTO.getPassword());
-        
-    //     // create return message
-	// 	JSONObject message = new JSONObject();
-        
-    //     if (user == null) {
-    //         try {
-    //             message.put("status", false);
-    //             message.put("message", "Authentication failed");
-    //             message.put("user", new JSONObject("{}"));
-    //         } catch (JSONException e) {
-    //             e.printStackTrace();
-    //         }
-    //         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
-    //     }
-    //     // Converts the User object to a JSON string
-    //     ObjectMapper objectMapper = new ObjectMapper();
-
-    //     JSONObject userMessage = new JSONObject();
-    //     // Converts the JSON string to a JSONObject
-    //     try {
-        
-	// 		message.put("status", true);
-	// 		message.put("message", "Authentication successful");
-    //         // userMessage.put("user_id", userId);
-    //         userMessage.put("account", user.getAccount());
-    //         message.put("user", userMessage);
-	// 	} catch (JSONException e) {
-	// 		e.printStackTrace();
-	// 	}
-    //     // Returns a successful response with user info
-    //     return new ResponseEntity<>(message.toString(), HttpStatus.OK);
-    // }
 
     /**
      * Updates user data.

@@ -43,7 +43,27 @@ public class LoginService {
      * @param password The password for the user's account.
      * @return The user if login is successful, null otherwise.
      */
-    public User login(String account, String password) {
+    public boolean login(String account, String password) {
+        User user = userRepository.queryUserByAccount(account);
+        if (user != null) {
+            if (password.equals(user.getPassword())) {
+                
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+        /**
+     * user information.
+     * @param account The account identifier for the user.
+     * @param password The password for the user's account.
+     * @return The user data.
+     */
+    public User getUserData(String account, String password) {
         User user = userRepository.queryUserByAccount(account);
         if (user != null) {
             if (password.equals(user.getPassword())) {
