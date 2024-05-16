@@ -25,6 +25,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 
 /**
@@ -114,6 +117,23 @@ public class RentalController {
 		} catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+        return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+    }
+
+    @PutMapping("/updateEscooterParkStatus")
+    public ResponseEntity<String> updateEscooterParkStatus(@RequestBody UserDTO userDTO) {
+        boolean res = rentalService.updateEscooterParkStatus(userDTO.getAccount(), userDTO.getPassword());
+
+
+        // create return message
+		JSONObject message = new JSONObject();
+		try {
+			message.put("status", res);
+			message.put("message", res ? "update escooter park status success" : "update escooter park status failed");
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 

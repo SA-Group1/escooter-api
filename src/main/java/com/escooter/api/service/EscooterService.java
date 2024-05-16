@@ -70,5 +70,5 @@ public class EscooterService {
 
     public boolean updateBetteryLevel(int escooterId,int batteryLevel){
         return escooterRepository.updateBetteryLevel(escooterId,batteryLevel);
-    }  
+    }
 }

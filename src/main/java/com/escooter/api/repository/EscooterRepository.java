@@ -110,4 +110,27 @@ public class EscooterRepository {
         return true;
     }
     
+    public Escooter queryRentedEscooterByAccount(String account) {
+        String sql = "SELECT * FROM escooter_rental.escooter WHERE escooter_id = (SELECT escooter_id FROM escooter_rental.rental_record WHERE user_id = (SELECT user_id FROM escooter_rental.user WHERE account = ?) AND end_time IS NULL)";
+        RowMapper<Escooter> rowMapper = (rs, rowNum) -> {
+			Escooter escooter = new Escooter();
+            escooter.setEscooterId(rs.getInt("escooter_id"));
+            escooter.setModelId(rs.getString("model_id"));
+            escooter.setStatus(rs.getString("escooter_status"));
+            escooter.setBatteryLevel(rs.getInt("battery_level"));
+            escooter.setGPS(rs.getDouble("escooter_gps_longitude"), rs.getDouble("escooter_gps_latitude"));
+            return escooter;
+        };
+		try {
+			return jdbcTemplate.queryForObject(sql, rowMapper, account);
+		} catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    public boolean updateEscooterParkStatusbyId(int escooterId, String status) {
+        String sql = "UPDATE escooter_rental.escooter SET escooter_status = ? WHERE escooter_id = ?";
+        jdbcTemplate.update(sql, status, escooterId);
+        return true;
+    }
 }

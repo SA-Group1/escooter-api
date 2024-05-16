@@ -116,6 +116,16 @@ public class RentalService {
     static double Meter2LatitudeAndLongitude(double num) {
         return (double)num * 0.00000900900901;
     }
+
+    public boolean updateEscooterParkStatus(String account, String passowrd) {
+        Escooter escooter = escooterRepository.queryRentedEscooterByAccount(account);
+        if (escooter == null) {
+            return false;
+        }
+
+        String status = escooter.getStatus();
+        status = status.equals("Rented") ? "Rented_parking" : "Rented";
+        escooterRepository.updateEscooterParkStatusbyId(escooter.getEscooterId(), status);
+        return true;
+    }
 }
-// 0.00000900900901 經度/meter
-// 0.0002702703
