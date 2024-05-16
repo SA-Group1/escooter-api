@@ -303,6 +303,30 @@ Example Response
 }
 ```
 
+### rent escooter 
+```
+PUT /api/updateEscooterParkStatus
+```
+| Parameter  |     Type      | Description   |
+| ---------  | :-----------: | ------------- |
+| account    |    String     | **Required.** |
+| password   |    String     | **Required.** |
+
+Example Input
+```json
+{ 
+    "account": "acc001",
+    "password": "pwd001"
+}
+```
+Example Response
+```json
+{
+    "status": true,
+    "message": "update escooter park status success"
+}
+```
+
 ## API Reference Escooter
 ### is escooter rantable
 ```
