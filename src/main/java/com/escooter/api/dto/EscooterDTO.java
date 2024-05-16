@@ -7,6 +7,7 @@ public class EscooterDTO {
     private int escooterId;
     private String modelId;
     private String status;
+    private int batteryLevel;
 
     /**
      * Sets the ID of the electric scooter.
@@ -33,6 +34,14 @@ public class EscooterDTO {
     }
 
     /**
+     * Sets the battery level of the electric scooter.
+     * @param batteryLevel The battery level.
+     */
+    public void setBatteryLevel(int batteryLevel){
+        this.batteryLevel = batteryLevel;
+    }
+
+    /**
      * Returns the electric scooter ID.
      * @return The electric scooter ID.
      */
@@ -54,6 +63,14 @@ public class EscooterDTO {
      */
     public String getStatus(){
         return status;
+    }
+
+    /**
+     * Returns the battery level of the electric scooter.
+     * @return The battery level.
+     */
+    public int getBatteryLevel(){
+        return batteryLevel;
     }
 }
 

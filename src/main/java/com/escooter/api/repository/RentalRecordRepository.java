@@ -25,7 +25,7 @@ public class RentalRecordRepository {
      * @return a list of RentalRecord objects if found, otherwise null
      */
     public List<RentalRecord> queryRentalRecordsByUserAccount(String account) {
-        String sql = "SELECT * FROM escooter_rental.rental_record WHERE user_id = (SELECT user_id FROM escooter_rental.user WHERE account = ?)";
+        String sql = "SELECT * FROM escooter_rental.rental_record WHERE user_id = (SELECT user_id FROM escooter_rental.user WHERE account = ?) AND end_time IS NOT NULL";
         RowMapper<RentalRecord> rowMapper = (rs,rowNum) -> {
             RentalRecord rentalRecord = new RentalRecord();
             rentalRecord.setUserId(rs.getInt("user_id"));

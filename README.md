@@ -175,12 +175,14 @@ POST /api/getRentalRecordList
 | Parameter  |     Type      | Description   |
 | ---------  | :-----------: | ------------- |
 | account    |    String     | **Required.** |
+| password   |    String     | **Required.** |
 
 
 Example Input
 ```json
 {
-    "account": "acc001"
+    "account": "acc001",
+    "password": "pwd001"
 }
 ```
 Example Response
@@ -190,15 +192,15 @@ Example Response
     "message": "return rental record",
     "rentalRecords": {
         "rentalRecord1": {
-            "userAccount": "acc001",
-            "escooterId": "1",
+            "userId": 1,
+            "escooterId": 1,
             "startTime": "2024-05-13T12:07:40",
             "endTime": "2024-05-13T13:07:40",
             "isPaid": true
         },
         "rentalRecord2": {
-            "userAccount": "acc001",
-            "escooterId": "2",
+            "userId": 1,
+            "escooterId": 2,
             "startTime": "2024-05-13T13:10:45",
             "endTime": "2024-05-13T15:11:45",
             "isPaid": false
@@ -215,8 +217,8 @@ POST /api/getRentableEscooterList
 ```
 | Parameter  |     Type      | Description   |
 | ---------  | :-----------: | ------------- |
-| longitude  | double        | **Required.** |
-| latitude   | double        | **Required.** |
+| longitude  |    double     | **Required.** |
+| latitude   |    double     | **Required.** |
 
 Example Input
 ```json
@@ -234,19 +236,19 @@ Example Response
         "escooter1": {
             "escooterId": 1,
             "status": "Available",
-            "betteryLevel": 0,
+            "batteryLevel": 0,
             "feePerMinutes": 0,
             "maintenanceRecords": null,
             "gps": {
-                "longitude": 122.000000001,
-                "latitude": 23.49999999999
+                "longitude": 122.000000000001,
+                "latitude": 23.49999999999999
             },
             "modelName": "LCE151"
         },
         "escooter2": {
             "escooterId": 2,
             "status": "Available",
-            "betteryLevel": 0,
+            "batteryLevel": 0,
             "feePerMinutes": 0,
             "maintenanceRecords": null,
             "gps": {
@@ -265,46 +267,161 @@ POST /api/rentEscooter
 ```
 | Parameter  |     Type      | Description   |
 | ---------  | :-----------: | ------------- |
-| user       | UserDTO       | **Required.** |
-| creditCard | CreditCardDTO | **Required.** |
+| account    |    String     | **Required.** |
+| password   |    String     | **Required.** |
+| escooterId |      Int      | **Required.** |
 
 Example Input
 ```json
 {
-    "longitude": 122,
-    "latitude": 23.5
+  "user": {
+        "account": "acc001",
+        "password": "pwd001"
+    },
+    "escooter": {
+        "escooterId": 1
+    }
 }
 ```
 Example Response
 ```json
 {
     "status": true,
-    "message": "return escooters",
-    "escooters": {
-        "escooter1": {
-            "escooterId": 1,
-            "status": "Available",
-            "betteryLevel": 0,
-            "feePerMinutes": 0,
-            "maintenanceRecords": null,
-            "gps": {
-                "longitude": 122.000000001,
-                "latitude": 23.49999999999
-            },
-            "modelName": "LCE151"
+    "message": "rent escooter success",
+    "escooter": {
+        "escooterId": 1,
+        "status": "Rented",
+        "batteryLevel": 0,
+        "feePerMinutes": 0,
+        "maintenanceRecords": null,
+        "gps": {
+            "longitude": 122.000000000001,
+            "latitude": 23.49999999999999
         },
-        "escooter2": {
-            "escooterId": 2,
-            "status": "Available",
-            "betteryLevel": 0,
-            "feePerMinutes": 0,
-            "maintenanceRecords": null,
-            "gps": {
-                "longitude": 122,
-                "latitude": 23.5
-            },
-            "modelName": "LCE151"
-        }
+        "modelName": "LCE151"
     }
+}
+```
+
+## API Reference Escooter
+### is escooter rantable
+```
+POST /api/isRent
+```
+| Parameter  |     Type      | Description   |
+| ---------  | :-----------: | ------------- |
+| escooterId |      Int      | **Required.** |
+
+Example Input
+```json
+{
+    "escooterId":1
+}
+```
+Example Response
+```json
+{
+    "status": true,
+    "message": "escooter is rentable"
+}
+```
+
+
+### is escooter returned
+```
+POST /api/isReturn
+```
+| Parameter  |     Type      | Description   |
+| ---------  | :-----------: | ------------- |
+| escooterId |      Int      | **Required.** |
+
+Example Input
+```json
+{
+    "escooterId":4
+}
+```
+Example Response
+```json
+{
+    "status": false,
+    "message": "escooter status is Rented"
+}
+```
+
+### is escooter parking
+```
+POST /api/getParkingStatus
+```
+| Parameter  |     Type      | Description   |
+| ---------  | :-----------: | ------------- |
+| escooterId |      Int      | **Required.** |
+
+Example Input
+```json
+{
+    "escooterId":4
+}
+```
+Example Response
+```json
+{
+    "status": true,
+    "message": "escooter is parking"
+}
+```
+
+### update escooter GPS 
+```
+PUT /api/updateGps
+```
+| Parameter  |     Type      | Description   |
+| ---------  | :-----------: | ------------- |
+| escooterId |      Int      | **Required.** |
+| longitude  |    double     | **Required.** |
+| latitude   |    double     | **Required.** |
+
+Example Input
+```json
+{
+    "escooter": {
+        "escooterId": 4
+    },
+    "gps": {
+        "longitude": 124,
+        "latitude": 24
+    }
+}
+```
+Example Response
+```json
+{
+    "status": true,
+    "message": "GPS update success"
+}
+```
+
+### update escooter battery level
+```
+PUT /api/updateBetteryLevel
+```
+| Parameter   |     Type      | Description   |
+| ----------- | :-----------: | ------------- |
+| escooterId  |      Int      | **Required.** |
+| batteryLevel|      Int      | **Required.** |
+
+
+Example Input
+```json
+{
+    "escooterId": 4,
+    "batteryLevel":90
+}
+```
+Example Response
+```json
+{
+    "status": true,
+    "message": "Battery Level update success"
 }
 ```

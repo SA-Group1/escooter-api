@@ -103,4 +103,11 @@ public class EscooterRepository {
         jdbcTemplate.update(sql, status, escooterId);
         return true;
     }
+
+    public boolean updateBetteryLevel(int escooterId, int batteryLevel){
+        String sql = "UPDATE escooter_rental.escooter SET battery_level = ? WHERE escooter_id = ?";
+        jdbcTemplate.update(sql, batteryLevel, escooterId);
+        return true;
+    }
+    
 }
