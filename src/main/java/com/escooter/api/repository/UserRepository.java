@@ -128,19 +128,6 @@ public class UserRepository {
 		return true;
 	}
 
-	public CreditCard getCreditCard(String account) {
-		String sql = "SELECT `creditcard_id` FROM escooter_rental.user WHERE (`account` = ?)";
-		
-		CreditCard creditCard = new CreditCard(null, null, null);
-		return creditCard;
-	}
-
-	public MemberCard getMemberCard(String account) {
-		MemberCard memberCard = new MemberCard(null, null);
-		return memberCard;
-	}
-
-
 	// public void addUser(User user) {
 	// 	System.out.println("新增使用者成功");
 	// 	jdbcTemplate.update("INSERT INTO escooter_rental.user (account, password, registration_time, username) VALUES (?, ?, NOW(), ?)",

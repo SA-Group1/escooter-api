@@ -121,9 +121,11 @@ public class PaymentService {
 		return true;
 	}
 
-	public boolean getCards() {
-		userRepository.getCreditCard(null);
-		userRepository.getMemberCard(null);
-		return true;
+	public CreditCard getCreditCard(String account) {
+		return creditCardRepository.getCreditCard(account);
+	}
+
+	public MemberCard getMemberCard(String account) {
+		return memberCardRepository.getMemberCard(account);
 	}
 }

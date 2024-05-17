@@ -8,6 +8,7 @@ public class CreditCard {
     private String expirationDate;
     private String cardHolderName;
     
+    public CreditCard(){}
     /**
      * Constructs a new CreditCard with the specified card details.
      * @param cardNumber The credit card number.
@@ -40,8 +41,20 @@ public class CreditCard {
      * Returns the name of the card holder.
      * @return The card holder name.
      */
-    public String getCardHolderName(){
+    public String getCardHolderName() {
         return cardHolderName;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public void setCardHolderName(String cardHolderName) {
+        this.cardHolderName = cardHolderName;
     }
 
     /**

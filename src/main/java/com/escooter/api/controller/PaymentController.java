@@ -5,7 +5,6 @@ import java.time.format.DateTimeParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.dao.DuplicateKeyException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.escooter.api.dto.UserDTO;
 import com.escooter.api.model.User;
@@ -134,9 +134,24 @@ public class PaymentController {
 		return new ResponseEntity<>(message.toString(), HttpStatus.OK);
 	}
 
-	@GetMapping("getCards")
-	public ResponseEntity<String> getCards(@RequestParam String account) {
-		paymentService.getCards();
-		return new ResponseEntity<>("cards",HttpStatus.OK);
+	@PostMapping("getCards")
+	public ResponseEntity<String> getCards(@RequestParam String account) throws Exception {
+
+		// create return message.
+		JSONObject message = new JSONObject();
+		message.put("status", false);
+
+		// gets card data from the payment service.
+		CreditCard creditCard = paymentService.getCreditCard(account);
+		MemberCard memberCard = paymentService.getMemberCard(account);
+
+		// puts card data into the message.
+		ObjectMapper objectMapper = new ObjectMapper();
+		message.put("status", true);
+		message.put("message","gets cards information success.");
+		message.put("creditCard",new JSONObject(objectMapper.writeValueAsString(creditCard)));
+		message.put("memberCard",new JSONObject(objectMapper.writeValueAsString(memberCard)));
+		System.out.println(objectMapper.writeValueAsString(memberCard));
+		return new ResponseEntity<>(message.toString(),HttpStatus.OK);
 	}
 }

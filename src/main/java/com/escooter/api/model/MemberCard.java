@@ -7,6 +7,7 @@ public class MemberCard {
     private String cardNumber;
     private String expirationDate;
     
+    public MemberCard(){}
     /**
      * Constructs a new MemberCard with the specified card details.
      * @param cardNumber The member card number.
@@ -40,5 +41,13 @@ public class MemberCard {
     public boolean isVaild() {
         // Logic of vaild member card
         return true;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
     }
 }

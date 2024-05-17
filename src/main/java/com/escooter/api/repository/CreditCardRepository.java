@@ -1,8 +1,12 @@
 package com.escooter.api.repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.escooter.api.model.CreditCard;
@@ -29,5 +33,25 @@ public class CreditCardRepository {
 		jdbcTemplate.update(sql,creditCard.getCardNumber(),creditCard.getExpirationDate(),creditCard.getCardHolderName());
 	
 		return true;
+	}
+
+	public CreditCard getCreditCard(String account) {
+		String sql = 
+		"SELECT creditcard_id, expiration_date, card_holder_name " +
+		"FROM escooter_rental.credit_card " +
+		"WHERE creditcard_id = (SELECT creditcard_id FROM escooter_rental.user WHERE account = ?)";
+		CreditCard creditCard = jdbcTemplate.queryForObject(sql,new CreditCardRowMapper(),new Object[]{account});
+		return creditCard;
+	}
+
+	private static class CreditCardRowMapper implements RowMapper<CreditCard> {
+		@Override
+		public CreditCard mapRow(ResultSet rs, int rowNum) throws SQLException {
+			CreditCard creditCard = new CreditCard();
+			creditCard.setCardNumber(rs.getString("creditcard_id"));
+			creditCard.setExpirationDate(rs.getString("expiration_date"));
+			creditCard.setCardHolderName(rs.getString("card_holder_name"));
+			return creditCard;
+		}
 	}
 }
