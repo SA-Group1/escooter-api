@@ -30,13 +30,14 @@ public class User {
     public User(String account) {
         this.account = account;
     }
-
     /**
      * Constructs a User with the specified account.
      * @param account The user account.
+     * @param password THe user password.
      */
     public User(String account, String password) {
         this.account = account;
+        this.password = password;
     }
     
     /**

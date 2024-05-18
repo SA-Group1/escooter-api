@@ -52,18 +52,22 @@ public class PaymentController {
 		JSONObject message = new JSONObject();
 		message.put("status", false);
 
-		// bind credit card to the user.
-		try {
-			paymentService.addCreditCard(creditCard, creditCardDTO.getCvv());
-			paymentService.bindCreditCard(user, creditCard);
-			message.put("status", true);
-			message.put("message", "Binding credit card success.");
-		} catch (DuplicateKeyException e) {
-			message.put("message", "This credit card is already been used.");
-		} catch (CardExpirationException e) {
-			message.put("message", "This credit card has expirated.");
-		} catch (DateTimeParseException e) {
-			message.put("message", "Invaild expiration date.");
+		if(user.verifyPassword(userDTO.getPassword())) {
+			// bind credit card to the user.
+			try {
+				paymentService.addCreditCard(creditCard, creditCardDTO.getCvv());
+				paymentService.bindCreditCard(user, creditCard);
+				message.put("status", true);
+				message.put("message", "Binding credit card success.");
+			} catch (DuplicateKeyException e) {
+				message.put("message", "This credit card is already been used.");
+			} catch (CardExpirationException e) {
+				message.put("message", "This credit card has expirated.");
+			} catch (DateTimeParseException e) {
+				message.put("message", "Invaild expiration date.");
+			}
+		} else {
+			message.put("message", "Wrong password.");
 		}
 
 		// return the result message.

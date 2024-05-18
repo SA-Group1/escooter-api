@@ -59,9 +59,11 @@ public class UserDTO {
     /**
      * Sets the user username.
      * @param userName The user username.
+     * @param password The user password.
      */
-    public void setUserName(String username) {
+    public void setUserName(String username, String password) {
         this.userName = username;
+        this.password = password;
     }
 
     /**
