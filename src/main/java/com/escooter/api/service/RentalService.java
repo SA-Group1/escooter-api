@@ -28,7 +28,7 @@ public class RentalService {
      * @param scooterId The ID of the e-scooter.
      * @return The e-scooter if found, null otherwise.
      */
-    public Escooter getEscooter(int scooterId){
+    public Escooter getEscooter(String scooterId){
         Escooter escooter = escooterRepository.queryEscooterById(scooterId);
         return escooter;
     }
@@ -59,7 +59,7 @@ public class RentalService {
      * @param escooter The e-scooter to be rented.
      * @return A rental record of the transaction.
      */
-    public Escooter rentEscooter(User user, int escooterId) {
+    public Escooter rentEscooter(User user, String escooterId) {
         Escooter escooter = escooterRepository.queryEscooterById(escooterId);
         if (!escooter.getStatus().equals("Available")) {
             return null;

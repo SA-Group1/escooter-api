@@ -93,7 +93,7 @@ public class EscooterController {
     
     @PutMapping("updateGps")
     public ResponseEntity<String> updateGps(@RequestBody UpdateGPSDTO updateGPSDTO) {
-        int escooterId = updateGPSDTO.getEscooterDTO().getEscooterId();
+        String escooterId = updateGPSDTO.getEscooterDTO().getEscooterId();
         GPSDTO gpsDTO = updateGPSDTO.getGPSDTO();
         GPS gps = new GPS(gpsDTO.getLongitude(), gpsDTO.getLatitude());
         
@@ -112,7 +112,7 @@ public class EscooterController {
 
     @PutMapping("updateBetteryLevel")
     public ResponseEntity<String> updateBetteryLevel(@RequestBody EscooterDTO escooterDTO) {
-        int escooterId = escooterDTO.getEscooterId();
+        String escooterId = escooterDTO.getEscooterId();
         int batteryLevel = escooterDTO.getBatteryLevel();
         
         boolean res = escooterService.updateBetteryLevel(escooterId,batteryLevel);

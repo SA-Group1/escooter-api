@@ -30,22 +30,22 @@ public class EscooterService {
      * @param escooterId The ID of the e-scooter.
      * @param gps The new GPS location of the e-scooter.
      */
-    public boolean updateGps(int escooterId, GPS gps) {
+    public boolean updateGps(String escooterId, GPS gps) {
         escooterRepository.updateGps(escooterId, gps);
         return true;
     }
 
-    public boolean isRent(int escooterId){
+    public boolean isRent(String escooterId){
         Escooter escooter = escooterRepository.queryEscooterById(escooterId);
         if(!escooter.getStatus().equals("Available")){
-            return false;
+            return true;
         }
         else{
-            return true;
+            return false;
         }
     }
 
-    public boolean isReturn(int escooterId){
+    public boolean isReturn(String escooterId){
         Escooter escooter = escooterRepository.queryEscooterById(escooterId);
         if(escooter.getStatus().equals("Rented")){
             return false;
@@ -58,7 +58,7 @@ public class EscooterService {
         }
     }
 
-    public boolean getParkingStatus(int escooterId){
+    public boolean getParkingStatus(String escooterId){
         Escooter escooter = escooterRepository.queryEscooterById(escooterId);
         if(escooter.getStatus().equals("Rented_parking")){
             return true;
@@ -68,7 +68,7 @@ public class EscooterService {
         }
     }
 
-    public boolean updateBetteryLevel(int escooterId,int batteryLevel){
+    public boolean updateBetteryLevel(String escooterId, int batteryLevel){
         return escooterRepository.updateBetteryLevel(escooterId,batteryLevel);
     }
 }

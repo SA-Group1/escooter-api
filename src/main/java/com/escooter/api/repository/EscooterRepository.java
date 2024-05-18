@@ -37,7 +37,7 @@ public class EscooterRepository {
      * @param gps the GPS coordinates to update
      * @return true if updating is successful, false otherwise
      */
-    public boolean updateGps(int escooterId, GPS gps) {
+    public boolean updateGps(String escooterId, GPS gps) {
         String sql = "UPDATE escooter_rental.escooter SET escooter_gps_longitude = ?, escooter_gps_latitude = ? WHERE escooter_id = ?";
         jdbcTemplate.update(sql, gps.getLongitude(), gps.getLatitude(), escooterId);
         return true;
@@ -50,11 +50,11 @@ public class EscooterRepository {
      * @param escooterId the e-scooter identifier
      * @return the Escooter object if found, otherwise null
      */
-    public Escooter queryEscooterById(int escooterId) {
+    public Escooter queryEscooterById(String escooterId) {
 		String sql = "SELECT * FROM escooter_rental.escooter WHERE escooter_id = ?";
         RowMapper<Escooter> rowMapper = (rs, rowNum) -> {
 			Escooter escooter = new Escooter();
-            escooter.setEscooterId(rs.getInt("escooter_id"));
+            escooter.setEscooterId(rs.getString("escooter_id"));
             escooter.setModelId(rs.getString("model_id"));
             escooter.setStatus(rs.getString("escooter_status"));
             escooter.setBatteryLevel(rs.getInt("battery_level"));
@@ -77,7 +77,7 @@ public class EscooterRepository {
         String sql = "SELECT * FROM escooter_rental.escooter WHERE escooter_status = ?";
         RowMapper<Escooter> rowMapper = (rs, rowNum) -> {
 			Escooter escooter = new Escooter();
-            escooter.setEscooterId(rs.getInt("escooter_id"));
+            escooter.setEscooterId(rs.getString("escooter_id"));
             escooter.setModelId(rs.getString("model_id"));
             escooter.setStatus(rs.getString("escooter_status"));
             escooter.setBatteryLevel(rs.getInt("battery_level"));
@@ -98,13 +98,13 @@ public class EscooterRepository {
      * @param gps the GPS coordinates to update
      * @return true if updating is successful, false otherwise
      */
-    public boolean updateStatus(int escooterId, String status) {
+    public boolean updateStatus(String escooterId, String status) {
         String sql = "UPDATE escooter_rental.escooter SET escooter_status = ? WHERE escooter_id = ?";
         jdbcTemplate.update(sql, status, escooterId);
         return true;
     }
 
-    public boolean updateBetteryLevel(int escooterId, int batteryLevel){
+    public boolean updateBetteryLevel(String escooterId, int batteryLevel){
         String sql = "UPDATE escooter_rental.escooter SET battery_level = ? WHERE escooter_id = ?";
         jdbcTemplate.update(sql, batteryLevel, escooterId);
         return true;
@@ -114,7 +114,7 @@ public class EscooterRepository {
         String sql = "SELECT * FROM escooter_rental.escooter WHERE escooter_id = (SELECT escooter_id FROM escooter_rental.rental_record WHERE user_id = (SELECT user_id FROM escooter_rental.user WHERE account = ?) AND end_time IS NULL)";
         RowMapper<Escooter> rowMapper = (rs, rowNum) -> {
 			Escooter escooter = new Escooter();
-            escooter.setEscooterId(rs.getInt("escooter_id"));
+            escooter.setEscooterId(rs.getString("escooter_id"));
             escooter.setModelId(rs.getString("model_id"));
             escooter.setStatus(rs.getString("escooter_status"));
             escooter.setBatteryLevel(rs.getInt("battery_level"));
@@ -128,7 +128,7 @@ public class EscooterRepository {
         }
     }
 
-    public boolean updateEscooterParkStatusbyId(int escooterId, String status) {
+    public boolean updateEscooterParkStatusbyId(String escooterId, String status) {
         String sql = "UPDATE escooter_rental.escooter SET escooter_status = ? WHERE escooter_id = ?";
         jdbcTemplate.update(sql, status, escooterId);
         return true;

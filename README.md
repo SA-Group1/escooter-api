@@ -99,13 +99,13 @@ Example Response
 ```
 PUT /api/updateUserData
 ```
-| Parameter  |  Type  | Description   |
-| ---------- | :----: | ------------- |
-| account    | String | **Required.** |
-| password   | String | **Required.** |
-| userName   | String | **Required.** |
-| email      | String | **Required.** |
-| phoneNumber| String | **Required.** |
+| Parameter   |  Type  | Description   |
+| ----------- | :----: | ------------- |
+| account     | String | **Required.** |
+| password    | String | **Required.** |
+| userName    | String | **Required.** |
+| email       | String | **Required.** |
+| phoneNumber | String | **Required.** |
 
 Example input
 
@@ -134,9 +134,9 @@ Example Response
 ```
 POST /api/bindCreditCard
 ```
-| Parameter  |     Type      | Description   |
-| ---------  | :-----------: | ------------- |
-| account    |    String     | **Required.** |
+| Parameter |  Type  | Description   |
+| --------- | :----: | ------------- |
+| account   | String | **Required.** |
 
 Example Input
 ```json
@@ -172,10 +172,10 @@ POST /api/bindMemberCard
 ```
 POST /api/getRentalRecordList
 ```
-| Parameter  |     Type      | Description   |
-| ---------  | :-----------: | ------------- |
-| account    |    String     | **Required.** |
-| password   |    String     | **Required.** |
+| Parameter |  Type  | Description   |
+| --------- | :----: | ------------- |
+| account   | String | **Required.** |
+| password  | String | **Required.** |
 
 
 Example Input
@@ -193,14 +193,14 @@ Example Response
     "rentalRecords": {
         "rentalRecord1": {
             "userId": 1,
-            "escooterId": 1,
+            "escooterId": "1",
             "startTime": "2024-05-13T12:07:40",
             "endTime": "2024-05-13T13:07:40",
             "isPaid": true
         },
         "rentalRecord2": {
             "userId": 1,
-            "escooterId": 2,
+            "escooterId": "2",
             "startTime": "2024-05-13T13:10:45",
             "endTime": "2024-05-13T15:11:45",
             "isPaid": false
@@ -215,10 +215,10 @@ Example Response
 ```
 POST /api/getRentableEscooterList
 ```
-| Parameter  |     Type      | Description   |
-| ---------  | :-----------: | ------------- |
-| longitude  |    double     | **Required.** |
-| latitude   |    double     | **Required.** |
+| Parameter |  Type  | Description   |
+| --------- | :----: | ------------- |
+| longitude | double | **Required.** |
+| latitude  | double | **Required.** |
 
 Example Input
 ```json
@@ -234,7 +234,7 @@ Example Response
     "message": "return escooters",
     "escooters": {
         "escooter1": {
-            "escooterId": 1,
+            "escooterId": "1",
             "status": "Available",
             "batteryLevel": 0,
             "feePerMinutes": 0,
@@ -246,7 +246,7 @@ Example Response
             "modelName": "LCE151"
         },
         "escooter2": {
-            "escooterId": 2,
+            "escooterId": "2",
             "status": "Available",
             "batteryLevel": 0,
             "feePerMinutes": 0,
@@ -265,11 +265,11 @@ Example Response
 ```
 POST /api/rentEscooter
 ```
-| Parameter  |     Type      | Description   |
-| ---------  | :-----------: | ------------- |
-| account    |    String     | **Required.** |
-| password   |    String     | **Required.** |
-| escooterId |      Int      | **Required.** |
+| Parameter  |  Type  | Description   |
+| ---------- | :----: | ------------- |
+| account    | String | **Required.** |
+| password   | String | **Required.** |
+| escooterId | String | **Required.** |
 
 Example Input
 ```json
@@ -279,7 +279,7 @@ Example Input
         "password": "pwd001"
     },
     "escooter": {
-        "escooterId": 1
+        "escooterId": "1"
     }
 }
 ```
@@ -289,7 +289,7 @@ Example Response
     "status": true,
     "message": "rent escooter success",
     "escooter": {
-        "escooterId": 1,
+        "escooterId": "1",
         "status": "Rented",
         "batteryLevel": 0,
         "feePerMinutes": 0,
@@ -307,10 +307,10 @@ Example Response
 ```
 PUT /api/updateEscooterParkStatus
 ```
-| Parameter  |     Type      | Description   |
-| ---------  | :-----------: | ------------- |
-| account    |    String     | **Required.** |
-| password   |    String     | **Required.** |
+| Parameter |  Type  | Description   |
+| --------- | :----: | ------------- |
+| account   | String | **Required.** |
+| password  | String | **Required.** |
 
 Example Input
 ```json
@@ -332,14 +332,14 @@ Example Response
 ```
 POST /api/isRent
 ```
-| Parameter  |     Type      | Description   |
-| ---------  | :-----------: | ------------- |
-| escooterId |      Int      | **Required.** |
+| Parameter  |  Type  | Description   |
+| ---------- | :----: | ------------- |
+| escooterId | String | **Required.** |
 
 Example Input
 ```json
 {
-    "escooterId":1
+    "escooterId": "1"
 }
 ```
 Example Response
@@ -355,14 +355,14 @@ Example Response
 ```
 POST /api/isReturn
 ```
-| Parameter  |     Type      | Description   |
-| ---------  | :-----------: | ------------- |
-| escooterId |      Int      | **Required.** |
+| Parameter  |  Type  | Description   |
+| ---------- | :----: | ------------- |
+| escooterId | String | **Required.** |
 
 Example Input
 ```json
 {
-    "escooterId":4
+    "escooterId": "4"
 }
 ```
 Example Response
@@ -377,14 +377,14 @@ Example Response
 ```
 POST /api/getParkingStatus
 ```
-| Parameter  |     Type      | Description   |
-| ---------  | :-----------: | ------------- |
-| escooterId |      Int      | **Required.** |
+| Parameter  |  Type  | Description   |
+| ---------- | :----: | ------------- |
+| escooterId | String | **Required.** |
 
 Example Input
 ```json
 {
-    "escooterId":4
+    "escooterId": "4"
 }
 ```
 Example Response
@@ -399,17 +399,17 @@ Example Response
 ```
 PUT /api/updateGps
 ```
-| Parameter  |     Type      | Description   |
-| ---------  | :-----------: | ------------- |
-| escooterId |      Int      | **Required.** |
-| longitude  |    double     | **Required.** |
-| latitude   |    double     | **Required.** |
+| Parameter  |  Type  | Description   |
+| ---------- | :----: | ------------- |
+| escooterId | String | **Required.** |
+| longitude  | double | **Required.** |
+| latitude   | double | **Required.** |
 
 Example Input
 ```json
 {
     "escooter": {
-        "escooterId": 4
+        "escooterId": "4"
     },
     "gps": {
         "longitude": 124,
@@ -429,16 +429,16 @@ Example Response
 ```
 PUT /api/updateBetteryLevel
 ```
-| Parameter   |     Type      | Description   |
-| ----------- | :-----------: | ------------- |
-| escooterId  |      Int      | **Required.** |
-| batteryLevel|      Int      | **Required.** |
+| Parameter    |  Type  | Description   |
+| ------------ | :----: | ------------- |
+| escooterId   | String | **Required.** |
+| batteryLevel |  Int   | **Required.** |
 
 
 Example Input
 ```json
 {
-    "escooterId": 4,
+    "escooterId": "4",
     "batteryLevel":90
 }
 ```

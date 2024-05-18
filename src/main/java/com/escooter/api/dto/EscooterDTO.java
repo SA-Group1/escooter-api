@@ -4,7 +4,7 @@ package com.escooter.api.dto;
  * Represents an electric scooter.
  */
 public class EscooterDTO {
-    private int escooterId;
+    private String escooterId;
     private String modelId;
     private String status;
     private int batteryLevel;
@@ -13,7 +13,7 @@ public class EscooterDTO {
      * Sets the ID of the electric scooter.
      * @param escooterId The electric scooter ID.
      */
-    public void setEscooterId(int escooterId){
+    public void setEscooterId(String escooterId){
         this.escooterId = escooterId;
     }
 
@@ -45,7 +45,7 @@ public class EscooterDTO {
      * Returns the electric scooter ID.
      * @return The electric scooter ID.
      */
-    public int getEscooterId(){
+    public String getEscooterId(){
         return escooterId;
     }
 

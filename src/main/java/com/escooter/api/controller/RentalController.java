@@ -97,7 +97,7 @@ public class RentalController {
      */
     @PostMapping("/rentEscooter")
     public ResponseEntity<String> rentEscooter(@RequestBody RentEscooterDTO rentEscooterDTO) {
-        int escooterId = rentEscooterDTO.getEscooterDTO().getEscooterId();
+        String escooterId = rentEscooterDTO.getEscooterDTO().getEscooterId();
         UserDTO userDTO = rentEscooterDTO.getUserDTO();
         User user = new User(userDTO.getAccount(), userDTO.getPassword());
 

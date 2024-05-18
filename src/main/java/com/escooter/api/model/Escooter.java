@@ -6,7 +6,7 @@ import java.util.List;
  * Represents an electric scooter.
  */
 public class Escooter {
-    private int escooterId;
+    private String escooterId;
     private String modelId;
     private String status;
     private int batteryLevel;
@@ -18,7 +18,7 @@ public class Escooter {
      * Sets the ID of the electric scooter.
      * @param escooterId The electric scooter ID.
      */
-    public void setEscooterId(int escooterId){
+    public void setEscooterId(String escooterId){
         this.escooterId = escooterId;
     }
 
@@ -68,7 +68,7 @@ public class Escooter {
      * Returns the electric scooter ID.
      * @return The electric scooter ID.
      */
-    public int getEscooterId(){
+    public String getEscooterId(){
         return escooterId;
     }
     

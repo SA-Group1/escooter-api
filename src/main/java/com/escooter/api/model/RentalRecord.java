@@ -5,7 +5,7 @@ package com.escooter.api.model;
  */
 public class RentalRecord {
     private int userId;
-    private int escooterId;
+    private String escooterId;
     private String startTime;
     private String endTime;
     private boolean isPaid;
@@ -22,7 +22,7 @@ public class RentalRecord {
      * Returns the e-scooter ID associated with this rental.
      * @return The e-scooter ID.
      */
-    public int getEscooterId(){
+    public String getEscooterId(){
         return escooterId;
     }
 
@@ -62,7 +62,7 @@ public class RentalRecord {
      * Sets the e-scooter ID associated with this rental.
      * @param escooterId The e-scooter ID.
      */
-    public void setEscooterId(int escooterId){
+    public void setEscooterId(String escooterId){
         this.escooterId = escooterId;
     }
 

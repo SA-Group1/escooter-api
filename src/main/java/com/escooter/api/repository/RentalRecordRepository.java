@@ -29,7 +29,7 @@ public class RentalRecordRepository {
         RowMapper<RentalRecord> rowMapper = (rs,rowNum) -> {
             RentalRecord rentalRecord = new RentalRecord();
             rentalRecord.setUserId(rs.getInt("user_id"));
-            rentalRecord.setEscooterId(rs.getInt("escooter_id"));
+            rentalRecord.setEscooterId(rs.getString("escooter_id"));
             rentalRecord.setStartTime(rs.getTimestamp("start_time").toLocalDateTime().toString());
             rentalRecord.setEndTime(rs.getTimestamp("end_time").toLocalDateTime().toString());
             rentalRecord.setIsPaid(rs.getBoolean("ispaid"));
@@ -42,7 +42,7 @@ public class RentalRecordRepository {
 		}
     }
 
-    public boolean createRentalRecord(int userId, int escooterId) {
+    public boolean createRentalRecord(int userId, String escooterId) {
         String sql = "INSERT INTO escooter_rental.rental_record (user_id, escooter_id, start_time) VALUES (?, ?, NOW())";
         jdbcTemplate.update(sql, userId, escooterId);
         return true;
