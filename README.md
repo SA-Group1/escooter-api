@@ -223,8 +223,8 @@ POST /api/getRentableEscooterList
 Example Input
 ```json
 {
-    "longitude": 122,
-    "latitude": 23.5
+    "longitude": 120.533301,
+    "latitude": 23.693615
 }
 ```
 Example Response

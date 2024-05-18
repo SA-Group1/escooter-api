@@ -92,6 +92,42 @@ public class EscooterRepository {
     }
 
     /**
+     * Queries all available e-scooters within the specified radius from the database.
+     * 
+     * @param longitude the longitude coordinate of the center point
+     * @param latitude the latitude coordinate of the center point
+     * @param distance the maximum distance (in kilometers) from the center point to search for available e-scooters
+     * @return a list of available Escooter objects if found, otherwise null
+     */
+    public List<Escooter> queryAvailableEscooters(double longitude, double latitude, double distance) {
+        String sql = 
+        """
+            SELECT *, 6371 * ACOS (
+                COS(RADIANS(?)) * COS(RADIANS(escooter_gps_latitude)) * COS(RADIANS(escooter_gps_longitude) - RADIANS(?)) +
+                SIN(RADIANS(?)) * SIN(RADIANS(escooter_gps_latitude))
+            ) AS distance
+            FROM escooter_rental.escooter
+            WHERE escooter_status = ?
+            HAVING distance < ?
+            ORDER BY distance;
+        """;
+        RowMapper<Escooter> rowMapper = (rs, rowNum) -> {
+			Escooter escooter = new Escooter();
+            escooter.setEscooterId(rs.getString("escooter_id"));
+            escooter.setModelId(rs.getString("model_id"));
+            escooter.setStatus(rs.getString("escooter_status"));
+            escooter.setBatteryLevel(rs.getInt("battery_level"));
+            escooter.setGPS(rs.getDouble("escooter_gps_longitude"), rs.getDouble("escooter_gps_latitude"));
+            return escooter;
+        };
+		try {
+			return jdbcTemplate.query(sql, rowMapper, latitude, longitude, latitude, "Available", distance);
+		} catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    /**
      * Updates the GPS coordinates of an e-scooter in the database.
      * 
      * @param escooterId the e-scooter identifier

@@ -57,7 +57,7 @@ public class RentalController {
         if (escooters.isEmpty()) {
             try {
                 message.put("status", false);
-                message.put("message", "ERROR");
+                message.put("message", "ERROR: There are no available e-scooters for rent within the range.");
                 message.put("escooters", new JSONObject("{}"));
             } catch (JSONException e) {
                 e.printStackTrace();

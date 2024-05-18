@@ -39,18 +39,12 @@ public class RentalService {
      * @return A list of available e-scooters within the specified radius.
      */
     public List<Escooter> showAvailableEscooter(GPS gps){
-        escooters = escooterRepository.queryEscooters();
-        int[] distance = new int[] {500, 1000};
-        List<Escooter> escootersWithinRadius = new ArrayList<Escooter>(){};
-        for (int i=0; i<distance.length && escootersWithinRadius.isEmpty(); i++) {
-            for (Escooter escooter: escooters) {
-                GPS escooterGPS = escooter.getGPS();
-                if (isWithinRadius(gps.getLongitude(), gps.getLatitude(), escooterGPS.getLongitude(), escooterGPS.getLatitude(), Meter2LatitudeAndLongitude(distance[i]))) {
-                    escootersWithinRadius.add(escooter);
-                }
-            }
-        }
-        return escootersWithinRadius;
+        int i = 0;
+        do {
+            escooters = escooterRepository.queryAvailableEscooters(gps.getLongitude(), gps.getLatitude(), 0.5 * ++i);
+            System.out.println("i=" + i);
+        } while (escooters.isEmpty() && i < 2);
+        return escooters;
     }
     
     /**
