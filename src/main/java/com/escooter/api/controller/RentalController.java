@@ -2,13 +2,11 @@ package com.escooter.api.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.escooter.api.dto.EscooterDTO;
 import com.escooter.api.dto.GPSDTO;
 import com.escooter.api.dto.RentEscooterDTO;
 import com.escooter.api.dto.UserDTO;
 import com.escooter.api.model.Escooter;
 import com.escooter.api.model.GPS;
-import com.escooter.api.model.RentalRecord;
 import com.escooter.api.model.User;
 import com.escooter.api.service.EscooterService;
 import com.escooter.api.service.RentalService;
@@ -26,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 
 

@@ -52,7 +52,7 @@ Example Response
 }
 ```
 
-### get user data
+### getUserData
 ```
 POST /api/getUserData
 ```
@@ -248,7 +248,7 @@ Example Response
 
 
 ## API Reference RentalRecord 
-### get rental record list
+### getRentalRecordList
 ```
 POST /api/getRentalRecordList
 ```
@@ -291,7 +291,7 @@ Example Response
 
 ```
 ## API Reference Rental
-### get rentable escooter list
+### getRentableEscooterList
 ```
 POST /api/getRentableEscooterList
 ```
@@ -341,7 +341,7 @@ Example Response
 }
 ```
 
-### rent escooter 
+### rentEscooter 
 ```
 POST /api/rentEscooter
 ```
@@ -383,7 +383,7 @@ Example Response
 }
 ```
 
-### rent escooter 
+### updateEscooterParkStatus
 ```
 PUT /api/updateEscooterParkStatus
 ```
@@ -408,7 +408,7 @@ Example Response
 ```
 
 ## API Reference Escooter
-### is escooter rantable
+### isRent
 ```
 POST /api/isRent
 ```
@@ -431,7 +431,7 @@ Example Response
 ```
 
 
-### is escooter returned
+### isReturn
 ```
 POST /api/isReturn
 ```
@@ -453,7 +453,7 @@ Example Response
 }
 ```
 
-### is escooter parking
+### getParkingStatus
 ```
 POST /api/getParkingStatus
 ```
@@ -475,7 +475,7 @@ Example Response
 }
 ```
 
-### update escooter GPS 
+### updateGps 
 ```
 PUT /api/updateGps
 ```
@@ -505,7 +505,7 @@ Example Response
 }
 ```
 
-### update escooter battery level
+### updateBetteryLevel
 ```
 PUT /api/updateBetteryLevel
 ```
