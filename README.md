@@ -134,15 +134,17 @@ Example Response
 ```
 POST /api/bindCreditCard
 ```
-| Parameter |  Type  | Description   |
-| --------- | :----: | ------------- |
-| account   | String | **Required.** |
+| Parameter  |    Type    | Description   |
+| ---------  | :--------: | ------------- |
+| user       | User       | **Required.** |
+| creditCard | CreditCard | **Required.** |
 
 Example Input
 ```json
 {
     "user":{
-        "account": "acc001"
+        "account": "acc001",
+        "password": "pwd001"
     },
     "creditCard":{
         "cardNumber": "0000111100001111",
@@ -160,11 +162,89 @@ Example Response
 }
 ```
 
+### unbindCreditCard
+```
+POST /api/unbindCreditCard
+```
+| Parameter |  Type  | Description   |
+| --------- | :----: | ------------- |
+| account   | String | **Required.** |
+| password  | String | **Required.** |
+
+Example Input
+```json
+{
+    "account": "acc001",
+    "password": "pwd001"
+}
+```
+Example Response
+```json
+{
+    "status": true,
+    "message":"Unbind credit card success."
+}
+```
+
 ### bindMemberCard
 ```
 POST /api/bindMemberCard
 ```
+| Parameter  |    Type    | Description   |
+| ---------  | :--------: | ------------- |
+| user       | User       | **Required.** |
+| memberCard | MemberCard | **Required.** |
 
+Example Input
+```json
+{
+    "user":{
+        "account": "acc001",
+    },
+    "memberCard":{
+        "cardNumber": "0000111100001111",
+        "expirationDate": "0425",
+    }
+}
+```
+Example Response
+```json
+{
+    "status": true,
+    "message":"Binding member card success."
+}
+```
+
+### getCards
+```
+POST /api/getCards
+```
+| Parameter |  Type  | Description   |
+| --------- | :----: | ------------- |
+| account   | String | **Required.** |
+
+Example Input
+```json
+{
+    "account": "acc001",
+}
+```
+Example Response
+```json
+{
+    "status": true,
+    "message":"gets cards information success.",
+    "creditCard": {
+        "cardNumber": "0000111100001111",
+        "expirationDate": "0425",
+        "cardHolderName": "acc001"
+    },
+    "memberCard": {
+        "cardNumber": "0000111100001111",
+        "expirationDate": "0425"
+    }
+}
+```
 
 
 ## API Reference RentalRecord 

@@ -121,11 +121,21 @@ public class PaymentService {
 		return true;
 	}
 
-	public CreditCard getCreditCard(String account) {
-		return creditCardRepository.getCreditCard(account);
+	/**
+	 * get the credit card from the user.
+	 * @param user The user who wants to get their credit card.
+	 * @return The user's credit card.
+	 */
+	public CreditCard getCreditCard(User user) {
+		return creditCardRepository.getCreditCard(user.getAccount());
 	}
 
-	public MemberCard getMemberCard(String account) {
-		return memberCardRepository.getMemberCard(account);
+	/**
+	 * get the member card from the user.
+	 * @param user The user who wants to get their member card.
+	 * @return The user's member card.
+	 */
+	public MemberCard getMemberCard(User user) {
+		return memberCardRepository.getMemberCard(user.getAccount());
 	}
 }

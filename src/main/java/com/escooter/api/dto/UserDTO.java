@@ -35,6 +35,16 @@ public class UserDTO {
     }
 
     /**
+     * Constructs a UserDTO with the specified account.
+     * @param account The user account.
+     * @param password The user password.
+     */
+    public UserDTO(String account, String password) {
+        this.account = account;
+        this.password = password;
+    }
+
+    /**
      * Constructs a UserDTO with the specified account, username, password, and email.
      * @param account The user account.
      * @param userName The user username.

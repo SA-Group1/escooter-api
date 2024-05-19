@@ -21,11 +21,11 @@ public class CreditCardRepository {
 	private JdbcTemplate jdbcTemplate;
 	
 	/**
-     * Adds a new credit card to the database.
-     * @param creditCard The credit card to add.
+	 * Adds a new credit card to the database.
+	 * @param creditCard The credit card to add.
 	 * @return True if adding is successful, false otherwise.
-	 * @throws DuplicateKeyException Throws when the credit card is already in the database.
-     */
+	 *  @throws DuplicateKeyException Throws when the credit card is already in the database.
+	 */
 	public boolean addCard(CreditCard creditCard) throws DuplicateKeyException {
 		System.out.println("EXCUTE INSERT MEMBER");
 		
@@ -35,6 +35,11 @@ public class CreditCardRepository {
 		return true;
 	}
 
+	/**
+	 * Gets the credit card by account.
+	 * @param account The user's account.
+	 * @return The user's credit card.
+	 */
 	public CreditCard getCreditCard(String account) {
 		String sql = 
 		"SELECT creditcard_id, expiration_date, card_holder_name " +
@@ -44,7 +49,15 @@ public class CreditCardRepository {
 		return creditCard;
 	}
 
+
 	private static class CreditCardRowMapper implements RowMapper<CreditCard> {
+
+		/**
+		 * The map for construct a credit card object using data gets from database.
+		 * @param rs For selecting column.
+		 * @param rowNum For selecting row.
+		 * @return a credit card object.
+		 */		
 		@Override
 		public CreditCard mapRow(ResultSet rs, int rowNum) throws SQLException {
 			CreditCard creditCard = new CreditCard();

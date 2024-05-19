@@ -18,18 +18,25 @@ public class MemberCardRepository {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+
 	/**
-     * Adds a new member card to the database.
-     * @param memberCard The member card to add.
-     */
-	public void addCard(MemberCard memberCard) {
+	 * Adds a new member card to the database.
+	 * @param memberCard The member card to add.
+	 * @return True if adding is successful, false otherwise.
+	 */
+	public boolean addCard(MemberCard memberCard) {
 		System.out.println("EXCUTE INSERT MEMBER");
 		
 		jdbcTemplate.update(String.format("INSERT INTO escooter_rental.member_card (membercard_id,expiration_date) VALUES ('%s','%s')",
 		memberCard.getCardNumber(),memberCard.getExpirationDate()));
+		return true;
 	}
 
+	/**
+	 * Gets the member card by account.
+	 * @param account The user's account.
+	 * @return The user's member card.
+	 */
 	public MemberCard getMemberCard(String account) {
 		String sql = 
 		"SELECT membercard_id, expiration_date " +
@@ -40,6 +47,13 @@ public class MemberCardRepository {
 	}
 
 	private static class MemberCardRowMapper implements RowMapper<MemberCard> {
+
+		/**
+		 * The map for construct a member card object using data gets from database.
+		 * @param rs For selecting column.
+		 * @param rowNum For selecting row.
+		 * @return a member card object.
+		 */
 		@Override
 		public MemberCard mapRow(ResultSet rs, int rowNum) throws SQLException {
 			MemberCard memberCard = new MemberCard();

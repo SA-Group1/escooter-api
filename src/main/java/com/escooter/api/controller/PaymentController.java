@@ -5,13 +5,15 @@ import java.time.format.DateTimeParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.dao.DuplicateKeyException;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.escooter.api.dto.UserDTO;
@@ -40,38 +42,45 @@ public class PaymentController {
 	 * @param bindCreditCardDTO User and credit card data include cvv.
 	 * @return A ResponseEntity with http status and message.
 	 */
-	@PostMapping("/bindCreditCard")
-	public ResponseEntity<String> bindCreditCard(@RequestBody BindCreditCardDTO bindCreditCardDTO) throws Exception {
+	@PostMapping("bindCreditCard")
+	public ResponseEntity<String> bindCreditCard(@RequestBody BindCreditCardDTO bindCreditCardDTO) {
 
 		CreditCardDTO creditCardDTO = bindCreditCardDTO.getCreditCardDTO();
 		CreditCard creditCard = new CreditCard(creditCardDTO.getCardNumber(), creditCardDTO.getExpirationDate(),creditCardDTO.getCardHolderName());
 		UserDTO userDTO = bindCreditCardDTO.getUserDTO();
 		User user = new User(userDTO.getAccount());
 
-		// create return message.
-		JSONObject message = new JSONObject();
-		message.put("status", false);
-
-		if(user.verifyPassword(userDTO.getPassword())) {
-			// bind credit card to the user.
-			try {
-				paymentService.addCreditCard(creditCard, creditCardDTO.getCvv());
-				paymentService.bindCreditCard(user, creditCard);
-				message.put("status", true);
-				message.put("message", "Binding credit card success.");
-			} catch (DuplicateKeyException e) {
-				message.put("message", "This credit card is already been used.");
-			} catch (CardExpirationException e) {
-				message.put("message", "This credit card has expirated.");
-			} catch (DateTimeParseException e) {
-				message.put("message", "Invaild expiration date.");
+		try {
+			// create return message.
+			JSONObject message = new JSONObject();
+			message.put("status", false);
+	
+			if(user.verifyPassword(userDTO.getPassword())) {
+				// bind credit card to the user.
+				try {
+					paymentService.addCreditCard(creditCard, creditCardDTO.getCvv());
+					paymentService.bindCreditCard(user, creditCard);
+					message.put("status", true);
+					message.put("message", "Binding credit card success.");
+				} catch (DuplicateKeyException e) {
+					message.put("message", "This credit card is already been used.");
+				} catch (CardExpirationException e) {
+					message.put("message", "This credit card has expirated.");
+				} catch (DateTimeParseException e) {
+					message.put("message", "Invaild expiration date.");
+				}
+			} else {
+				message.put("message", "Wrong password.");
 			}
-		} else {
-			message.put("message", "Wrong password.");
+
+			// return the result message.
+			return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 
-		// return the result message.
-		return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+		return new ResponseEntity<>("bind credit card failed.",HttpStatus.OK);
 	}
 
 	/**
@@ -81,24 +90,36 @@ public class PaymentController {
 	 * @return A ResponseEntity with http status and message.
 	 */
 	@PostMapping("unbindCreditCard")
-	public ResponseEntity<String> unbindCreditCard(@RequestBody UserDTO userDTO) throws Exception {
+	public ResponseEntity<String> unbindCreditCard(@RequestBody UserDTO userDTO) {
+		
 		User user = new User(userDTO.getAccount());
 
-		// create return message.
-		JSONObject message = new JSONObject();
-		message.put("status",false);
-
-		// unbind credit card for the user.
 		try {
-			paymentService.unbindCreditCard(user);
-			message.put("status", true);
-			message.put("message","Unbind credit card success.");
-		} catch (Exception e) {
-			message.put("message","Failed to unbind credit card.");
+			// create return message.
+			JSONObject message = new JSONObject();
+			message.put("status",false);
+	
+			if(user.verifyPassword(userDTO.getPassword())){
+				// unbind credit card for the user.
+				try {
+					paymentService.unbindCreditCard(user);
+					message.put("status", true);
+					message.put("message","Unbind credit card success.");
+				} catch (Exception e) {
+					message.put("message","Failed to unbind credit card.");
+				}
+			} else {
+				message.put("message", "Wrong password.");
+			}
+	
+			// return the result message.
+			return new ResponseEntity<>(message.toString(),HttpStatus.OK);
+
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 
-		// return the result message.
-		return new ResponseEntity<>(message.toString(),HttpStatus.OK);
+		return new ResponseEntity<>("unbind credit card failed.",HttpStatus.OK);
 	}
 	
 
@@ -108,54 +129,79 @@ public class PaymentController {
 	 * @param memberCardDTO Member card data.
 	 * @return A ResponseEntity with http status and message.
 	 */
-	@PostMapping("/bindMemberCard")
-	public ResponseEntity<String> bindMemberCard(@RequestBody BindMemberCardDTO bindMemberCardDTO) throws Exception {
+	@PostMapping("bindMemberCard")
+	public ResponseEntity<String> bindMemberCard(@RequestBody BindMemberCardDTO bindMemberCardDTO) {
 
 		MemberCardDTO memberCardDTO = bindMemberCardDTO.getMemberCardDTO();
 		MemberCard memberCard = new MemberCard(memberCardDTO.getCardNumber(),memberCardDTO.getExpirationDate());
 		UserDTO userDTO = bindMemberCardDTO.getUserDTO();
 		User user = new User(userDTO.getAccount());
 
-		// create return message.
-		JSONObject message = new JSONObject();
-		message.put("status", false);
-
-		// bind member card to the user.
 		try {
-			paymentService.addMemberCard(memberCard);
-			paymentService.bindMemberCard(user, memberCard);
-			message.put("status", true);
-			message.put("message", "Binding member card success.");
-		} catch (DuplicateKeyException e) {
-			message.put("message", "This member card is already been used.");
-		} catch (CardExpirationException e) {
-			message.put("message", "This member card has expirated.");
-		} catch (DateTimeParseException e) {
-			message.put("message", "Invaild expiration date.");
+			// create return message.
+			JSONObject message = new JSONObject();
+			message.put("status", false);
+			
+			// bind member card to the user.
+			try {
+				paymentService.addMemberCard(memberCard);
+				paymentService.bindMemberCard(user, memberCard);
+				message.put("status", true);
+				message.put("message", "Binding member card success.");
+			} catch (DuplicateKeyException e) {
+				message.put("message", "This member card is already been used.");
+			} catch (CardExpirationException e) {
+				message.put("message", "This member card has expirated.");
+			} catch (DateTimeParseException e) {
+				message.put("message", "Invaild expiration date.");
+			}
+	
+			// return the result message.
+			return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 
-		// return the result message.
-		return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+		return new ResponseEntity<>("Bind member card failed.",HttpStatus.OK);
 	}
 
+	/**
+	 * Gets card information for the user.
+	 * 
+	 * @param userDTO User's account.
+	 * @return A ResponseEntity with http status and result message.
+	 */
 	@PostMapping("getCards")
-	public ResponseEntity<String> getCards(@RequestParam String account) throws Exception {
+	public ResponseEntity<String> getCards(@RequestBody UserDTO userDTO) {
 
-		// create return message.
-		JSONObject message = new JSONObject();
-		message.put("status", false);
+		User user = new User(userDTO.getAccount());
 
-		// gets card data from the payment service.
-		CreditCard creditCard = paymentService.getCreditCard(account);
-		MemberCard memberCard = paymentService.getMemberCard(account);
+		try {
+			// create return message.
+			JSONObject message = new JSONObject();
+			message.put("status", false);
 
-		// puts card data into the message.
-		ObjectMapper objectMapper = new ObjectMapper();
-		message.put("status", true);
-		message.put("message","gets cards information success.");
-		message.put("creditCard",new JSONObject(objectMapper.writeValueAsString(creditCard)));
-		message.put("memberCard",new JSONObject(objectMapper.writeValueAsString(memberCard)));
-		System.out.println(objectMapper.writeValueAsString(memberCard));
-		return new ResponseEntity<>(message.toString(),HttpStatus.OK);
+			// gets card data from the payment service.
+			CreditCard creditCard = paymentService.getCreditCard(user);
+			MemberCard memberCard = paymentService.getMemberCard(user);
+			
+			// puts card data into the message.
+			ObjectMapper objectMapper = new ObjectMapper();
+			message.put("status", true);
+			message.put("message","gets cards information success.");
+			message.put("creditCard",new JSONObject(objectMapper.writeValueAsString(creditCard)));
+			message.put("memberCard",new JSONObject(objectMapper.writeValueAsString(memberCard)));
+			
+			// return the result message.
+			return new ResponseEntity<>(message.toString(),HttpStatus.OK);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		return new ResponseEntity<>("get card information failed",HttpStatus.OK);
 	}
 }
