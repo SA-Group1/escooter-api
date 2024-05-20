@@ -10,13 +10,17 @@ POST /api/register
 | account   | String | **Required.** |
 | userName  | String | **Required.** |
 | password  | String | **Required.** |
+|  email    | String | **Required.** |
+|phonenumber| String | **Required.** |
+
 Example input
 ```json
 {
     "account": "acc004",
     "password": "pwd004",
     "userName": "user444",
-    "email": "user444@test.com"
+    "email": "user444@test.com",
+    "phone":"0987878787"
 }
 ```
 
@@ -404,6 +408,42 @@ Example Response
 {
     "status": true,
     "message": "update escooter park status success"
+}
+```
+
+### returnEscooter
+```
+POST /api/returnEscooter
+```
+| Parameter  |  Type  | Description   |
+| ---------- | :----: | ------------- |
+| account    | String | **Required.** |
+| password   | String | **Required.** |
+
+Example Input
+```json
+{
+    "account": "acc001",
+    "password": "pwd001" 
+}
+```
+Example Response
+```json
+{
+    "status": true,
+    "message": "rent escooter success",
+    "escooter": {
+        "escooterId": "1",
+        "status": "Rented",
+        "batteryLevel": 0,
+        "feePerMinutes": 0,
+        "maintenanceRecords": null,
+        "gps": {
+            "longitude": 122.000000000001,
+            "latitude": 23.49999999999999
+        },
+        "modelName": "LCE151"
+    }
 }
 ```
 

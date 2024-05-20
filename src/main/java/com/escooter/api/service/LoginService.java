@@ -1,5 +1,5 @@
 package com.escooter.api.service;
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class LoginService {
     @Autowired
     UserRepository userRepository;
 
-    private List<User> userList;
+    
 
     /**
      * Registers a new user.
@@ -26,12 +26,12 @@ public class LoginService {
      * @param email The email address of the user.
      * @return True if registration is successful, false if the account already exists.
      */
-    public boolean register(String account, String password, String userName, String email) {
+    public boolean register(String account, String password, String userName, String email,String phoneNumber) {
         User user = userRepository.queryUserByAccount(account);
         boolean res;
         if (user == null) {
-            res = userRepository.createUser(account, password, userName, email);
-            return true;
+            res = userRepository.createUser(account, password, userName, email, phoneNumber);
+            return res;
         } else {
             return false;
         }
@@ -57,7 +57,7 @@ public class LoginService {
         }
     }
 
-        /**
+    /**
      * user information.
      * @param account The account identifier for the user.
      * @param password The password for the user's account.
@@ -87,14 +87,7 @@ public class LoginService {
         return userRepository.updateUserData(userDTO);
     }
 
-    /**
-     * Queries all users.
-     * @return A list of all users.
-     */
-    public List<User> queryUsers() {
-        User user = new User();
-        return this.userList;
-    }
+    
 
     /**
      * Queries a user by their ID.
@@ -111,7 +104,4 @@ public class LoginService {
         return user;
     }
 
-    public void deleteUser(Integer id) {
-        
-    }
 }

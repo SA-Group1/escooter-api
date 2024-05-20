@@ -38,7 +38,7 @@ public class UserController {
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
         // Calls service return the user register is sucess or fail
-        boolean res = loginService.register(userDTO.getAccount(), userDTO.getPassword(), userDTO.getUserName(), userDTO.getEmail());
+        boolean res = loginService.register(userDTO.getAccount(), userDTO.getPassword(), userDTO.getUserName(), userDTO.getEmail(), userDTO.getPhoneNumber());
         
         // create return message
 		JSONObject message = new JSONObject();

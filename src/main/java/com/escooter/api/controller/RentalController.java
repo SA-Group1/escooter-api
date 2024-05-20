@@ -120,6 +120,12 @@ public class RentalController {
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
 
+    /**
+    * Updates the parking status of the e-scooter associated with the provided user account.
+    *
+    * @param userDTO User data transfer object containing account and password
+     * @return A ResponseEntity with HTTP status and message
+    */
     @PutMapping("/updateEscooterParkStatus")
     public ResponseEntity<String> updateEscooterParkStatus(@RequestBody UserDTO userDTO) {
         boolean res = rentalService.updateEscooterParkStatus(userDTO.getAccount(), userDTO.getPassword());
@@ -136,6 +142,12 @@ public class RentalController {
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
 
+    /**
+    * Processes the return of an e-scooter and payment associated with the provided user account.
+    *
+    * @param userDTO User data transfer object containing account and password
+    * @return A ResponseEntity with HTTP status and message
+    */
     @PostMapping("/returnEscooter")
     public ResponseEntity<String> returnEscooter(@RequestBody UserDTO userDTO) {
         boolean res = rentalService.returnEscooter(userDTO.getAccount(), userDTO.getPassword());

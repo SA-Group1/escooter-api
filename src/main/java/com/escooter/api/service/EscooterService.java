@@ -35,6 +35,12 @@ public class EscooterService {
         return true;
     }
 
+    /**
+    * Checks if the specified e-scooter is currently rented.
+    *
+    * @param escooterId The ID of the e-scooter to check
+    * @return true if the e-scooter is not available (i.e., it is rented), false otherwise
+    */
     public boolean isRent(String escooterId){
         Escooter escooter = escooterRepository.queryEscooterById(escooterId);
         if(!escooter.getStatus().equals("Available")){
@@ -45,6 +51,12 @@ public class EscooterService {
         }
     }
 
+    /**
+    * Checks if the specified e-scooter has been returned.
+    *
+    * @param escooterId The ID of the e-scooter to check
+    * @return false if the e-scooter is still rented or rented and parked, true otherwise
+    */
     public boolean isReturn(String escooterId){
         Escooter escooter = escooterRepository.queryEscooterById(escooterId);
         if(escooter.getStatus().equals("Rented")){
@@ -58,6 +70,12 @@ public class EscooterService {
         }
     }
 
+    /**
+    * Checks if the specified e-scooter is currently parked while rented.
+    *
+    * @param escooterId The ID of the e-scooter to check
+    * @return true if the e-scooter is rented and parked, false otherwise
+    */
     public boolean getParkingStatus(String escooterId){
         Escooter escooter = escooterRepository.queryEscooterById(escooterId);
         if(escooter.getStatus().equals("Rented_parking")){
@@ -68,6 +86,13 @@ public class EscooterService {
         }
     }
 
+    /**
+    * Updates the battery level of the specified e-scooter.
+    *
+    * @param escooterId   The ID of the e-scooter to update
+    * @param batteryLevel The new battery level
+    * @return true if the battery level was successfully updated
+    */
     public boolean updateBetteryLevel(String escooterId, int batteryLevel){
         return escooterRepository.updateBetteryLevel(escooterId,batteryLevel);
     }

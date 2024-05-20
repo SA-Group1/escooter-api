@@ -1,10 +1,5 @@
 package com.escooter.api.repository;
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -13,8 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.escooter.api.dto.UserDTO;
-import com.escooter.api.model.CreditCard;
-import com.escooter.api.model.MemberCard;
+
 import com.escooter.api.model.User;
 /**
  * Repository for managing user data in the database.
@@ -60,9 +54,9 @@ public class UserRepository {
      * @param email the user's email
      * @return True if adding is successful, false otherwise.
      */
-	public boolean createUser(String account, String password, String userName, String email) {
-		String sql = "INSERT INTO escooter_rental.user (account, password, username, email, registration_time) VALUES (?, ?, ?, ?, NOW())";
-		jdbcTemplate.update(sql, account, password, userName, email);
+	public boolean createUser(String account, String password, String userName, String email, String phoneNumber) {
+		String sql = "INSERT INTO escooter_rental.user (account, password, username, email, registration_time, phone_number) VALUES (?, ?, ?, ?, NOW(), ?)";
+		jdbcTemplate.update(sql, account, password, userName, email, phoneNumber);
 		return true;
 	}
 

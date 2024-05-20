@@ -1,12 +1,5 @@
 package com.escooter.api.dto;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import com.escooter.api.model.CreditCard;
-import com.escooter.api.model.Escooter;
-import com.escooter.api.model.MemberCard;
-import com.escooter.api.model.RentalRecord;
 
 /**
  * DTO (Data Transfer Object) for representing User information.
@@ -17,9 +10,6 @@ public class UserDTO {
     private String password;
     private String email;
     private String phoneNumber;
-    private LocalDateTime registrationTime;
-    private CreditCard creditCard;
-    private MemberCard memberCard;
 
     /**
      * Default constructor for UserDTO.
@@ -92,13 +82,7 @@ public class UserDTO {
         this.email = email;
     }
 
-    /**
-     * Sets the registration time.
-     * @param registrationTime The registration time.
-     */
-    public void setRegistrationTime(LocalDateTime registrationTime) {
-        this.registrationTime = registrationTime;
-    }
+    
     
     /**
      * return the user account.

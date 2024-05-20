@@ -42,11 +42,20 @@ public class MemberCard {
         // Logic of vaild member card
         return true;
     }
-
+    /**
+    * Sets the credit card number.
+    *
+    * @param cardNumber The credit card number to set
+    */
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
     }
 
+    /**
+    * Sets the expiration date of the credit card.
+    *
+    * @param expirationDate The expiration date to set in MM/YY format
+    */
     public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
     }

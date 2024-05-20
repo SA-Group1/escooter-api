@@ -3,11 +3,11 @@ package com.escooter.api.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import com.escooter.api.model.*;
 import com.escooter.api.repository.RentalRecordRepository;
-import com.escooter.api.repository.UserRepository;
+
 
 /**
  * Service class for managing rental history.
@@ -17,10 +17,7 @@ public class RentalHistoryService {
     @Autowired
     private RentalRecordRepository rentalRecordRepository;
     
-    @Autowired
-    private UserRepository userRepository;
-
-    private List<RentalRecord> rentalRecords;
+    
     
     /**
      * Placeholder method for retrieving a list of rental records.

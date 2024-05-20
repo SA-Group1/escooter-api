@@ -140,12 +140,25 @@ public class EscooterRepository {
         return true;
     }
 
+    /**
+    * Updates the battery level of the specified e-scooter.
+    *
+    * @param escooterId   The ID of the e-scooter to update
+    * @param batteryLevel The new battery level
+    * @return true if the update was successful
+    */
     public boolean updateBetteryLevel(String escooterId, int batteryLevel){
         String sql = "UPDATE escooter_rental.escooter SET battery_level = ? WHERE escooter_id = ?";
         jdbcTemplate.update(sql, batteryLevel, escooterId);
         return true;
     }
     
+    /**
+    * Queries the currently rented e-scooter for a given account.
+    *
+    * @param account The account identifier
+    * @return The rented e-scooter, or null if no e-scooter is rented by the account
+    */
     public Escooter queryRentedEscooterByAccount(String account) {
         String sql = "SELECT * FROM escooter_rental.escooter WHERE escooter_id = (SELECT escooter_id FROM escooter_rental.rental_record WHERE user_id = (SELECT user_id FROM escooter_rental.user WHERE account = ?) AND end_time IS NULL)";
         RowMapper<Escooter> rowMapper = (rs, rowNum) -> {
@@ -164,12 +177,27 @@ public class EscooterRepository {
         }
     }
 
+    /**
+    * Updates the parking status of the specified e-scooter.
+    *
+    * @param escooterId The ID of the e-scooter to update
+    * @param status     The new parking status
+    * @return true if the update was successful
+    */
     public boolean updateEscooterParkStatusbyId(String escooterId, String status) {
         String sql = "UPDATE escooter_rental.escooter SET escooter_status = ? WHERE escooter_id = ?";
         jdbcTemplate.update(sql, status, escooterId);
         return true;
     }
 
+    /**
+    * Processes the return of an e-scooter, updating its status and rental record.
+    *
+    * @param userId      The ID of the user returning the e-scooter
+    * @param escooterId  The ID of the e-scooter being returned
+    * @param modelId     The model ID of the e-scooter
+    * @return true if the return was processed successfully, false otherwise
+    */
     public boolean returnEscooter(int userId, String escooterId, String modelId) {
         String updateSql1 = "UPDATE escooter_rental.escooter SET escooter_status = \"Available\" WHERE escooter_id = ? AND escooter_status = \"Rented\"";
         String updateSql2 = "UPDATE escooter_rental.rental_record SET end_time = NOW() WHERE escooter_id = ? AND ispaid = 0";

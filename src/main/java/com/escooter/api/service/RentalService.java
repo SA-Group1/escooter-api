@@ -3,7 +3,7 @@ package com.escooter.api.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import com.escooter.api.model.*;
 import com.escooter.api.repository.EscooterRepository;
@@ -81,7 +81,13 @@ public class RentalService {
         String modelId = escooter.getModelId();
         return escooterRepository.returnEscooter(userId, escooterId, modelId);
     }
-
+    /**
+    * Updates the parking status of the e-scooter associated with the given account.
+    *
+    * @param account  The account identifier of the user
+    * @param password The password of the user (not used in this method, consider security implications)
+    * @return true if the e-scooter's parking status was successfully updated, false otherwise
+    */
     public boolean updateEscooterParkStatus(String account, String passowrd) {
         Escooter escooter = escooterRepository.queryRentedEscooterByAccount(account);
         if (escooter == null) {

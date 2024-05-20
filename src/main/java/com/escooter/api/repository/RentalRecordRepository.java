@@ -42,6 +42,12 @@ public class RentalRecordRepository {
 		}
     }
 
+    /**
+    * Creates a new rental record for the specified user and e-scooter.
+    * @param userId     The ID of the user renting the e-scooter
+    * @param escooterId The ID of the e-scooter being rented
+    * @return true if the rental record was successfully created
+    */
     public boolean createRentalRecord(int userId, String escooterId) {
         String sql = "INSERT INTO escooter_rental.rental_record (user_id, escooter_id, start_time) VALUES (?, ?, NOW())";
         jdbcTemplate.update(sql, userId, escooterId);
