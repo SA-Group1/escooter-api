@@ -8,6 +8,7 @@ import java.util.List;
 import com.escooter.api.model.*;
 import com.escooter.api.repository.EscooterRepository;
 import com.escooter.api.repository.RentalRecordRepository;
+import com.escooter.api.repository.ReturnAreaRepository;
 import com.escooter.api.repository.UserRepository;
 /**
  * Service class for managing rental service.
@@ -20,6 +21,8 @@ public class RentalService {
     private RentalRecordRepository rentalRecordRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ReturnAreaRepository returnAreaRepository;
     
     private List<Escooter> escooters;
     
@@ -54,16 +57,19 @@ public class RentalService {
      * @return A rental record of the transaction.
      */
     public Escooter rentEscooter(User user, String escooterId) {
-        Escooter escooter = escooterRepository.queryEscooterById(escooterId);
-        if (!escooter.getStatus().equals("Available")) {
+        Escooter rentEscooter = escooterRepository.queryEscooterById(escooterId);
+        if (!rentEscooter.getStatus().equals("Available")) {
             return null;
-        } else {
-            user = userRepository.queryUserByAccount(user.getAccount());
-            rentalRecordRepository.createRentalRecord(user.getUserId(), escooter.getEscooterId());
-            escooterRepository.updateStatus(escooter.getEscooterId(), "Rented");
-            escooter.setStatus("Rented");
-            return escooter;
         }
+        Escooter rentedEscooter = escooterRepository.queryRentedEscooterByAccount(user.getAccount());
+        if (rentedEscooter != null) {
+            return null;
+        }
+        user = userRepository.queryUserByAccount(user.getAccount());
+        rentalRecordRepository.createRentalRecord(user.getUserId(), rentEscooter.getEscooterId());
+        escooterRepository.updateStatus(rentEscooter.getEscooterId(), "Rented");
+        rentEscooter.setStatus("Rented");
+        return rentEscooter;
     }
 
 
@@ -78,6 +84,11 @@ public class RentalService {
         int userId = user.getUserId();
         Escooter escooter = escooterRepository.queryRentedEscooterByAccount(account);
         if (escooter == null) {
+            return false;
+        }
+        GPS gps = escooter.getGPS();
+        boolean res = returnAreaRepository.checkWithinReturnArea(gps.getLongitude(), gps.getLatitude());
+        if (!res) {
             return false;
         }
         String escooterId = escooter.getEscooterId();

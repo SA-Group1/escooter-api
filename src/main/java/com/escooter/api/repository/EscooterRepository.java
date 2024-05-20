@@ -219,8 +219,8 @@ public class EscooterRepository {
         try {
             jdbcTemplate.update(updateSql1, escooterId);
             jdbcTemplate.update(updateSql2, escooterId);
-            jdbcTemplate.update(updateSql3, escooterId);
             String res = jdbcTemplate.queryForObject(selectSql, String.class, new Object[]{modelId, userId});
+            jdbcTemplate.update(updateSql3, escooterId);
             System.out.println(res);
         } catch (EmptyResultDataAccessException e) {
             return false;
