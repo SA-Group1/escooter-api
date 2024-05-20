@@ -423,27 +423,15 @@ POST /api/returnEscooter
 Example Input
 ```json
 {
-    "account": "acc001",
-    "password": "pwd001" 
+    "account": "acc003",
+    "password": "pwd003"
 }
 ```
 Example Response
 ```json
-{
-    "status": true,
-    "message": "rent escooter success",
-    "escooter": {
-        "escooterId": "1",
-        "status": "Rented",
-        "batteryLevel": 0,
-        "feePerMinutes": 0,
-        "maintenanceRecords": null,
-        "gps": {
-            "longitude": 122.000000000001,
-            "latitude": 23.49999999999999
-        },
-        "modelName": "LCE151"
-    }
+{   
+    "status":true,
+    "message":"return and payment successful"
 }
 ```
 
