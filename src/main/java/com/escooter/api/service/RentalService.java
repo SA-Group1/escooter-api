@@ -77,6 +77,9 @@ public class RentalService {
         User user = userRepository.queryUserByAccount(account);
         int userId = user.getUserId();
         Escooter escooter = escooterRepository.queryRentedEscooterByAccount(account);
+        if (escooter == null) {
+            return false;
+        }
         String escooterId = escooter.getEscooterId();
         String modelId = escooter.getModelId();
         return escooterRepository.returnEscooter(userId, escooterId, modelId);
