@@ -11,7 +11,7 @@ POST /api/register
 | userName  | String | **Required.** |
 | password  | String | **Required.** |
 |  email    | String | **Required.** |
-|phonenumber| String | **Required.** |
+|phoneNumber| String | **Required.** |
 
 Example input
 ```json
@@ -20,7 +20,7 @@ Example input
     "password": "pwd004",
     "userName": "user444",
     "email": "user444@test.com",
-    "phone":"0987878787"
+    "phoneNumber":"0987878787"
 }
 ```
 
@@ -84,6 +84,7 @@ Example Response
         "password": "pwd001",
         "email": "user001@test.com",
         "registrationTime": "2024-05-13T12:07:40",
+        "phoneNumber": "0987654320",
         "creditCard": {
             "cardNumber": "0000111100001112",
             "expirationDate": "****",
@@ -203,10 +204,11 @@ Example Input
 {
     "user":{
         "account": "acc001",
+        "password": "pwd001"
     },
     "memberCard":{
         "cardNumber": "0000111100001111",
-        "expirationDate": "0425",
+        "expirationDate": "0425"
     }
 }
 ```
@@ -362,7 +364,7 @@ Example Input
         "password": "pwd001"
     },
     "escooter": {
-        "escooterId": "1"
+        "escooterId": "EL_07"
     }
 }
 ```
@@ -372,16 +374,16 @@ Example Response
     "status": true,
     "message": "rent escooter success",
     "escooter": {
-        "escooterId": "1",
+        "escooterId": "EL_07",
+        "modelId": "TEST",
         "status": "Rented",
-        "batteryLevel": 0,
+        "batteryLevel": 100,
         "feePerMinutes": 0,
         "maintenanceRecords": null,
         "gps": {
-            "longitude": 122.000000000001,
-            "latitude": 23.49999999999999
-        },
-        "modelName": "LCE151"
+            "longitude": 120.535822,
+            "latitude": 23.693859
+        }
     }
 }
 ```
@@ -421,16 +423,16 @@ POST /api/returnEscooter
 
 Example Input
 ```json
-{
-    "account": "acc003",
-    "password": "pwd003"
+{ 
+    "account": "acc001",
+    "password": "pwd001"
 }
 ```
 Example Response
 ```json
-{   
-    "status":true,
-    "message":"return and payment successful"
+{
+    "status": true,
+    "message": "return and payment successful"
 }
 ```
 
@@ -446,7 +448,7 @@ POST /api/isRent
 Example Input
 ```json
 {
-    "escooterId": "1"
+    "escooterId": "PD11"
 }
 ```
 Example Response

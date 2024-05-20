@@ -53,14 +53,29 @@ public class CreditCard {
         return cardHolderName;
     }
 
+    /**
+    * Sets the card number for this credit card.
+    *
+    * @param cardNumber The card number to set
+    */
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
     }
 
+    /**
+    * Sets the expiration date for this credit card.
+    *
+    * @param expirationDate The expiration date to set in MM/YY format
+    */
     public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
     }
 
+    /**
+    * Sets the card holder's name for this credit card.
+    *
+    * @param cardHolderName The card holder's name to set
+    */
     public void setCardHolderName(String cardHolderName) {
         this.cardHolderName = cardHolderName;
     }

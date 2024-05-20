@@ -34,6 +34,7 @@ public class UserRepository {
             user.setUserName(rs.getString("username"));
             user.setPassword(rs.getString("password"));
             user.setEmail(rs.getString("email"));
+			user.setPhoneNumber(rs.getString("phone_number"));
 			System.out.println(rs.getTimestamp("registration_time").toLocalDateTime());
             user.setRegistrationTime(rs.getTimestamp("registration_time").toLocalDateTime().toString());
 			CreditCard creditCard = new CreditCard(rs.getString("creditcard_id"),"****","***");
@@ -57,6 +58,7 @@ public class UserRepository {
      * @param password the user's password
      * @param userName the user's name
      * @param email the user's email
+	 * @param phoneNumber the user's phone number
      * @return True if adding is successful, false otherwise.
      */
 	public boolean createUser(String account, String password, String userName, String email, String phoneNumber) {
