@@ -169,4 +169,34 @@ public class EscooterRepository {
         jdbcTemplate.update(sql, status, escooterId);
         return true;
     }
+
+    public boolean returnEscooter(int userId, String escooterId, String modelId) {
+        String updateSql1 = "UPDATE escooter_rental.escooter SET escooter_status = \"Available\" WHERE escooter_id = ? AND escooter_status = \"Rented\"";
+        String updateSql2 = "UPDATE escooter_rental.rental_record SET end_time = NOW() WHERE escooter_id = ? AND ispaid = 0";
+        String updateSql3 = "UPDATE escooter_rental.rental_record SET ispaid = 1 WHERE escooter_id = ? AND ispaid = 0";
+
+        String selectSql = 
+        """
+            SELECT rental_cost FROM (
+                SELECT 
+                    rental_record.start_time,
+                    rental_record.end_time,
+                    escooter_model_type.fee_perminute,
+            		CEIL(TIMESTAMPDIFF(SECOND, rental_record.start_time, rental_record.end_time) * escooter_model_type.fee_perminute/60) AS rental_cost
+                FROM escooter_rental.rental_record
+                JOIN escooter_rental.escooter_model_type
+                WHERE model_id = ? AND user_id = ? AND end_time IS NOT NULL) AS subquery_alias
+                ORDER BY end_time DESC LIMIT 1;
+        """;
+        try {
+            jdbcTemplate.update(updateSql1, escooterId);
+            jdbcTemplate.update(updateSql2, escooterId);
+            jdbcTemplate.update(updateSql3, escooterId);
+            String res = jdbcTemplate.queryForObject(selectSql, String.class, new Object[]{modelId, userId});
+            System.out.println(res);
+        } catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+        return true;
+    }
 }

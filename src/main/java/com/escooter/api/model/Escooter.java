@@ -84,7 +84,7 @@ public class Escooter {
      * Returns the model ID of the electric scooter.
      * @return The model ID.
      */
-    public String getModelName(){
+    public String getModelId(){
         return modelId;
     }
 

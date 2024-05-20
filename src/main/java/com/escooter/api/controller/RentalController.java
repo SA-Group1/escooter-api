@@ -124,7 +124,6 @@ public class RentalController {
     public ResponseEntity<String> updateEscooterParkStatus(@RequestBody UserDTO userDTO) {
         boolean res = rentalService.updateEscooterParkStatus(userDTO.getAccount(), userDTO.getPassword());
 
-
         // create return message
 		JSONObject message = new JSONObject();
 		try {
@@ -136,4 +135,21 @@ public class RentalController {
 
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
+
+    @PostMapping("/returnEscooter")
+    public ResponseEntity<String> returnEscooter(@RequestBody UserDTO userDTO) {
+        boolean res = rentalService.returnEscooter(userDTO.getAccount(), userDTO.getPassword());
+
+        // create return message
+		JSONObject message = new JSONObject();
+		try {
+			message.put("status", res);
+			message.put("message", res ? "return and payment successful" : "returned and payment failed");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+        return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+    }
+    
 }
