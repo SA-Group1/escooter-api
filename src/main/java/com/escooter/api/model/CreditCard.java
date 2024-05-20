@@ -22,6 +22,14 @@ public class CreditCard {
     }
 
     /**
+     * Constructs a new CreditCard with the specified card details.
+     * @param cardNumber The credit card number.
+     */
+    public CreditCard(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    /**
      * Returns the credit card number.
      * @return The credit card number.
      */

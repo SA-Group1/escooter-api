@@ -1,5 +1,6 @@
 package com.escooter.api.model;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 /*
@@ -12,6 +13,11 @@ public class User {
     private String password;
     private String email;
     private String registrationTime;
+    private Escooter rentingEscooter;
+    private CreditCard creditCard;
+    private MemberCard memberCard;
+    private List<RentalRecord> rentalRecords;
+    
 
 
     /**
@@ -155,5 +161,19 @@ public class User {
         return registrationTime;
     }
 
+    public CreditCard getCreditCard(){
+        return creditCard;
+    }
+
+    public MemberCard getmemberCard(){
+        return memberCard;
+    }
+
+    public void setCreditCard(CreditCard creditCard){
+        this.creditCard = creditCard;
+    }
     
+    public void setMemberCard(MemberCard memberCard){
+        this.memberCard = memberCard;
+    }
 }

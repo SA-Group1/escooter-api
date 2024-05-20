@@ -8,7 +8,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.escooter.api.dto.UserDTO;
-
+import com.escooter.api.model.CreditCard;
+import com.escooter.api.model.MemberCard;
 import com.escooter.api.model.User;
 /**
  * Repository for managing user data in the database.
@@ -35,6 +36,10 @@ public class UserRepository {
             user.setEmail(rs.getString("email"));
 			System.out.println(rs.getTimestamp("registration_time").toLocalDateTime());
             user.setRegistrationTime(rs.getTimestamp("registration_time").toLocalDateTime().toString());
+			CreditCard creditCard = new CreditCard(rs.getString("creditcard_id"),"****","***");
+			user.setCreditCard(creditCard);
+			MemberCard memberCard = new MemberCard(rs.getString("membercard_id"),"****");
+			user.setMemberCard(memberCard);
             return user;
         };
 		User user;

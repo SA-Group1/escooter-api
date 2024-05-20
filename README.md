@@ -78,23 +78,22 @@ Example Response
     "status": true,
     "message": "get user data success",
     "user": {
-        "userId": 0,
+        "userId": 1,
         "account": "acc001",
         "userName": "user111",
         "password": "pwd001",
         "email": "user001@test.com",
         "registrationTime": "2024-05-13T12:07:40",
         "creditCard": {
-            "cardNumber": "",
-            "expirationDate": "",
-            "cardHolderName": ""
+            "cardNumber": "0000111100001112",
+            "expirationDate": "****",
+            "cardHolderName": "***"
         },
         "memberCard": {
-            "cardNumber": "",
-            "expirationDate": "",
+            "cardNumber": "0000111100001113",
+            "expirationDate": "****",
             "vaild": true
-        },
-        "rentalRecords": []
+        }
     }
 }
 ```

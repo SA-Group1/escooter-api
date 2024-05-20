@@ -19,6 +19,15 @@ public class MemberCard {
     }
 
     /**
+     * Constructs a new MemberCard with the specified card details.
+     * @param cardNumber The member card number.
+     * @param expirationDate The expiration date of the member card.
+     */
+    public MemberCard(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    /**
      * Returns the member card number.
      * @return The member card number.
      */
