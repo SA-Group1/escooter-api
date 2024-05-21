@@ -80,13 +80,13 @@ Example Response
     "user": {
         "userId": 1,
         "account": "acc001",
-        "userName": "user111",
+        "userName": "Test001",
         "password": "pwd001",
-        "email": "user001@test.com",
+        "email": "v0153135@gmail.com",
         "registrationTime": "2024-05-13T12:07:40",
-        "phoneNumber": "0987654320",
+        "phoneNumber": "0973524658",
         "creditCard": {
-            "cardNumber": "0000111100001112",
+            "cardNumber": null,
             "expirationDate": "****",
             "cardHolderName": "***"
         },
@@ -94,8 +94,35 @@ Example Response
             "cardNumber": "0000111100001113",
             "expirationDate": "****",
             "vaild": true
-        }
+        },
+        "image": "your image's base64"
     }
+}
+```
+
+### uploadUserPhoto
+```
+POST /api/uploadUserPhoto
+```
+| Parameter |  Type  | Description   |
+| --------- | :----: | ------------- |
+| account   | String | **Required.** |
+| password  | String | **Required.** |
+| image     | String | **Required.** |
+Example input
+```json
+{
+    "account": "acc001",
+    "password": "pwd001",
+    "image":"your image's base64"
+}
+```
+
+Example Response
+```json
+{
+    "status":true,
+    "message":"upload image success"
 }
 ```
 
@@ -110,6 +137,7 @@ PUT /api/updateUserData
 | userName    | String | **Required.** |
 | email       | String | **Required.** |
 | phoneNumber | String | **Required.** |
+
 
 Example input
 

@@ -17,6 +17,7 @@ public class User {
     private CreditCard creditCard;
     private MemberCard memberCard;
     //private List<RentalRecord> rentalRecords;
+    private byte[] image;
     
 
 
@@ -108,6 +109,10 @@ public class User {
      */
     public void setRegistrationTime(String registrationTime) {
         this.registrationTime = registrationTime;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     /**
@@ -213,5 +218,9 @@ public class User {
     */
     public void setPhoneNumber(String phoneNumber){
         this.phoneNumber = phoneNumber;
+    }
+
+    public byte[] getImage() {
+        return image;
     }
 }

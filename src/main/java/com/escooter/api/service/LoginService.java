@@ -4,6 +4,7 @@ package com.escooter.api.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.escooter.api.dto.UploadUserPhotoDTO;
 import com.escooter.api.dto.UserDTO;
 import com.escooter.api.model.User;
 import com.escooter.api.repository.UserRepository;
@@ -83,10 +84,12 @@ public class LoginService {
      * @return True if the update is successful, false otherwise.
      */
     public boolean updateUserData(UserDTO userDTO) {
-        // 判斷
         return userRepository.updateUserData(userDTO);
     }
 
+    public boolean uploadUserPhoto(UploadUserPhotoDTO uploadUserPhotoDTO) {
+        return userRepository.uploadUserPhoto(uploadUserPhotoDTO);
+    }
     
 
     /**
