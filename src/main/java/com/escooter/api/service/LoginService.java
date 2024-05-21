@@ -87,6 +87,11 @@ public class LoginService {
         return userRepository.updateUserData(userDTO);
     }
 
+    /**
+     * Upload user photo.
+     * @param userDTO The data transfer object containing updated user information.
+     * @return True if the update is successful, false otherwise.
+     */
     public boolean uploadUserPhoto(UploadUserPhotoDTO uploadUserPhotoDTO) {
         return userRepository.uploadUserPhoto(uploadUserPhotoDTO);
     }
@@ -105,6 +110,27 @@ public class LoginService {
     // 建立使用者
     public User createUser(User user) {
         return user;
+    }
+
+
+    /**
+     * user photo.
+     * @param account The account identifier for the user.
+     * @param password The password for the user's account.
+     * @return The user photo.
+     */
+    public User getUserPhoto(String account, String password) {
+        User user = userRepository.queryUserByAccount(account);
+        if (user != null) {
+            if (password.equals(user.getPassword())) {
+                
+                return user;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
 }

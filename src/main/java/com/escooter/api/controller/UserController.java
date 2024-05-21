@@ -2,6 +2,8 @@ package com.escooter.api.controller;
 
 
 
+import java.util.Base64;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -118,6 +120,7 @@ public class UserController {
         String jsonString = "{}";
         try {
             jsonString = objectMapper.writeValueAsString(user);
+            
             System.out.println(jsonString);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -126,6 +129,7 @@ public class UserController {
         // Converts the JSON string to a JSONObject
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
+            jsonObject.remove("image");
 			message.put("status", true);
 			message.put("message", "get user data success");
             message.put("user", jsonObject);
@@ -176,4 +180,42 @@ public class UserController {
         }
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
+
+    /**
+     * get user photo.
+     *
+     * @param userDTO User data.
+     * @return A ResponseEntity with user photo.
+     */
+    @PostMapping("getUserPhoto")
+    public ResponseEntity<String> getUserPhoto(@RequestBody UserDTO userDTO) {
+        // Calls service to retrieve user data
+        User user = loginService.getUserPhoto(userDTO.getAccount(), userDTO.getPassword());
+        
+        // Create return message
+		JSONObject message = new JSONObject();
+        
+        if (user == null) {
+            try {
+                message.put("status", false);
+                message.put("message", "get user photo failed");
+                message.put("user", new JSONObject("{}"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+        }
+
+        // Converts the JSON string to a JSONObject
+        try {
+			message.put("status", true);
+			message.put("message", "get user photo success");
+            message.put("user", (new JSONObject()).put("image", Base64.getEncoder().encodeToString(user.getImage())));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+        // Returns a successful response with user info
+        return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+    }
+    
 }

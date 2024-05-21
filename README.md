@@ -94,9 +94,33 @@ Example Response
             "cardNumber": "0000111100001113",
             "expirationDate": "****",
             "vaild": true
-        },
-        "image": "your image's base64"
+        }
     }
+}
+```
+
+### getUserPhoto
+```
+POST /api/getUserPhoto
+```
+| Parameter |  Type  | Description   |
+| --------- | :----: | ------------- |
+| account   | String | **Required.** |
+| password  | String | **Required.** |
+Example input
+```json
+{
+    "account": "acc001",
+    "password": "pwd001"
+}
+```
+
+Example Response
+```json
+{
+    "status": true,
+    "message": "get user photo success",
+    "image":"your image's base64"
 }
 ```
 

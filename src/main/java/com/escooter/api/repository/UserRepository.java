@@ -138,27 +138,13 @@ public class UserRepository {
 		return true;
 	}
 
-	/*public User findByAccount(String account) {
-        String sql = "SELECT * FROM user WHERE account = ?";
-        return jdbcTemplate.queryForObject(sql, this::mapRowToUser, new Object[]{account});
-    }*/
-
 	public boolean uploadUserPhoto(UploadUserPhotoDTO uploadUserPhotoDTO) {
         String sql = "UPDATE user SET user_photo = ? WHERE account = ?";
         jdbcTemplate.update(sql, uploadUserPhotoDTO.getImage(), uploadUserPhotoDTO.getAccount());
 		return true;
     }
 
-	/*private User mapRowToUser(ResultSet rs, int rowNum) throws SQLException {
-        User user = new User();
-        user.setAccount(rs.getString("account"));
-        user.setUserName(rs.getString("username"));
-        user.setPassword(rs.getString("password"));
-        user.setEmail(rs.getString("email"));
-        user.setPhoneNumber(rs.getString("phone_number"));
-        user.setImage(rs.getBytes("user_photo"));
-        return user;
-    }*/
+	
 
 	// public void addUser(User user) {
 	// 	System.out.println("新增使用者成功");
