@@ -1,13 +1,18 @@
 package com.escooter.api.controller;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RestController;
 
+
+import com.escooter.api.dto.UploadUserPhotoDTO;
 import com.escooter.api.dto.UserDTO;
 import com.escooter.api.model.User;
 import com.escooter.api.service.LoginService;
@@ -141,6 +146,7 @@ public class UserController {
     public ResponseEntity<String> updateUserData(@RequestBody UserDTO userDTO) {
         boolean res = loginService.updateUserData(userDTO);
         
+        // Create return message
         JSONObject message = new JSONObject();
 		try {
 			message.put("status", res);
@@ -148,7 +154,26 @@ public class UserController {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+        // Returns a successful response with user info
+        return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+    }
 
+    /**
+     * Upload user photo
+     *
+     * @param userDTO User data.
+     * @return A ResponseEntity with HTTP status and message.
+     */
+    @PutMapping("uploadUserPhoto")
+    public ResponseEntity<String> uploadUserPhoto(@RequestBody UploadUserPhotoDTO uploadUserPhotoDTO){
+        JSONObject message = new JSONObject();
+        boolean res = loginService.uploadUserPhoto(uploadUserPhotoDTO);
+        try {
+            message.put("status", res);
+			message.put("message", res? "upload image success":"upload image failed");
+        } catch (JSONException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload photo");
+        }
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
 }

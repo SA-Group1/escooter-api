@@ -10,6 +10,8 @@ public class UserDTO {
     private String password;
     private String email;
     private String phoneNumber;
+    private byte[] image;
+
 
     /**
      * Default constructor for UserDTO.
@@ -48,6 +50,24 @@ public class UserDTO {
         this.email = email;
     }
 
+     /**
+     * Constructs a UserDTO with all fields.
+     * @param account The user account.
+     * @param userName The user username.
+     * @param password The user password.
+     * @param email The user email.
+     * @param phoneNumber The user phone number.
+     * @param image The user image in BLOB format.
+     */
+    public UserDTO(String account, String userName, String password, String email, String phoneNumber, byte[] image) {
+        this.account = account;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.image = image;
+    }
+
     /**
      * Sets the user account.
      * @param account The user account.
@@ -82,8 +102,30 @@ public class UserDTO {
         this.email = email;
     }
 
+    /**
+     * Sets the user phone number.
+     * @param phoneNumber The user phone number.
+     */
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
     
-    
+    /**
+     * Sets the user image.
+     * @param image The user image in BLOB format.
+     */
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    /**
+     * Returns the user image.
+     * @return The user image in BLOB format.
+     */
+    public byte[] getImage() {
+        return image;
+    }
+
     /**
      * return the user account.
      * @return The user account.

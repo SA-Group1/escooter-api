@@ -1,12 +1,16 @@
 package com.escooter.api.repository;
 
 
+import java.sql.Blob;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.escooter.api.dto.UploadUserPhotoDTO;
 import com.escooter.api.dto.UserDTO;
 import com.escooter.api.model.CreditCard;
 import com.escooter.api.model.MemberCard;
@@ -41,6 +45,11 @@ public class UserRepository {
 			user.setCreditCard(creditCard);
 			MemberCard memberCard = new MemberCard(rs.getString("membercard_id"),"****");
 			user.setMemberCard(memberCard);
+			//user.setImage(rs.getBlob("user_photo").tobyte());
+			Blob blob = rs.getBlob("user_photo");
+        	if (blob != null) {
+            user.setImage(blob.getBytes(1, (int) blob.length()));
+        	}
             return user;
         };
 		User user;
@@ -128,6 +137,28 @@ public class UserRepository {
 		jdbcTemplate.update(sql, account);
 		return true;
 	}
+
+	/*public User findByAccount(String account) {
+        String sql = "SELECT * FROM user WHERE account = ?";
+        return jdbcTemplate.queryForObject(sql, this::mapRowToUser, new Object[]{account});
+    }*/
+
+	public boolean uploadUserPhoto(UploadUserPhotoDTO uploadUserPhotoDTO) {
+        String sql = "UPDATE user SET user_photo = ? WHERE account = ?";
+        jdbcTemplate.update(sql, uploadUserPhotoDTO.getImage(), uploadUserPhotoDTO.getAccount());
+		return true;
+    }
+
+	/*private User mapRowToUser(ResultSet rs, int rowNum) throws SQLException {
+        User user = new User();
+        user.setAccount(rs.getString("account"));
+        user.setUserName(rs.getString("username"));
+        user.setPassword(rs.getString("password"));
+        user.setEmail(rs.getString("email"));
+        user.setPhoneNumber(rs.getString("phone_number"));
+        user.setImage(rs.getBytes("user_photo"));
+        return user;
+    }*/
 
 	// public void addUser(User user) {
 	// 	System.out.println("新增使用者成功");
