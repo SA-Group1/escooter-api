@@ -17,8 +17,6 @@ public class RentalHistoryService {
     @Autowired
     private RentalRecordRepository rentalRecordRepository;
     
-    
-    
     /**
      * Placeholder method for retrieving a list of rental records.
      */

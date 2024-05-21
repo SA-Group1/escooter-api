@@ -9,6 +9,9 @@ public class RentalRecord {
     private String startTime;
     private String endTime;
     private boolean isPaid;
+    private double feePerMin;
+    private int duration;
+    private int totalFee;
 
     /**
      * Returns the user account associated with this rental.
@@ -48,6 +51,18 @@ public class RentalRecord {
      */
     public boolean getIsPaid(){
         return isPaid;
+    }
+
+    public double getFeePerMin() {
+        return feePerMin;
+    }
+    
+    public int getDuration() {
+        return duration;
+    }
+
+    public int getTotalFee() {
+        return totalFee;
     }
 
     /**
@@ -91,5 +106,15 @@ public class RentalRecord {
         this.isPaid = isPaid;
     }
 
+    public void setFeePerMin(double feePerMin) {
+        this.feePerMin = feePerMin;
+    }
     
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public void setTotalFee(int totalFee) {
+        this.totalFee = totalFee;
+    }
 }

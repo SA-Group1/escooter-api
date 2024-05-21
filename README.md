@@ -266,8 +266,8 @@ POST /api/getRentalRecordList
 Example Input
 ```json
 {
-    "account": "acc001",
-    "password": "pwd001"
+    "account": "acc003",
+    "password": "pwd003"
 }
 ```
 Example Response
@@ -275,25 +275,39 @@ Example Response
 {
     "status": true,
     "message": "return rental record",
-    "rentalRecords": {
-        "rentalRecord1": {
-            "userId": 1,
-            "escooterId": "1",
-            "startTime": "2024-05-13T12:07:40",
-            "endTime": "2024-05-13T13:07:40",
-            "isPaid": true
+    "rentalRecords": [
+        {
+            "userId": 6,
+            "escooterId": "A_09",
+            "startTime": "2024-05-21T05:50:53",
+            "endTime": "2024-05-21T06:14:54",
+            "isPaid": true,
+            "feePerMin": 0.3,
+            "duration": 24,
+            "totalFee": 7
         },
-        "rentalRecord2": {
-            "userId": 1,
-            "escooterId": "2",
-            "startTime": "2024-05-13T13:10:45",
-            "endTime": "2024-05-13T15:11:45",
-            "isPaid": false
+        {
+            "userId": 6,
+            "escooterId": "AI_10",
+            "startTime": "2024-05-21T07:27:35",
+            "endTime": "2024-05-21T07:28:32",
+            "isPaid": true,
+            "feePerMin": 0.5,
+            "duration": 0,
+            "totalFee": 0
+        },
+        {
+            "userId": 6,
+            "escooterId": "AI_10",
+            "startTime": "2024-05-21T04:34:37",
+            "endTime": "2024-05-21T05:42:12",
+            "isPaid": true,
+            "feePerMin": 0.5,
+            "duration": 67,
+            "totalFee": 33
         }
-    }
+    ]
 }
-
-
 ```
 ## API Reference Rental
 ### getRentableEscooterList
@@ -317,32 +331,128 @@ Example Response
 {
     "status": true,
     "message": "return escooters",
-    "escooters": {
-        "escooter1": {
-            "escooterId": "1",
+    "escooters": [
+        {
+            "escooterId": "TEST_00",
+            "modelId": "TEST",
             "status": "Available",
-            "batteryLevel": 0,
+            "batteryLevel": 100,
             "feePerMinutes": 0,
             "maintenanceRecords": null,
             "gps": {
-                "longitude": 122.000000000001,
-                "latitude": 23.49999999999999
-            },
-            "modelName": "LCE151"
+                "longitude": 120.53295219082112,
+                "latitude": 23.693785836720586
+            }
         },
-        "escooter2": {
-            "escooterId": "2",
+        {
+            "escooterId": "DH_04",
+            "modelId": "TEST",
             "status": "Available",
-            "batteryLevel": 0,
+            "batteryLevel": 100,
             "feePerMinutes": 0,
             "maintenanceRecords": null,
             "gps": {
-                "longitude": 122,
-                "latitude": 23.5
-            },
-            "modelName": "LCE151"
+                "longitude": 120.533755,
+                "latitude": 23.692902
+            }
+        },
+        {
+            "escooterId": "DA_05",
+            "modelId": "TEST",
+            "status": "Available",
+            "batteryLevel": 100,
+            "feePerMinutes": 0,
+            "maintenanceRecords": null,
+            "gps": {
+                "longitude": 120.534923,
+                "latitude": 23.692616
+            }
+        },
+        {
+            "escooterId": "EL_07",
+            "modelId": "TEST",
+            "status": "Available",
+            "batteryLevel": 100,
+            "feePerMinutes": 0,
+            "maintenanceRecords": null,
+            "gps": {
+                "longitude": 120.535822,
+                "latitude": 23.693859
+            }
+        },
+        {
+            "escooterId": "EM_08",
+            "modelId": "TEST",
+            "status": "Available",
+            "batteryLevel": 100,
+            "feePerMinutes": 0,
+            "maintenanceRecords": null,
+            "gps": {
+                "longitude": 120.535519,
+                "latitude": 23.695188
+            }
+        },
+        {
+            "escooterId": "GA_06",
+            "modelId": "TEST",
+            "status": "Available",
+            "batteryLevel": 100,
+            "feePerMinutes": 0,
+            "maintenanceRecords": null,
+            "gps": {
+                "longitude": 120.534982,
+                "latitude": 23.691336
+            }
+        },
+        {
+            "escooterId": "PD_11",
+            "modelId": "TEST",
+            "status": "Available",
+            "batteryLevel": 100,
+            "feePerMinutes": 0,
+            "maintenanceRecords": null,
+            "gps": {
+                "longitude": 120.536782,
+                "latitude": 23.691812
+            }
+        },
+        {
+            "escooterId": "G_02",
+            "modelId": "LCE151",
+            "status": "Available",
+            "batteryLevel": 100,
+            "feePerMinutes": 0,
+            "maintenanceRecords": null,
+            "gps": {
+                "longitude": 120.534336,
+                "latitude": 23.689858
+            }
+        },
+        {
+            "escooterId": "A_09",
+            "modelId": "LCE151",
+            "status": "Available",
+            "batteryLevel": 100,
+            "feePerMinutes": 0,
+            "maintenanceRecords": null,
+            "gps": {
+                "longitude": 120.535527,
+                "latitude": 23.689927
+            }
+        },
+        {
+            "escooterId": "C_01",
+            "modelId": "LCE151",
+            "status": "Available",
+            "batteryLevel": 100,
+            "feePerMinutes": 0,
+            "maintenanceRecords": null,
+            "gps": {
+                "longitude": 120.534454,
+                "latitude": 23.689305
+            }
         }
-    }
+    ]
 }
 ```
 

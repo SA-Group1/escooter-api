@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
@@ -50,7 +51,8 @@ public class RentalController {
         // call service to show the avaliable escooter list
         List<Escooter> escooters = rentalService.showAvailableEscooter(new GPS(gpsDTO.getLongitude(), gpsDTO.getLatitude()));
         JSONObject message = new JSONObject();
-        
+        JSONArray jsonArray = new JSONArray();
+
         if (escooters.isEmpty()) {
             try {
                 message.put("status", false);
@@ -62,21 +64,18 @@ public class RentalController {
             return new ResponseEntity<>(message.toString(), HttpStatus.OK);
         }
         //creat return message
-        JSONObject escooterMessage = new JSONObject();
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = "{}";
         try {
             message.put("status", true);
             message.put("message", "return escooters");
             
-            for (int i=0; i<escooters.size(); i++) {
-                Escooter escooter = escooters.get(i);
+            for (Escooter escooter:escooters) {
                 jsonString = objectMapper.writeValueAsString(escooter);
-                System.out.println(jsonString);
                 JSONObject jsonObject = new JSONObject(jsonString);
-                escooterMessage.put("escooter"+ (i + 1), jsonObject);
+                jsonArray.put(jsonObject);
             }
-            message.put("escooters", escooterMessage);
+            message.put("escooters", jsonArray);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (JSONException e) {

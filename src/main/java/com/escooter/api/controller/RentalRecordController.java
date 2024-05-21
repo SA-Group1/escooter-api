@@ -3,6 +3,7 @@ package com.escooter.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
@@ -39,25 +40,25 @@ public class RentalRecordController {
     public ResponseEntity<String> getRentalRecordList(@RequestBody UserDTO userDTO) {
         List<RentalRecord> rentalRecords = rentalHistoryService.getRentalRecordList(userDTO.getAccount(), userDTO.getPassword());
         JSONObject message = new JSONObject();
-		JSONObject rentalRecordMessage = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString = "{}";
 
-		try {
-			message.put("status", true);
-			message.put("message", "return rental record");
-            for (int i=0; i<rentalRecords.size(); i++) {
-                RentalRecord rentalRecord = rentalRecords.get(i);
-                jsonString = objectMapper.writeValueAsString(rentalRecord);
-                JSONObject jsonObject = new JSONObject(jsonString);
-                rentalRecordMessage.put("rentalRecord"+ (i + 1), jsonObject);
+        try {
+            message.put("status", true);
+            message.put("message", "return rental record");
+
+            for (RentalRecord rentalRecord : rentalRecords) {
+                String jsonString = objectMapper.writeValueAsString(rentalRecord);
+                JSONObject rentalRecordJson = new JSONObject(jsonString);
+                jsonArray.put(rentalRecordJson);
             }
-            message.put("rentalRecords", rentalRecordMessage);
-		} catch (JsonProcessingException e) {
+
+            message.put("rentalRecords", jsonArray);
+        } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (JSONException e) {
-			e.printStackTrace();
-		}
+            e.printStackTrace();
+        }
 
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
 	}
