@@ -10,7 +10,7 @@ public class Escooter {
     private String modelId;
     private String status;
     private int batteryLevel;
-    private int feePerMinutes;
+    private double feePerMinutes;
     private List<MaintenanceRecord> maintenanceRecords;
     private GPS gps;
 
@@ -50,8 +50,7 @@ public class Escooter {
      * Sets the fee per minute for using the electric scooter.
      * @param feePerMinute The fee per minute.
      */
-    public void setFeePerMinutes(int feePerMinutes){
-        feePerMinutes = 10;     // if
+    public void setFeePerMinutes(double feePerMinutes){
         this.feePerMinutes = feePerMinutes;
     }
 
@@ -100,7 +99,7 @@ public class Escooter {
      * Returns the fee per minute for using the electric scooter.
      * @return The fee per minute.
      */
-    public int getFeePerMinutes(){
+    public double getFeePerMinutes(){
         return feePerMinutes;
     }
 

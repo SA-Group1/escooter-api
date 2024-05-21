@@ -310,7 +310,8 @@ Example Response
             "startTime": "2024-05-21T05:50:53",
             "endTime": "2024-05-21T06:14:54",
             "isPaid": true,
-            "feePerMin": 0.3,
+            "modelId": "LCE151",
+            "feePerMinutes": 0.3,
             "duration": 24,
             "totalFee": 7
         },
@@ -320,7 +321,8 @@ Example Response
             "startTime": "2024-05-21T07:27:35",
             "endTime": "2024-05-21T07:28:32",
             "isPaid": true,
-            "feePerMin": 0.5,
+            "modelId": "TEST",
+            "feePerMinutes": 0.5,
             "duration": 0,
             "totalFee": 0
         },
@@ -330,7 +332,8 @@ Example Response
             "startTime": "2024-05-21T04:34:37",
             "endTime": "2024-05-21T05:42:12",
             "isPaid": true,
-            "feePerMin": 0.5,
+            "modelId": "TEST",
+            "feePerMinutes": 0.5,
             "duration": 67,
             "totalFee": 33
         }
@@ -357,6 +360,7 @@ Example Input
 Example Response
 ```json
 {
+{
     "status": true,
     "message": "return escooters",
     "escooters": [
@@ -365,7 +369,7 @@ Example Response
             "modelId": "TEST",
             "status": "Available",
             "batteryLevel": 100,
-            "feePerMinutes": 0,
+            "feePerMinutes": 0.5,
             "maintenanceRecords": null,
             "gps": {
                 "longitude": 120.53295219082112,
@@ -377,7 +381,7 @@ Example Response
             "modelId": "TEST",
             "status": "Available",
             "batteryLevel": 100,
-            "feePerMinutes": 0,
+            "feePerMinutes": 0.5,
             "maintenanceRecords": null,
             "gps": {
                 "longitude": 120.533755,
@@ -389,7 +393,7 @@ Example Response
             "modelId": "TEST",
             "status": "Available",
             "batteryLevel": 100,
-            "feePerMinutes": 0,
+            "feePerMinutes": 0.5,
             "maintenanceRecords": null,
             "gps": {
                 "longitude": 120.534923,
@@ -401,7 +405,7 @@ Example Response
             "modelId": "TEST",
             "status": "Available",
             "batteryLevel": 100,
-            "feePerMinutes": 0,
+            "feePerMinutes": 0.5,
             "maintenanceRecords": null,
             "gps": {
                 "longitude": 120.535822,
@@ -413,7 +417,7 @@ Example Response
             "modelId": "TEST",
             "status": "Available",
             "batteryLevel": 100,
-            "feePerMinutes": 0,
+            "feePerMinutes": 0.5,
             "maintenanceRecords": null,
             "gps": {
                 "longitude": 120.535519,
@@ -425,7 +429,7 @@ Example Response
             "modelId": "TEST",
             "status": "Available",
             "batteryLevel": 100,
-            "feePerMinutes": 0,
+            "feePerMinutes": 0.5,
             "maintenanceRecords": null,
             "gps": {
                 "longitude": 120.534982,
@@ -437,7 +441,7 @@ Example Response
             "modelId": "TEST",
             "status": "Available",
             "batteryLevel": 100,
-            "feePerMinutes": 0,
+            "feePerMinutes": 0.5,
             "maintenanceRecords": null,
             "gps": {
                 "longitude": 120.536782,
@@ -449,7 +453,7 @@ Example Response
             "modelId": "LCE151",
             "status": "Available",
             "batteryLevel": 100,
-            "feePerMinutes": 0,
+            "feePerMinutes": 0.3,
             "maintenanceRecords": null,
             "gps": {
                 "longitude": 120.534336,
@@ -461,7 +465,7 @@ Example Response
             "modelId": "LCE151",
             "status": "Available",
             "batteryLevel": 100,
-            "feePerMinutes": 0,
+            "feePerMinutes": 0.3,
             "maintenanceRecords": null,
             "gps": {
                 "longitude": 120.535527,
@@ -473,7 +477,7 @@ Example Response
             "modelId": "LCE151",
             "status": "Available",
             "batteryLevel": 100,
-            "feePerMinutes": 0,
+            "feePerMinutes": 0.3,
             "maintenanceRecords": null,
             "gps": {
                 "longitude": 120.534454,

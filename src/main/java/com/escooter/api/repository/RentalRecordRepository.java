@@ -46,7 +46,8 @@ public class RentalRecordRepository {
             rentalRecord.setStartTime(rs.getTimestamp("start_time").toLocalDateTime().toString());
             rentalRecord.setEndTime(rs.getTimestamp("end_time").toLocalDateTime().toString());
             rentalRecord.setIsPaid(rs.getBoolean("ispaid"));
-            rentalRecord.setFeePerMin(rs.getDouble("fee_perminute"));
+            rentalRecord.setModelId(rs.getString("model_id"));
+            rentalRecord.setFeePerMinutes(rs.getDouble("fee_perminute"));
             rentalRecord.setDuration(rs.getInt("rental_duration"));
             rentalRecord.setTotalFee(rs.getInt("rental_cost"));
             

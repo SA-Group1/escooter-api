@@ -9,7 +9,8 @@ public class RentalRecord {
     private String startTime;
     private String endTime;
     private boolean isPaid;
-    private double feePerMin;
+    private String modelId;
+    private double feePerMinutes;
     private int duration;
     private int totalFee;
 
@@ -44,7 +45,7 @@ public class RentalRecord {
     public String getEndTime(){
         return endTime;
     }
-
+    
     /**
      * Returns whether this rental has been paid for.
      * @return True if the rental is paid, false otherwise.
@@ -53,8 +54,12 @@ public class RentalRecord {
         return isPaid;
     }
 
-    public double getFeePerMin() {
-        return feePerMin;
+    public String getModelId(){
+        return modelId;
+    }
+
+    public double getFeePerMinutes() {
+        return feePerMinutes;
     }
     
     public int getDuration() {
@@ -106,8 +111,12 @@ public class RentalRecord {
         this.isPaid = isPaid;
     }
 
-    public void setFeePerMin(double feePerMin) {
-        this.feePerMin = feePerMin;
+    public void setModelId(String modelId){
+        this.modelId = modelId;
+    }
+
+    public void setFeePerMinutes(double feePerMinutes) {
+        this.feePerMinutes = feePerMinutes;
     }
     
     public void setDuration(int duration) {

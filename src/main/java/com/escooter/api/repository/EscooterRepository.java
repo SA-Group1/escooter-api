@@ -74,11 +74,18 @@ public class EscooterRepository {
      * @return a list of available Escooter objects if found, otherwise null
      */
     public List<Escooter> queryEscooters() {
-        String sql = "SELECT * FROM escooter_rental.escooter WHERE escooter_status = ?";
+        String sql = """
+            SELECT escooter.*, escooter_model_type.fee_perminute
+            FROM escooter_rental.escooter
+            JOIN escooter_rental.escooter_model_type
+            ON escooter_model_type.model_id = escooter.model_id
+            WHERE escooter_status = ?
+            """;
         RowMapper<Escooter> rowMapper = (rs, rowNum) -> {
 			Escooter escooter = new Escooter();
             escooter.setEscooterId(rs.getString("escooter_id"));
             escooter.setModelId(rs.getString("model_id"));
+            escooter.setFeePerMinutes(rs.getDouble("fee_perminute"));
             escooter.setStatus(rs.getString("escooter_status"));
             escooter.setBatteryLevel(rs.getInt("battery_level"));
             escooter.setGPS(rs.getDouble("escooter_gps_longitude"), rs.getDouble("escooter_gps_latitude"));
@@ -102,11 +109,13 @@ public class EscooterRepository {
     public List<Escooter> queryAvailableEscooters(double longitude, double latitude, double distance) {
         String sql = 
         """
-            SELECT *, 6371 * ACOS (
+            SELECT escooter.*, escooter_model_type.fee_perminute, 6371 * ACOS (
                 COS(RADIANS(?)) * COS(RADIANS(escooter_gps_latitude)) * COS(RADIANS(escooter_gps_longitude) - RADIANS(?)) +
                 SIN(RADIANS(?)) * SIN(RADIANS(escooter_gps_latitude))
             ) AS distance
             FROM escooter_rental.escooter
+            JOIN escooter_rental.escooter_model_type
+            ON escooter_model_type.model_id = escooter.model_id
             WHERE escooter_status = ?
             HAVING distance < ?
             ORDER BY distance;
@@ -115,6 +124,7 @@ public class EscooterRepository {
 			Escooter escooter = new Escooter();
             escooter.setEscooterId(rs.getString("escooter_id"));
             escooter.setModelId(rs.getString("model_id"));
+            escooter.setFeePerMinutes(rs.getDouble("fee_perminute"));
             escooter.setStatus(rs.getString("escooter_status"));
             escooter.setBatteryLevel(rs.getInt("battery_level"));
             escooter.setGPS(rs.getDouble("escooter_gps_longitude"), rs.getDouble("escooter_gps_latitude"));
