@@ -1,6 +1,9 @@
 package com.escooter.api.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
@@ -13,8 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.escooter.api.dto.EscooterDTO;
 import com.escooter.api.dto.GPSDTO;
 import com.escooter.api.dto.UpdateGPSDTO;
+
 import com.escooter.api.model.GPS;
+
 import com.escooter.api.service.*;
+
+
 import org.springframework.web.bind.annotation.PutMapping;
 
 /**
@@ -158,6 +165,32 @@ public class EscooterController {
         try {
             message.put("status", res);
             message.put("message", res ? "Battery Level update success" : "Battery Level update failed");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+    }
+
+    /**
+	 * Adding rental data to database and returns a successful message
+	 *
+	 * @param escooterDTO E-scooter data transfer object
+	 * @return A ResponseEntity with http status and message
+	 */
+    @PostMapping("getEscooterIdList")
+    public ResponseEntity<String> getEscooterIdList() {
+        List<String> escootersId  = escooterService.getEscooterId();
+        // Create return message
+        JSONObject message = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        try {
+            message.put("status", true);
+            message.put("message", "get escooter ID list sucess");
+            for (String escootrtId:escootersId) {
+                jsonArray.put((new JSONObject()).put("escooterId",escootrtId));
+            }
+        message.put("escooterId",jsonArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }

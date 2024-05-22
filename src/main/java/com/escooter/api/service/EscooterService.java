@@ -1,5 +1,8 @@
 package com.escooter.api.service;
 
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,5 +98,12 @@ public class EscooterService {
     */
     public boolean updateBetteryLevel(String escooterId, int batteryLevel){
         return escooterRepository.updateBetteryLevel(escooterId,batteryLevel);
+    }
+
+    /**
+    * get all Escooter id.
+    */
+    public List<String> getEscooterId(){
+        return escooterRepository.queryEscooters();
     }
 }

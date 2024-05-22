@@ -723,3 +723,59 @@ Example Response
     "message": "Battery Level update success"
 }
 ```
+
+### getEscooterIdList
+```
+PUT /api/getEscooterIdList
+```
+Example Input
+```json
+{
+   
+}
+```
+Example Response
+```json
+{
+    "status": true,
+    "message": "get escooter ID list sucess",
+    "escooterId": [
+        {
+            "escooterId": "A_09"
+        },
+        {
+            "escooterId": "C_01"
+        },
+        {
+            "escooterId": "D_03"
+        },
+        {
+            "escooterId": "G_02"
+        },
+        {
+            "escooterId": "AI_10"
+        },
+        {
+            "escooterId": "DA_05"
+        },
+        {
+            "escooterId": "DH_04"
+        },
+        {
+            "escooterId": "EL_07"
+        },
+        {
+            "escooterId": "EM_08"
+        },
+        {
+            "escooterId": "GA_06"
+        },
+        {
+            "escooterId": "PD_11"
+        },
+        {
+            "escooterId": "TEST_00"
+        }
+    ]
+}
+```

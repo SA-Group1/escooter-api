@@ -70,29 +70,15 @@ public class EscooterRepository {
 
     /**
      * Queries all available e-scooters from the database.
-     * 
-     * @return a list of available Escooter objects if found, otherwise null
+     * @return a list of all Escooter objects if found, otherwise null
      */
-    public List<Escooter> queryEscooters() {
-        String sql = """
-            SELECT escooter.*, escooter_model_type.fee_perminute
-            FROM escooter_rental.escooter
-            JOIN escooter_rental.escooter_model_type
-            ON escooter_model_type.model_id = escooter.model_id
-            WHERE escooter_status = ?
-            """;
-        RowMapper<Escooter> rowMapper = (rs, rowNum) -> {
-			Escooter escooter = new Escooter();
-            escooter.setEscooterId(rs.getString("escooter_id"));
-            escooter.setModelId(rs.getString("model_id"));
-            escooter.setFeePerMinutes(rs.getDouble("fee_perminute"));
-            escooter.setStatus(rs.getString("escooter_status"));
-            escooter.setBatteryLevel(rs.getInt("battery_level"));
-            escooter.setGPS(rs.getDouble("escooter_gps_longitude"), rs.getDouble("escooter_gps_latitude"));
-            return escooter;
+    public List<String> queryEscooters() {
+        String sql = "SELECT escooter_id FROM escooter_rental.escooter";
+        RowMapper<String> rowMapper = (rs, rowNum) -> {
+            return  rs.getString("escooter_id");
         };
 		try {
-			return jdbcTemplate.query(sql, rowMapper, "Available");
+			return jdbcTemplate.query(sql, rowMapper);
 		} catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -237,4 +223,6 @@ public class EscooterRepository {
         }
         return true;
     }
+
+    
 }
