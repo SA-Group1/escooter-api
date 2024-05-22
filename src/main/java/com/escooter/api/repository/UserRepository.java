@@ -30,7 +30,17 @@ public class UserRepository {
      * @return the User object if found, otherwise null
      */
 	public User queryUserByAccount(String account) {
-		String sql = "SELECT * FROM escooter_rental.user WHERE account = ?";
+		String sql = """
+			SELECT
+				user.*,
+				credit_card.expiration_date AS credit_card_expiration_date,
+				credit_card.card_holder_name,
+				member_card.expiration_date AS member_card_expiration_date
+			FROM escooter_rental.user
+			LEFT JOIN credit_card ON user.creditcard_id = credit_card.creditcard_id
+			LEFT JOIN member_card ON user.membercard_id = member_card.membercard_id
+			WHERE account = ?
+		""";
         RowMapper<User> rowMapper = (rs, rowNum) -> {
 			User user = new User();
             user.setUserId(rs.getInt("user_id"));
@@ -41,15 +51,20 @@ public class UserRepository {
 			user.setPhoneNumber(rs.getString("phone_number"));
 			System.out.println(rs.getTimestamp("registration_time").toLocalDateTime());
             user.setRegistrationTime(rs.getTimestamp("registration_time").toLocalDateTime().toString());
-			CreditCard creditCard = new CreditCard(rs.getString("creditcard_id"),"****","***");
+			CreditCard creditCard = new CreditCard(rs.getString("creditcard_id"),
+												   rs.getString("credit_card_expiration_date"),
+												   rs.getString("card_holder_name"));
+			if (creditCard.getCardNumber() != null) {
+				creditCard.setCardNumber(creditCard.getCardNumber().substring(12, 16));
+			}
 			user.setCreditCard(creditCard);
-			MemberCard memberCard = new MemberCard(rs.getString("membercard_id"),"****");
+			MemberCard memberCard = new MemberCard(rs.getString("membercard_id"), rs.getString("member_card_expiration_date"));
 			user.setMemberCard(memberCard);
 			//user.setImage(rs.getBlob("user_photo").tobyte());
 			Blob blob = rs.getBlob("user_photo");
-        	if (blob != null) {
-            user.setImage(blob.getBytes(1, (int) blob.length()));
-        	}
+			if (blob != null) {
+				user.setImage(blob.getBytes(1, (int) blob.length()));
+			}
             return user;
         };
 		User user;

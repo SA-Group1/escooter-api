@@ -120,8 +120,6 @@ public class UserController {
         String jsonString = "{}";
         try {
             jsonString = objectMapper.writeValueAsString(user);
-            
-            System.out.println(jsonString);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -130,6 +128,7 @@ public class UserController {
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
             jsonObject.remove("image");
+            jsonObject.getJSONObject("creditCard").remove("cardHolderName");
 			message.put("status", true);
 			message.put("message", "get user data success");
             message.put("user", jsonObject);
