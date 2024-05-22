@@ -726,13 +726,7 @@ Example Response
 
 ### getEscooterIdList
 ```
-PUT /api/getEscooterIdList
-```
-Example Input
-```json
-{
-   
-}
+GET /api/getEscooterIdList
 ```
 Example Response
 ```json
