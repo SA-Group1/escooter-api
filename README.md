@@ -80,19 +80,18 @@ Example Response
     "user": {
         "userId": 1,
         "account": "acc001",
-        "userName": "Test001",
+        "userName": "user001",
         "password": "pwd001",
-        "email": "v0153135@gmail.com",
+        "email": "user001@test.com",
         "registrationTime": "2024-05-13T12:07:40",
-        "phoneNumber": "0973524658",
+        "phoneNumber": "0987654321",
         "creditCard": {
             "cardNumber": null,
-            "expirationDate": "****",
-            "cardHolderName": "***"
+            "expirationDate": null
         },
         "memberCard": {
             "cardNumber": "0000111100001113",
-            "expirationDate": "****",
+            "expirationDate": "0425",
             "vaild": true
         }
     }
