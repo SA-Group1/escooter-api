@@ -42,51 +42,11 @@ public class EscooterService {
     * Checks if the specified e-scooter is currently rented.
     *
     * @param escooterId The ID of the e-scooter to check
-    * @return true if the e-scooter is not available (i.e., it is rented), false otherwise
+    * @return get escooter status
     */
-    public boolean isRent(String escooterId){
+    public String getStatus(String escooterId){
         Escooter escooter = escooterRepository.queryEscooterById(escooterId);
-        if(!escooter.getStatus().equals("Available")){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    /**
-    * Checks if the specified e-scooter has been returned.
-    *
-    * @param escooterId The ID of the e-scooter to check
-    * @return false if the e-scooter is still rented or rented and parked, true otherwise
-    */
-    public boolean isReturn(String escooterId){
-        Escooter escooter = escooterRepository.queryEscooterById(escooterId);
-        if(escooter.getStatus().equals("Rented")){
-            return false;
-        }
-        else if(escooter.getStatus().equals("Rented_parling")){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-
-    /**
-    * Checks if the specified e-scooter is currently parked while rented.
-    *
-    * @param escooterId The ID of the e-scooter to check
-    * @return true if the e-scooter is rented and parked, false otherwise
-    */
-    public boolean getParkingStatus(String escooterId){
-        Escooter escooter = escooterRepository.queryEscooterById(escooterId);
-        if(escooter.getStatus().equals("Rented_parking")){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return escooter.getStatus();
     }
 
     /**

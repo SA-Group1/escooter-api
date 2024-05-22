@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,13 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.escooter.api.dto.EscooterDTO;
 import com.escooter.api.dto.GPSDTO;
 import com.escooter.api.dto.UpdateGPSDTO;
-
 import com.escooter.api.model.GPS;
-
-import com.escooter.api.service.*;
-
-
-import org.springframework.web.bind.annotation.PutMapping;
+import com.escooter.api.service.EscooterService;
 
 /**
  * Controller for handling e-scooter related requests.
@@ -56,65 +52,22 @@ public class EscooterController {
         return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
 
-    /**
-     * Check if the e-scooter is rentable and returns the status.
-     *
-     * @param escooterDTO E-scooter data transfer object
-     * @return A ResponseEntity with HTTP status and message
-     */
-    @PostMapping("/isRent")
-    public ResponseEntity<String> isRent(@RequestBody EscooterDTO escooterDTO) {
-        boolean res = escooterService.isRent(escooterDTO.getEscooterId());
-
-        // Create return message
-        JSONObject message = new JSONObject();
-        try {
-            message.put("status", res);
-            message.put("message", res ? "escooter is rentable" : "escooter is not rentable");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return new ResponseEntity<>(message.toString(), HttpStatus.OK);
-    }
     
     /**
-     * Check if the e-scooter has been returned and returns the status.
+     * Get the status of the e-scooter and returns the status.
      *
      * @param escooterDTO E-scooter data transfer object
-     * @return A ResponseEntity with HTTP status and message
+     * @return A ResponseEntity with HTTP status and escooter status
      */
-    @PostMapping("/isReturn")
-    public ResponseEntity<String> isReturn(@RequestBody EscooterDTO escooterDTO) {
-        boolean res = escooterService.isReturn(escooterDTO.getEscooterId());
+    @PostMapping("/getStatus")
+    public ResponseEntity<String> getStatus(@RequestBody EscooterDTO escooterDTO) {
+        String res = escooterService.getStatus(escooterDTO.getEscooterId());
 
         // Create return message
         JSONObject message = new JSONObject();
         try {
             message.put("status", res);
-            message.put("message", res ? "escooter has been returned" : "escooter status is Rented");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return new ResponseEntity<>(message.toString(), HttpStatus.OK);
-    }
-    
-    /**
-     * Get the parking status of the e-scooter and returns the status.
-     *
-     * @param escooterDTO E-scooter data transfer object
-     * @return A ResponseEntity with HTTP status and message
-     */
-    @PostMapping("/getParkingStatus")
-    public ResponseEntity<String> getParkingStatus(@RequestBody EscooterDTO escooterDTO) {
-        boolean res = escooterService.getParkingStatus(escooterDTO.getEscooterId());
-
-        // Create return message
-        JSONObject message = new JSONObject();
-        try {
-            message.put("status", res);
-            message.put("message", res ? "escooter is parking" : "escooter is not parking");
+            message.put("message", res);
         } catch (JSONException e) {
             e.printStackTrace();
         }
