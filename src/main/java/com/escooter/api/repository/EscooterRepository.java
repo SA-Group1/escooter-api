@@ -143,7 +143,7 @@ public class EscooterRepository {
     * @param batteryLevel The new battery level
     * @return true if the update was successful
     */
-    public boolean updateBetteryLevel(String escooterId, int batteryLevel){
+    public boolean updateBatteryLevel(String escooterId, int batteryLevel){
         String sql = "UPDATE escooter_rental.escooter SET battery_level = ? WHERE escooter_id = ?";
         jdbcTemplate.update(sql, batteryLevel, escooterId);
         return true;

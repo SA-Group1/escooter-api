@@ -44,7 +44,7 @@ public class EscooterService {
     * @param escooterId The ID of the e-scooter to check
     * @return get escooter status
     */
-    public String getStatus(String escooterId){
+    public String getEscooterStatus(String escooterId){
         Escooter escooter = escooterRepository.queryEscooterById(escooterId);
         return escooter.getStatus();
     }
@@ -56,8 +56,8 @@ public class EscooterService {
     * @param batteryLevel The new battery level
     * @return true if the battery level was successfully updated
     */
-    public boolean updateBetteryLevel(String escooterId, int batteryLevel){
-        return escooterRepository.updateBetteryLevel(escooterId,batteryLevel);
+    public boolean updateBatteryLevel(String escooterId, int batteryLevel){
+        return escooterRepository.updateBatteryLevel(escooterId,batteryLevel);
     }
 
     /**
