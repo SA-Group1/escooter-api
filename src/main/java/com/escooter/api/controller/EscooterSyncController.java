@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.escooter.api.dto.EscooterDTO;
-import com.escooter.api.dto.GPSDTO;
-import com.escooter.api.dto.UpdateGPSDTO;
+import com.escooter.api.dto.UpdateGpsDTO;
 import com.escooter.api.model.GPS;
 import com.escooter.api.service.EscooterService;
 import com.escooter.api.util.JsonResponseBuilder;
@@ -45,6 +44,7 @@ public class EscooterSyncController {
             return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Get status success" , escooterStatus), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Failed to get status", ex);
+
             return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Failed to get status"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -52,17 +52,17 @@ public class EscooterSyncController {
     /**
      * Updates the GPS location of the e-scooter and returns the status.
      *
-     * @param updateGPSDTO Update GPS data transfer object
+     * @param updateGpsDTO Update GPS data transfer object
      * @return A ResponseEntity with HTTP status and message
      */
     @PutMapping("/updateGps")
-    public ResponseEntity<String> updateGps(@RequestBody UpdateGPSDTO updateGPSDTO) {
+    public ResponseEntity<String> updateGps(@RequestBody UpdateGpsDTO updateGpsDTO) {
         try {
-            String escooterId = updateGPSDTO.getEscooterDTO().getEscooterId();
-            GPSDTO gpsDTO = updateGPSDTO.getGPSDTO();
-            GPS gps = new GPS(gpsDTO.getLongitude(), gpsDTO.getLatitude());
+            String escooterId = updateGpsDTO.getEscooterId();
+            GPS gps = updateGpsDTO.getGps();
 
             escooterService.updateGps(escooterId, gps);
+
             return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse( "GPS update success"), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Failed to update GPS", ex);
@@ -83,6 +83,7 @@ public class EscooterSyncController {
             int batteryLevel = escooterDTO.getBatteryLevel();
 
             escooterService.updateBatteryLevel(escooterId, batteryLevel);
+
             return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse( "Battery Level update success"), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Failed to update battery level", ex);

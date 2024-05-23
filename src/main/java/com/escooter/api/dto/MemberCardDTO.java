@@ -17,18 +17,10 @@ public class MemberCardDTO {
         this.expirationDate = expirationDate;
     }
 
-    /**
-     * Returns the member card number.
-     * @return The member card number.
-     */
     public String getCardNumber() {
         return cardNumber;
     }
 
-    /**
-     * Returns the expiration date of the member card.
-     * @return The expiration date.
-     */
     public String getExpirationDate() {
         return expirationDate;
     }

@@ -1,36 +1,31 @@
 package com.escooter.api.dto;
+import com.escooter.api.model.GPS;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public class UpdateGPSDTO {
-    @JsonProperty("escooter")
-    private EscooterDTO escooterDTO;
-    @JsonProperty("gps")
-    private GPSDTO gpsDTO;
+/**
+ * Data Transfer Object for updating GPS information.
+ * This class holds the data for an e-scooter and its GPS details.
+ */
+public class UpdateGpsDTO {
+    private final String escooterId;
+    private final GPS gps;
 
     /**
      * Constructs a new UpdateGPSDTO with the specified details.
-     * @param escooterDTO The escooter data.
-     * @param gpsDTO The GPS data.
+     *
+     * @param escooterId The escooter id.
+     * @param longitude The GPS longitude data.
+     * @param latitude The GPS latitude data.
      */
-    public UpdateGPSDTO(EscooterDTO escooterDTO, GPSDTO gpsDTO){
-        this.escooterDTO = escooterDTO;
-        this.gpsDTO = gpsDTO;
+    public UpdateGpsDTO(String escooterId, double longitude, double latitude) {
+        this.escooterId = escooterId;
+        this.gps = new GPS(longitude, latitude);
     }
 
-    /**
-     * Returns the escooter data.
-     * @return The escooter data.
-     */
-    public EscooterDTO getEscooterDTO(){
-        return escooterDTO;
+    public String getEscooterId() {
+        return escooterId;
     }
 
-    /**
-     * Returns the GPS data.
-     * @return The GPS data.
-     */
-    public GPSDTO getGPSDTO(){
-        return gpsDTO;
+    public GPS getGps(){
+        return gps;
     }
 }

@@ -1,41 +1,45 @@
 package com.escooter.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.escooter.api.model.CreditCard;
+import com.escooter.api.model.UserCredentials;
 
 /**
  * DTO (Data Transfer Object) for binding credit card to a user.
  */
 public class BindCreditCardDTO {
 
-    @JsonProperty("user")
-    private UserDTO userDTO;
-    @JsonProperty("creditCard")
-    private CreditCardDTO creditCardDTO;
+    private final UserCredentialsDTO userCredentialsDTO;
+    private final CreditCardDTO creditCardDTO;
 
     /**
      * Constructs a new BindCreditCardDTO with the specified details.
-     * @param userDTO The user data.
-     * @param creditCardDTO The credit card data.
+     * @param account User account for credentials.
+     * @param password User password for credentials.
+     * @param cardNumber
+     * @param expirationDate
+     * @param cardHolderName
+     * @param cvv
      */
-    public BindCreditCardDTO(UserDTO userDTO, CreditCardDTO creditCardDTO){
-        this.userDTO = userDTO;
-        this.creditCardDTO = creditCardDTO;
+    public BindCreditCardDTO(String account , String password, String cardNumber, String expirationDate , String cardHolderName , String cvv){
+        this.userCredentialsDTO = new UserCredentialsDTO(account , password);
+        this.creditCardDTO = new CreditCardDTO(cardNumber, expirationDate , cardHolderName , cvv);
     }
 
-    /**
-     * Returns the user data.
-     * @return The user data.
-     */
-    public UserDTO getUserDTO(){
-        return userDTO;
+    public UserCredentials getUserCredentials(){
+        UserCredentials userCredentials= new UserCredentials(userCredentialsDTO.getAccount(), userCredentialsDTO.getPassword());
+        return userCredentials;
     }
 
-    /**
-     * Returns the credit card data.
-     * @return The credit card data.
-     */
-    public CreditCardDTO getCreditCardDTO(){
-        return creditCardDTO;
+    public CreditCard getCreditCard(){
+        CreditCard creditCard = new CreditCard();
+        creditCard.setCardNumber(creditCardDTO.getCardNumber());
+        creditCard.setExpirationDate(creditCardDTO.getExpirationDate());
+        creditCard.setCardHolderName(creditCardDTO.getCardHolderName());
+        return creditCard;
+    }
+
+    public String getCvv(){
+        return creditCardDTO.getCvv();
     }
 }
 

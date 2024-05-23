@@ -22,18 +22,10 @@ public class RentEscooterDTO {
         this.escooterDTO = escooterDTO;
     }
 
-    /**
-     * Returns the user data.
-     * @return The user data.
-     */
     public UserDTO getUserDTO() {
         return userDTO;
     }
 
-    /**
-     * Returns the escooter data.
-     * @return The escooter data.
-     */
     public EscooterDTO getEscooterDTO() {
         return escooterDTO;
     }

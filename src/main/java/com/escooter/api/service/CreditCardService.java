@@ -1,33 +1,34 @@
 package com.escooter.api.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 
+import com.escooter.api.exceptions.CardExpiredException;
+import com.escooter.api.exceptions.CreditCardCvvException;
 import com.escooter.api.model.CreditCard;
-import com.escooter.api.repository.CreditCardRepository;
 
-/**
- * Service class for managing credit cards.
- */
-@Service
 public class CreditCardService {
-
-	@Autowired
-	private CreditCardRepository creditCardRepository;
-
-	/**
-     * Adds a new credit card if it is valid.
-     * @param creditCard The credit card to add.
-     * @param cvv The CVV (Card Verification Value) of the credit card.
-     * @return True if the credit card is valid and added successfully, false otherwise.
-     */
-	public boolean addCard(CreditCard creditCard , String cvv){
-
-		if(!creditCard.isVaild(cvv)){
-			return false;
+    public boolean addCreditCard(CreditCard creditCard , String vcc) throws CardExpiredException , CreditCardCvvException{
+		
+		if(!isCreditCardExpiration(creditCard.getExpirationDate())) {
+			throw new CardExpiredException("Invalid card Expired.");
 		}
 
-		creditCardRepository.addCard(creditCard);
-		return true;
-	}
+		if(!isCreditCardVaild(creditCard , vcc)) {
+			throw new CreditCardCvvException("Invalid card cvv.");
+		}
+
+        return true;
+    }
+
+    private boolean isCreditCardVaild(CreditCard creditCard , String vcc){
+        // TODO add credit card vaild
+        return true;
+    }
+
+    private  boolean isCreditCardExpiration(String expirationDate){
+        YearMonth expirationDate = YearMonth.parse(expirationDate,DateTimeFormatter.ofPattern("MMyy"));
+        return !LocalDate.now().isAfter(expirationDate.atDay(1));
+    }
 }

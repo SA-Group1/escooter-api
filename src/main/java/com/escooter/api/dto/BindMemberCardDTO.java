@@ -22,18 +22,10 @@ public class BindMemberCardDTO {
         this.memberCardDTO = memberCardDTO;
     }
 
-    /**
-     * Returns the user data.
-     * @return The user data.
-     */
     public UserDTO getUserDTO(){
         return userDTO;
     }
 
-    /**
-     * Returns the credit card data.
-     * @return The credit card data.
-     */
     public MemberCardDTO getMemberCardDTO(){
         return memberCardDTO;
     }
