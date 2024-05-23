@@ -1,5 +1,7 @@
 package com.escooter.api.exceptions;
 
-public class CardExpirationException extends Exception {
-    
+public class CardExpiredException extends Exception {
+    public CardExpiredException(String message) {
+        super(message);
+    }
 }

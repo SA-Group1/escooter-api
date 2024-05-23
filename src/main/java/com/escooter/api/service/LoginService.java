@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.escooter.api.dto.UploadUserPhotoDTO;
 import com.escooter.api.dto.UserDTO;
 import com.escooter.api.model.User;
+import com.escooter.api.model.UserCredentials;
 import com.escooter.api.repository.UserRepository;
 
 /**
@@ -16,8 +17,6 @@ import com.escooter.api.repository.UserRepository;
 public class LoginService {
     @Autowired
     UserRepository userRepository;
-
-    
 
     /**
      * Registers a new user.

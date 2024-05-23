@@ -9,7 +9,6 @@ public class User {
     private int userId;
     private String account;
     private String userName;
-    private String password;
     private String email;
     private String registrationTime;
     private String phoneNumber;
@@ -18,42 +17,6 @@ public class User {
     private MemberCard memberCard;
     //private List<RentalRecord> rentalRecords;
     private byte[] image;
-    
-
-
-    /**
-     * Default constructor.
-     */
-    public User() {}
-
-    /**
-     * Constructs a User with the specified account.
-     * @param account The user account.
-     */
-    public User(String account) {
-        this.account = account;
-    }
-    /**
-     * Constructs a User with the specified account.
-     * @param account The user account.
-     * @param password THe user password.
-     */
-    public User(String account, String password) {
-        this.account = account;
-        this.password = password;
-    }
-    
-    /**
-     * Constructs a User with the specified account, userName, and password.
-     * @param account The user account.
-     * @param userName The user name.
-     * @param password The user password.
-     */
-    public User(String account, String userName, String password) {
-        this.account = account;
-        this.userName = userName;
-        this.password = password;
-    }
 
     public void setUserId(int userId) {
         this.userId = userId;
@@ -69,10 +32,6 @@ public class User {
 
     public void setUserName(String username) {
         this.userName = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public void setEmail(String email) {
@@ -95,21 +54,11 @@ public class User {
         return userName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public String getEmail() {
         return email;
     }
 
-    public boolean verifyPassword(String password) {
-        // 如何驗證
-        return true;
-    }
-
     public String getRegistrationTime() {
-        //
         return registrationTime;
     }
 

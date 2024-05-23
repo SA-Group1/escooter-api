@@ -9,13 +9,13 @@ import com.escooter.api.exceptions.CreditCardCvvException;
 import com.escooter.api.model.CreditCard;
 
 public class CreditCardService {
-    public boolean addCreditCard(CreditCard creditCard , String vcc) throws CardExpiredException , CreditCardCvvException{
+    public boolean addCreditCard(CreditCard creditCard , String cvv) throws CardExpiredException , CreditCardCvvException{
 		
-		if(!isCreditCardExpiration(creditCard.getExpirationDate())) {
+		if(!isCreditCardNotExpired(creditCard.getExpirationDate())) {
 			throw new CardExpiredException("Invalid card Expired.");
 		}
 
-		if(!isCreditCardVaild(creditCard , vcc)) {
+		if(!isCreditCardVaild(creditCard , cvv)) {
 			throw new CreditCardCvvException("Invalid card cvv.");
 		}
 
@@ -27,8 +27,8 @@ public class CreditCardService {
         return true;
     }
 
-    private  boolean isCreditCardExpiration(String expirationDate){
-        YearMonth expirationDate = YearMonth.parse(expirationDate,DateTimeFormatter.ofPattern("MMyy"));
-        return !LocalDate.now().isAfter(expirationDate.atDay(1));
+    private  boolean isCreditCardNotExpired(String expirationDate){
+        YearMonth yearMonth = YearMonth.parse(expirationDate,DateTimeFormatter.ofPattern("MMyy"));
+        return !LocalDate.now().isAfter(yearMonth.atDay(1));
     }
 }

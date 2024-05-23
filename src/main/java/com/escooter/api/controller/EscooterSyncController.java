@@ -41,10 +41,13 @@ public class EscooterSyncController {
             String escooterId = escooterDTO.getEscooterId();
             String escooterStatus = escooterService.getEscooterStatus(escooterId);
 
+            if (escooterStatus == null) {
+                return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("E-scooter not found"), HttpStatus.NOT_FOUND);
+            }
+
             return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Get status success" , escooterStatus), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Failed to get status", ex);
-
             return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Failed to get status"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

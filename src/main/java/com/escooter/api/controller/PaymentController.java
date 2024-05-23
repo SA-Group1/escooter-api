@@ -15,14 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.escooter.api.dto.BindCreditCardDTO;
 import com.escooter.api.dto.BindMemberCardDTO;
-import com.escooter.api.dto.CreditCardDTO;
 import com.escooter.api.dto.MemberCardDTO;
 import com.escooter.api.dto.UserDTO;
-import com.escooter.api.exceptions.CardExpirationException;
+import com.escooter.api.exceptions.CardExpiredException;
+import com.escooter.api.exceptions.UserCredentialsException;
 import com.escooter.api.model.CreditCard;
 import com.escooter.api.model.MemberCard;
 import com.escooter.api.model.User;
-import com.escooter.api.service.PaymentService;
+import com.escooter.api.model.UserCredentials;
+import com.escooter.api.service.UserService;
+import com.escooter.api.util.JsonResponseBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -33,7 +35,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/api")
 public class PaymentController {
 	@Autowired
-	private PaymentService paymentService;
+	private UserService userService;
 
     /**
      * Binds credit card data to the user's account and returns a result message.
@@ -43,45 +45,23 @@ public class PaymentController {
      */
 	@PostMapping("bindCreditCard")
 	public ResponseEntity<String> bindCreditCard(@RequestBody BindCreditCardDTO bindCreditCardDTO) {
-
 		CreditCard creditCard = bindCreditCardDTO.getCreditCard();
 		String cvv = bindCreditCardDTO.getCvv();
-		UserDTO userDTO = bindCreditCardDTO.getUserDTO();
-		User user = new User(userDTO.getAccount());
-
+		UserCredentials userCredentials = bindCreditCardDTO.getUserCredentials();
 		try {
-			// create return message.
-			JSONObject message = new JSONObject();
-			message.put("status", false);
-
-
-	
-			if(user.verifyPassword(userDTO.getPassword())) {
-				// bind credit card to the user.
-				try {
-					paymentService.addCreditCard(creditCard, cvv);
-					paymentService.bindCreditCard(user, creditCard);
-					message.put("status", true);
-					message.put("message", "Binding credit card success.");
-				} catch (DuplicateKeyException e) {
-					message.put("message", "This credit card is already been used.");
-				} catch (CardExpirationException e) {
-					message.put("message", "This credit card has expirated.");
-				} catch (DateTimeParseException e) {
-					message.put("message", "Invaild expiration date.");
-				}
-			} else {
-				message.put("message", "Wrong password.");
-			}
-
-			// return the result message.
-			return new ResponseEntity<>(message.toString(), HttpStatus.OK);
-
-		} catch (JSONException e) {
-			e.printStackTrace();
+			userService.bindCreditCard(userCredentials, creditCard , cvv);
+			return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Bind credit card success."), HttpStatus.ACCEPTED);
+		} catch (UserCredentialsException e){
+			return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Wrong password."), HttpStatus.UNAUTHORIZED);
+		} catch (DuplicateKeyException e) {
+			return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("This credit card is already been used."), HttpStatus.CONFLICT);
+		} catch (CardExpiredException e) {
+			return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("This credit card has expired."), HttpStatus.BAD_REQUEST);
+		} catch (DateTimeParseException e) {
+			return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Invalid expiration date."), HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Failed to bind credit card.",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		return new ResponseEntity<>("bind credit card failed.",HttpStatus.OK);
 	}
 
 	/**
@@ -151,7 +131,7 @@ public class PaymentController {
 				message.put("message", "Binding member card success.");
 			} catch (DuplicateKeyException e) {
 				message.put("message", "This member card is already been used.");
-			} catch (CardExpirationException e) {
+			} catch (CardExpiredException e) {
 				message.put("message", "This member card has expirated.");
 			} catch (DateTimeParseException e) {
 				message.put("message", "Invaild expiration date.");
