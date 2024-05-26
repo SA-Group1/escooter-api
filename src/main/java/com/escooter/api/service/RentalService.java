@@ -1,40 +1,29 @@
 package com.escooter.api.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import java.util.List;
-import com.escooter.api.model.*;
-import com.escooter.api.repository.EscooterRepository;
-import com.escooter.api.repository.RentalRecordRepository;
-import com.escooter.api.repository.ReturnAreaRepository;
-import com.escooter.api.repository.UserRepository;
+import com.escooter.api.exceptions.UserCredentialsException;
+import com.escooter.api.model.Escooter;
+import com.escooter.api.model.GPS;
+import com.escooter.api.model.UserCredentials;
+import com.escooter.api.repository.RentalRepository;
 /**
  * Service class for managing rental service.
  */
 @Service
 public class RentalService {
+
     @Autowired
-	private EscooterRepository escooterRepository;
+    EscooterService escooterService;
     @Autowired
-    private RentalRecordRepository rentalRecordRepository;
+    UserCredentialService userCredentialService;
     @Autowired
-    private UserRepository userRepository;
+    UserService userService;
     @Autowired
-    private ReturnAreaRepository returnAreaRepository;
-    
-    private List<Escooter> escooters;
-    
-    /**
-     * Retrieves an e-scooter by its ID.
-     * @param scooterId The ID of the e-scooter.
-     * @return The e-scooter if found, null otherwise.
-     */
-    public Escooter getEscooter(String scooterId){
-        Escooter escooter = escooterRepository.queryEscooterById(scooterId);
-        return escooter;
-    }
+    RentalRepository rentalRepository;
     
     /**
      * Shows available e-scooters within a certain radius from the given GPS location.
@@ -42,12 +31,7 @@ public class RentalService {
      * @return A list of available e-scooters within the specified radius.
      */
     public List<Escooter> showAvailableEscooter(GPS gps){
-        int i = 0;
-        do {
-            escooters = escooterRepository.queryAvailableEscooters(gps.getLongitude(), gps.getLatitude(), 0.5 * ++i);
-            System.out.println("i=" + i);
-        } while (escooters.isEmpty() && i < 2);
-        return escooters;
+        return escooterService.showAvailableEscooter(gps);
     }
     
     /**
@@ -56,20 +40,39 @@ public class RentalService {
      * @param escooter The e-scooter to be rented.
      * @return A rental record of the transaction.
      */
-    public Escooter rentEscooter(User user, String escooterId) {
-        Escooter rentEscooter = escooterRepository.queryEscooterById(escooterId);
-        if (!rentEscooter.getStatus().equals("Available")) {
-            return null;
-        }
-        Escooter rentedEscooter = escooterRepository.queryRentedEscooterByAccount(user.getAccount());
-        if (rentedEscooter != null) {
-            return null;
-        }
-        user = userRepository.queryUserByAccount(user.getAccount());
-        rentalRecordRepository.createRentalRecord(user.getUserId(), rentEscooter.getEscooterId());
-        escooterRepository.updateStatus(rentEscooter.getEscooterId(), "Rented");
-        rentEscooter.setStatus("Rented");
+    public Escooter rentEscooter(UserCredentials userCredentials, String escooterId) throws UserCredentialsException {
+
+        if(!userCredentialService.verifyUserCredentials(userCredentials)){
+			throw new UserCredentialsException("Invalid credentials.");
+		}
+
+        Escooter rentEscooter = escooterService.rentEscooter(userCredentials.getAccount(), escooterId);
+        
         return rentEscooter;
+    }
+
+    /**
+    * Updates the parking status of the e-scooter associated with the given account.
+    *
+    * @param account  The account identifier of the user
+    * @param password The password of the user (not used in this method, consider security implications)
+    * @return true if the e-scooter's parking status was successfully updated, false otherwise
+    */
+    public boolean updateEscooterParkStatus(UserCredentials userCredentials) throws UserCredentialsException {
+
+        if(!userCredentialService.verifyUserCredentials(userCredentials)){
+			throw new UserCredentialsException("Invalid credentials.");
+		}
+
+        Escooter escooter = escooterService.queryRentedEscooterByAccount(userCredentials.getAccount());
+        if (escooter == null) {
+            return false;
+        }
+
+        String status = escooter.getStatus();
+        status = status.equals("Rented") ? "Rented_parking" : "Rented";
+        escooterService.updateEscooterParkStatusbyId(escooter.getEscooterId(), status);
+        return true;
     }
 
 
@@ -79,38 +82,27 @@ public class RentalService {
      * @param escooter The e-scooter to be returned.
      * @return 
      */
-    public boolean returnEscooter(String account, String password) {
-        User user = userRepository.queryUserByAccount(account);
-        int userId = user.getUserId();
-        Escooter escooter = escooterRepository.queryRentedEscooterByAccount(account);
-        if (escooter == null) {
-            return false;
-        }
-        GPS gps = escooter.getGPS();
-        boolean res = returnAreaRepository.checkWithinReturnArea(gps.getLongitude(), gps.getLatitude());
-        if (!res) {
-            return false;
-        }
-        String escooterId = escooter.getEscooterId();
-        String modelId = escooter.getModelId();
-        return escooterRepository.returnEscooter(userId, escooterId, modelId);
-    }
-    /**
-    * Updates the parking status of the e-scooter associated with the given account.
-    *
-    * @param account  The account identifier of the user
-    * @param password The password of the user (not used in this method, consider security implications)
-    * @return true if the e-scooter's parking status was successfully updated, false otherwise
-    */
-    public boolean updateEscooterParkStatus(String account, String passowrd) {
-        Escooter escooter = escooterRepository.queryRentedEscooterByAccount(account);
+    public boolean returnEscooter(UserCredentials userCredentials)throws UserCredentialsException {
+
+        if(!userCredentialService.verifyUserCredentials(userCredentials)){
+			throw new UserCredentialsException("Invalid credentials.");
+		}
+
+        int userId = userService.queryUserIdByAccount(userCredentials.getAccount());
+        Escooter escooter = escooterService.queryRentedEscooterByAccount(userCredentials.getAccount());
         if (escooter == null) {
             return false;
         }
 
-        String status = escooter.getStatus();
-        status = status.equals("Rented") ? "Rented_parking" : "Rented";
-        escooterRepository.updateEscooterParkStatusbyId(escooter.getEscooterId(), status);
-        return true;
+        GPS gps = escooter.getGPS();
+        boolean res = rentalRepository.checkWithinReturnArea(gps.getLongitude(), gps.getLatitude());
+        if (!res) {
+            return false;
+        }
+
+        String escooterId = escooter.getEscooterId();
+        String modelId = escooter.getModelId();
+
+        return escooterService.returnEscooter(userId, escooterId, modelId);
     }
 }

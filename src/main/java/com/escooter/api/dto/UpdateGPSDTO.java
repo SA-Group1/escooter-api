@@ -7,7 +7,7 @@ import com.escooter.api.model.GPS;
  */
 public class UpdateGpsDTO {
     private final String escooterId;
-    private final GPS gps;
+    private final GpsDTO gpsDTO;
 
     /**
      * Constructs a new UpdateGPSDTO with the specified details.
@@ -18,7 +18,7 @@ public class UpdateGpsDTO {
      */
     public UpdateGpsDTO(String escooterId, double longitude, double latitude) {
         this.escooterId = escooterId;
-        this.gps = new GPS(longitude, latitude);
+        this.gpsDTO = new GpsDTO(longitude, latitude);
     }
 
     public String getEscooterId() {
@@ -26,6 +26,6 @@ public class UpdateGpsDTO {
     }
 
     public GPS getGps(){
-        return gps;
+        return new GPS(gpsDTO.getLongitude(),gpsDTO.getLatitude());
     }
 }

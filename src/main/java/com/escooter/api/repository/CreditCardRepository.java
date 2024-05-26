@@ -26,7 +26,7 @@ public class CreditCardRepository {
 	 * @return True if adding is successful, false otherwise.
 	 *  @throws DuplicateKeyException Throws when the credit card is already in the database.
 	 */
-	public boolean addCard(CreditCard creditCard) throws DuplicateKeyException {
+	public boolean addCreditCard(CreditCard creditCard) throws DuplicateKeyException {
 		System.out.println("EXCUTE INSERT MEMBER");
 		
 		String sql = "INSERT INTO escooter_rental.credit_card (creditcard_id,expiration_date,card_holder_name) VALUES (?,?,?)";
@@ -47,6 +47,43 @@ public class CreditCardRepository {
 		"WHERE creditcard_id = (SELECT creditcard_id FROM escooter_rental.user WHERE account = ?)";
 		CreditCard creditCard = jdbcTemplate.queryForObject(sql,new CreditCardRowMapper(),new Object[]{account});
 		return creditCard;
+	}
+
+	/**
+	 * Binds a credit card to the user.
+	 * 
+	 * @param account the user's account.
+	 * @param cardNumber the credit card number.
+	 * @return True if binding is successful.
+	 */
+	public boolean bindCreditCard(String account, String cardNumber) {
+		String sql = "UPDATE `escooter_rental`.`user` SET `creditcard_id` = ? WHERE (`account` = ?)";
+		jdbcTemplate.update(sql, cardNumber, account);
+		return true;
+	}
+
+	/**
+	 * Unbinds a credit card for the user.
+	 * 
+	 * @param account the user's account.
+	 * @return True if unbinding is successful.
+	 */
+	public String unbindCreditCard(String account) {
+
+		String sql = "SELECT creditcard_id FROM `escooter_rental`.`user` WHERE (`account` = ?)";
+
+		String cardNumber = jdbcTemplate.queryForObject(sql,String.class, new Object[]{account});
+
+		sql = "UPDATE `escooter_rental`.`user` SET `creditcard_id` = NULL WHERE (`account` = ?)";
+		jdbcTemplate.update(sql, account);
+
+		return cardNumber;
+	}
+
+	public boolean deleteCreditCard(String cardNumber){
+		String sql = "DELETE FROM `escooter_rental`.`credit_card` WHERE `creditcard_id` = ?";
+		int rowsAffected = jdbcTemplate.update(sql, cardNumber);
+		return rowsAffected > 0;
 	}
 
 

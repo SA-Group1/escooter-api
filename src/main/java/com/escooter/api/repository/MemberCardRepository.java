@@ -24,12 +24,49 @@ public class MemberCardRepository {
 	 * @param memberCard The member card to add.
 	 * @return True if adding is successful, false otherwise.
 	 */
-	public boolean addCard(MemberCard memberCard) {
+	public boolean addMemberCard(MemberCard memberCard) {
 		System.out.println("EXCUTE INSERT MEMBER");
 		
 		jdbcTemplate.update(String.format("INSERT INTO escooter_rental.member_card (membercard_id,expiration_date) VALUES ('%s','%s')",
 		memberCard.getCardNumber(),memberCard.getExpirationDate()));
 		return true;
+	}
+
+	/**
+	 * Binds a member card to the user.
+	 * 
+	 * @param account the user's account.
+	 * @param cardNumber the member card number.
+	 * @return True if binding is successful.
+	 */
+	public boolean bindMemberCard(String account, String cardNumber) {
+		String sql = "UPDATE `escooter_rental`.`user` SET `membercard_id` = ? WHERE (`account` = ?)";
+		jdbcTemplate.update(sql, cardNumber, account);
+		return true;
+	}
+
+	/**
+	 * Unbinds a credit card for the user.
+	 * 
+	 * @param account the user's account.
+	 * @return True if unbinding is successful.
+	 */
+	public String unbindMemberCard(String account) {
+
+		String sql = "SELECT membercard_id FROM `escooter_rental`.`user` WHERE (`account` = ?)";
+
+		String cardNumber = jdbcTemplate.queryForObject(sql,String.class, new Object[]{account});
+
+		sql = "UPDATE `escooter_rental`.`user` SET `membercard_id` = NULL WHERE (`account` = ?)";
+		jdbcTemplate.update(sql, account);
+
+		return cardNumber;
+	}
+
+	public boolean deleteMemberCard(String cardNumber){
+		String sql = "DELETE FROM `escooter_rental`.`member_card` WHERE `membercard_id` = ?";
+		int rowsAffected = jdbcTemplate.update(sql, cardNumber);
+		return rowsAffected > 0;
 	}
 
 	/**

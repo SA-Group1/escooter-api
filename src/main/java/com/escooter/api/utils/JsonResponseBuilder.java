@@ -1,4 +1,4 @@
-package com.escooter.api.util;
+package com.escooter.api.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +22,10 @@ public class JsonResponseBuilder {
     }
 
     public static String buildSuccessResponse(String message , JSONArray data){
+        return buildResponse(true, message , data);
+    }
+
+    public static String buildSuccessResponse(String message , JSONObject data){
         return buildResponse(true, message , data);
     }
     

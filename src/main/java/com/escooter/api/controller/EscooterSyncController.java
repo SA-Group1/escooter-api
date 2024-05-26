@@ -15,7 +15,7 @@ import com.escooter.api.dto.EscooterDTO;
 import com.escooter.api.dto.UpdateGpsDTO;
 import com.escooter.api.model.GPS;
 import com.escooter.api.service.EscooterService;
-import com.escooter.api.util.JsonResponseBuilder;
+import com.escooter.api.utils.JsonResponseBuilder;
 
 /**
  * Controller for handling e-scooter related requests.

@@ -3,15 +3,12 @@ package com.escooter.api.repository;
 
 import java.sql.Blob;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.escooter.api.dto.UploadUserPhotoDTO;
-import com.escooter.api.dto.UserDTO;
 import com.escooter.api.model.CreditCard;
 import com.escooter.api.model.MemberCard;
 import com.escooter.api.model.User;
@@ -46,7 +43,6 @@ public class UserRepository {
             user.setUserId(rs.getInt("user_id"));
             user.setAccount(rs.getString("account"));
             user.setUserName(rs.getString("username"));
-            user.setPassword(rs.getString("password"));
             user.setEmail(rs.getString("email"));
 			user.setPhoneNumber(rs.getString("phone_number"));
 			System.out.println(rs.getTimestamp("registration_time").toLocalDateTime());
@@ -75,6 +71,23 @@ public class UserRepository {
 		}
         return user;
 	}
+
+	/**
+     * Queries the user by account from the database.
+     * 
+     * @param account the account identifier
+     * @return the User object if found, otherwise null
+     */
+	public int queryUserIdByAccount(String account) {
+		String sql = """
+			SELECT
+				user.user_id,
+			FROM escooter_rental.user
+			WHERE account = ?
+		""";
+        return jdbcTemplate.queryForObject(sql,int.class, new Object[]{account});
+	}
+
 	/**
      * Adds a new User to the database.
      * 
@@ -97,73 +110,16 @@ public class UserRepository {
      * @param userDTO the user data transfer object containing updated user information
      * @return True if updating is successful, false otherwise.
      */
-	public boolean updateUserData(UserDTO userDTO) {
-		String sql = "UPDATE escooter_rental.user SET password = ?, email = ?, username = ?, phone_number = ? WHERE account = ?";
-		jdbcTemplate.update(sql, userDTO.getPassword(), userDTO.getEmail(), userDTO.getUserName(), userDTO.getPhoneNumber(), userDTO.getAccount());
+	public boolean updateUserData(User user) {
+		String sql = "UPDATE escooter_rental.user SET  email = ?, username = ?, phone_number = ? WHERE account = ?";
+		jdbcTemplate.update(sql, user.getEmail(), user.getUserName(), user.getPhoneNumber(), user.getAccount());
 		return true;
 	}
 
-	/**
-	 * Binds a credit card to the user.
-	 * 
-	 * @param account the user's account.
-	 * @param cardNumber the credit card number.
-	 * @return True if binding is successful.
-	 */
-	public boolean bindCreditCard(String account, String cardNumber) {
-		String sql = "UPDATE `escooter_rental`.`user` SET `creditcard_id` = ? WHERE (`account` = ?)";
-		jdbcTemplate.update(sql, cardNumber, account);
-		return true;
-	}
 
-	/**
-	 * Unbinds a credit card for the user.
-	 * 
-	 * @param account the user's account.
-	 * @return True if unbinding is successful.
-	 */
-	public boolean unbindCreditCard(String account) {
-		String sql = "UPDATE `escooter_rental`.`user` SET `creditcard_id` = NULL WHERE (`account` = ?)";
-		jdbcTemplate.update(sql, account);
-		return true;
-	}
-
-	/**
-	 * Binds a member card to the user.
-	 * 
-	 * @param account the user's account.
-	 * @param cardNumber the member card number.
-	 * @return True if binding is successful.
-	 */
-	public boolean bindMemberCard(String account, String cardNumber) {
-		String sql = "UPDATE `escooter_rental`.`user` SET `membercard_id` = ? WHERE (`account` = ?)";
-		jdbcTemplate.update(sql, cardNumber, account);
-		return true;
-	}
-
-	/**
-	 * Unbinds a member card for the user.
-	 * 
-	 * @param account the user's account.
-	 * @return True if unbinding is successful.
-	 */
-	public boolean unbindMemberCard(String account) {
-		String sql = "UPDATE `escooter_rental`.`user` SET `membercard_id` = NULL WHERE (`account` = ?)";
-		jdbcTemplate.update(sql, account);
-		return true;
-	}
-
-	public boolean uploadUserPhoto(UploadUserPhotoDTO uploadUserPhotoDTO) {
+	public boolean uploadUserPhoto(String account, byte[]image) {
         String sql = "UPDATE user SET user_photo = ? WHERE account = ?";
-        jdbcTemplate.update(sql, uploadUserPhotoDTO.getImage(), uploadUserPhotoDTO.getAccount());
+        jdbcTemplate.update(sql, image, account);
 		return true;
     }
-
-	
-
-	// public void addUser(User user) {
-	// 	System.out.println("新增使用者成功");
-	// 	jdbcTemplate.update("INSERT INTO escooter_rental.user (account, password, registration_time, username) VALUES (?, ?, NOW(), ?)",
-	// 							user.getAccount(), user.getPassword(), user.getUserName());
-	// }
 }

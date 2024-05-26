@@ -1,18 +1,5 @@
 package com.escooter.api.controller;
 
-import org.springframework.web.bind.annotation.RestController;
-
-import com.escooter.api.dto.GPSDTO;
-import com.escooter.api.dto.RentEscooterDTO;
-import com.escooter.api.dto.UserDTO;
-import com.escooter.api.model.Escooter;
-import com.escooter.api.model.GPS;
-import com.escooter.api.model.User;
-import com.escooter.api.service.EscooterService;
-import com.escooter.api.service.RentalService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +8,22 @@ import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.escooter.api.dto.GpsDTO;
+import com.escooter.api.dto.RentEscooterDTO;
+import com.escooter.api.dto.UserCredentialsDTO;
+import com.escooter.api.exceptions.UserCredentialsException;
+import com.escooter.api.model.Escooter;
+import com.escooter.api.model.GPS;
+import com.escooter.api.service.RentalService;
+import com.escooter.api.utils.JsonResponseBuilder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 
@@ -36,52 +35,36 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class RentalController {
     @Autowired
     RentalService rentalService;
-    
-    @Autowired
-    EscooterService escooterService;
 
     /**
 	 * Adding rental data to database and returns a successful message
 	 *
-	 * @param GPSDTO Credit GPS data 
+     * @param gpsDTO GPS data 
 	 * @return A ResponseEntity with http status and message
 	 */
     @PostMapping("getRentableEscooterList")
-    public ResponseEntity<String> postMethodName(@RequestBody GPSDTO gpsDTO) {
-        // call service to show the avaliable escooter list
+    public ResponseEntity<String> getRentableEscooterList(@RequestBody GpsDTO gpsDTO) {
         List<Escooter> escooters = rentalService.showAvailableEscooter(new GPS(gpsDTO.getLongitude(), gpsDTO.getLatitude()));
-        JSONObject message = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
 
         if (escooters.isEmpty()) {
-            try {
-                message.put("status", false);
-                message.put("message", "ERROR: There are no available e-scooters for rent within the range.");
-                message.put("escooters", new JSONObject("{}"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Escooters not found."), HttpStatus.NO_CONTENT);
         }
-        //creat return message
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString = "{}";
+
         try {
-            message.put("status", true);
-            message.put("message", "return escooters");
-            
+            ObjectMapper objectMapper = new ObjectMapper();
+            JSONArray jsonArray = new JSONArray();
+            String jsonString = "{}";
+
             for (Escooter escooter:escooters) {
                 jsonString = objectMapper.writeValueAsString(escooter);
                 JSONObject jsonObject = new JSONObject(jsonString);
                 jsonArray.put(jsonObject);
             }
-            message.put("escooters", jsonArray);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(message.toString(), HttpStatus.OK);
+
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Get rentable escooter success.",jsonArray),HttpStatus.OK);
+        } catch (JSONException | JsonProcessingException e) {
+			return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Get rentable escooter failed."),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
     }
     
 
@@ -93,30 +76,18 @@ public class RentalController {
      */
     @PostMapping("/rentEscooter")
     public ResponseEntity<String> rentEscooter(@RequestBody RentEscooterDTO rentEscooterDTO) {
-        String escooterId = rentEscooterDTO.getEscooterDTO().getEscooterId();
-        UserDTO userDTO = rentEscooterDTO.getUserDTO();
-        User user = new User(userDTO.getAccount(), userDTO.getPassword());
-
-        Escooter escooter = rentalService.rentEscooter(user, escooterId);
-
-        // create return message
-		JSONObject message = new JSONObject();
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString = "{}";
-
 		try {
-			message.put("status", escooter != null);
-			message.put("message", escooter != null ? "rent escooter success" : "rent escooter failed");
+            Escooter escooter = rentalService.rentEscooter(rentEscooterDTO.getUserCredentials(), rentEscooterDTO.getEscooterId());
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonString = "{}";
             jsonString = objectMapper.writeValueAsString(escooter);
             JSONObject jsonObject = new JSONObject(jsonString);
-            message.put("escooter", escooter != null ? jsonObject : new JSONObject("{}"));
-		} catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-			e.printStackTrace();
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Rent escooter success.",jsonObject),HttpStatus.OK);
+		} catch (JSONException | JsonProcessingException e) {
+			return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Rent escooter failed."),HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (UserCredentialsException ex) {
+            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Invalid user credentials."), HttpStatus.UNAUTHORIZED);
 		}
-
-        return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
 
     /**
@@ -126,19 +97,13 @@ public class RentalController {
      * @return A ResponseEntity with HTTP status and message
     */
     @PutMapping("/updateEscooterParkStatus")
-    public ResponseEntity<String> updateEscooterParkStatus(@RequestBody UserDTO userDTO) {
-        boolean res = rentalService.updateEscooterParkStatus(userDTO.getAccount(), userDTO.getPassword());
-
-        // create return message
-		JSONObject message = new JSONObject();
-		try {
-			message.put("status", res);
-			message.put("message", res ? "update escooter park status success" : "update escooter park status failed");
-		} catch (JSONException e) {
-			e.printStackTrace();
+    public ResponseEntity<String> updateEscooterParkStatus(@RequestBody UserCredentialsDTO userCredentialsDTO) {
+        try {
+            boolean res = rentalService.updateEscooterParkStatus(userCredentialsDTO.getUserCredentials());
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Update escooter park status success.",res),HttpStatus.OK);
+		} catch (UserCredentialsException ex) {
+            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Invalid user credentials."), HttpStatus.UNAUTHORIZED);
 		}
-
-        return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
 
     /**
@@ -148,19 +113,13 @@ public class RentalController {
     * @return A ResponseEntity with HTTP status and message
     */
     @PostMapping("/returnEscooter")
-    public ResponseEntity<String> returnEscooter(@RequestBody UserDTO userDTO) {
-        boolean res = rentalService.returnEscooter(userDTO.getAccount(), userDTO.getPassword());
-
-        // create return message
-		JSONObject message = new JSONObject();
+    public ResponseEntity<String> returnEscooter(@RequestBody UserCredentialsDTO userCredentialsDTO) {
 		try {
-			message.put("status", res);
-			message.put("message", res ? "return and payment successful" : "returned and payment failed");
-		} catch (JSONException e) {
-			e.printStackTrace();
+            boolean res = rentalService.returnEscooter(userCredentialsDTO.getUserCredentials());
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Rent escooter success.",res),HttpStatus.OK);
+		} catch (UserCredentialsException ex) {
+            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Invalid user credentials."), HttpStatus.UNAUTHORIZED);
 		}
-
-        return new ResponseEntity<>(message.toString(), HttpStatus.OK);
     }
     
 }

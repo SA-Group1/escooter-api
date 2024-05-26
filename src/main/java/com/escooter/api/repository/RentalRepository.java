@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ReturnAreaRepository {
+public class RentalRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     
@@ -14,9 +14,8 @@ public class ReturnAreaRepository {
         String sql = "SELECT COUNT(*) FROM escooter_rental.return_area WHERE ST_WITHIN(ST_GeomFromText(CONCAT('POINT(', ?, ' ', ?, ')')), area_point)";
         try {
             int res = jdbcTemplate.queryForObject(sql, Integer.class, new Object[]{latitude, longitude});
-            return res > 0 ? true : false;
+            return res > 0;
         } catch (EmptyResultDataAccessException e) {
-            e.printStackTrace();
             return false;
         }
     }

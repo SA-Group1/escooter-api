@@ -1,27 +1,23 @@
 package com.escooter.api.dto;
 
+import com.escooter.api.model.UserCredentials;
+
 public class UserCredentialsDTO {
-    private String account;
-    private String password;
+    private final UserCredentials userCredentials;
 
     public UserCredentialsDTO(String account, String password) {
-        this.account = account;
-        this.password = password;
+        this.userCredentials = new UserCredentials(account ,password);
     }
 
     public String getAccount() {
-        return account;
+        return userCredentials.getAccount();
     }
 
     public String getPassword() {
-        return password;
+        return userCredentials.getPassword();
     }
 
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public UserCredentials getUserCredentials(){
+        return userCredentials;
     }
 }

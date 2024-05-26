@@ -21,8 +21,8 @@ public class EscooterRepository {
 
     /**
      * Adds a new e-scooter to the database.
-     * 
      * @param modelId the model name of the e-scooter
+     * @return is add escooter successful.
      */
     public boolean addEscooter(String modelId){
         String sql = "INSERT INTO escooter_rental.escooter (model_id) VALUES (?)";
@@ -92,7 +92,7 @@ public class EscooterRepository {
      * @param distance the maximum distance (in kilometers) from the center point to search for available e-scooters
      * @return a list of available Escooter objects if found, otherwise null
      */
-    public List<Escooter> queryAvailableEscooters(double longitude, double latitude, double distance) {
+    public List<Escooter> queryAvailableEscooters(GPS gps, double distance) {
         String sql = 
         """
             SELECT escooter.*, escooter_model_type.fee_perminute, 6371 * ACOS (
@@ -117,7 +117,7 @@ public class EscooterRepository {
             return escooter;
         };
 		try {
-			return jdbcTemplate.query(sql, rowMapper, latitude, longitude, latitude, "Available", distance);
+			return jdbcTemplate.query(sql, rowMapper, gps.getLatitude(), gps.getLongitude(), gps.getLatitude(), "Available", distance);
 		} catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -127,7 +127,7 @@ public class EscooterRepository {
      * Updates the GPS coordinates of an e-scooter in the database.
      * 
      * @param escooterId the e-scooter identifier
-     * @param gps the GPS coordinates to update
+     * @param status the GPS coordinates to update
      * @return true if updating is successful, false otherwise
      */
     public boolean updateStatus(String escooterId, String status) {
@@ -212,6 +212,7 @@ public class EscooterRepository {
                 WHERE model_id = ? AND user_id = ? AND end_time IS NOT NULL) AS subquery_alias
                 ORDER BY end_time DESC LIMIT 1;
         """;
+
         try {
             jdbcTemplate.update(updateSql1, escooterId);
             jdbcTemplate.update(updateSql2, escooterId);
