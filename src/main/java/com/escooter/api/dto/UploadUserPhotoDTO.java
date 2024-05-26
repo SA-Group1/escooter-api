@@ -6,7 +6,6 @@ public class UploadUserPhotoDTO {
     private UserCredentialsDTO userCredentialsDTO;
     private byte[] image;
 
-    public UploadUserPhotoDTO(){};
 
     public UploadUserPhotoDTO(String account, String password, byte[] image){
         this.userCredentialsDTO = new UserCredentialsDTO(account, password);

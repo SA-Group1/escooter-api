@@ -28,8 +28,8 @@ public class BindMemberCardDTO {
 
     public MemberCard getMemberCard(){
         MemberCard memberCard = new MemberCard();
-        memberCard.setCardNumber(memberCard.getCardNumber());
-        memberCard.setExpirationDate(memberCard.getExpirationDate());
+        memberCard.setCardNumber(memberCardDTO.getCardNumber());
+        memberCard.setExpirationDate(memberCardDTO.getExpirationDate());
         return memberCard;
     }
 }

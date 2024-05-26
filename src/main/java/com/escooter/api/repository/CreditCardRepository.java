@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -41,13 +42,17 @@ public class CreditCardRepository {
 	 * @return The user's credit card.
 	 */
 	public CreditCard getCreditCard(String account) {
-		String sql = 
-		"SELECT creditcard_id, expiration_date, card_holder_name " +
-		"FROM escooter_rental.credit_card " +
-		"WHERE creditcard_id = (SELECT creditcard_id FROM escooter_rental.user WHERE account = ?)";
-		CreditCard creditCard = jdbcTemplate.queryForObject(sql,new CreditCardRowMapper(),new Object[]{account});
-		return creditCard;
-	}
+        String sql = 
+        "SELECT creditcard_id, expiration_date, card_holder_name " +
+        "FROM escooter_rental.credit_card " +
+        "WHERE creditcard_id = (SELECT creditcard_id FROM escooter_rental.user WHERE account = ?)";
+
+        try {
+            return jdbcTemplate.queryForObject(sql,new CreditCardRowMapper(),new Object[]{account});
+        } catch (EmptyResultDataAccessException e) {
+            return new CreditCard();
+        }
+    }
 
 	/**
 	 * Binds a credit card to the user.
@@ -96,7 +101,7 @@ public class CreditCardRepository {
 		 * @return a credit card object.
 		 */		
 		@Override
-		public CreditCard mapRow(ResultSet rs, int rowNum) throws SQLException {
+		public CreditCard mapRow(@SuppressWarnings("null") ResultSet rs, int rowNum) throws SQLException {
 			CreditCard creditCard = new CreditCard();
 			creditCard.setCardNumber(rs.getString("creditcard_id"));
 			creditCard.setExpirationDate(rs.getString("expiration_date"));

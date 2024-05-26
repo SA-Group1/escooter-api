@@ -116,7 +116,7 @@ public class RentalController {
     public ResponseEntity<String> returnEscooter(@RequestBody UserCredentialsDTO userCredentialsDTO) {
 		try {
             boolean res = rentalService.returnEscooter(userCredentialsDTO.getUserCredentials());
-            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Rent escooter success.",res),HttpStatus.OK);
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Return escooter success.",res),HttpStatus.OK);
 		} catch (UserCredentialsException ex) {
             return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Invalid user credentials."), HttpStatus.UNAUTHORIZED);
 		}

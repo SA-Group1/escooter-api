@@ -1,5 +1,5 @@
 # Escooter Api
-## API Reference User
+## API Reference Account
 
 ### register
 ```
@@ -16,19 +16,19 @@ POST /api/register
 Example input
 ```json
 {
-    "account": "acc004",
-    "password": "pwd004",
-    "userName": "user444",
-    "email": "user444@test.com",
-    "phoneNumber":"0987878787"
+    "account":"Test002",
+    "password":"test002",
+    "userName":"userTest",
+    "email":"Test002@gmail.com",
+    "phoneNumber":"0909893352"
 }
 ```
 
 Example Response
 ```json
 {
-    "status":true,
-    "message":"create user success"
+    "status": true,
+    "message": "Create user success."
 }
 ```
 
@@ -43,8 +43,8 @@ POST /api/login
 Example input
 ```json
 {
-    "account": "acc004",
-    "password": "pwd004"
+    "account":"Test002",
+    "password":"test002"
 }
 ```
 
@@ -52,9 +52,12 @@ Example Response
 ```json
 {
     "status": true,
-    "message": "login success"
+    "message": "Login success.",
+    "data": true
 }
 ```
+
+## API Reference User
 
 ### getUserData
 ```
@@ -67,8 +70,8 @@ POST /api/getUserData
 Example input
 ```json
 {
-    "account": "acc001",
-    "password": "pwd001"
+    "account":"Test002",
+    "password":"test002"
 }
 ```
 
@@ -76,22 +79,21 @@ Example Response
 ```json
 {
     "status": true,
-    "message": "get user data success",
-    "user": {
-        "userId": 1,
-        "account": "acc001",
-        "userName": "user001",
-        "password": "pwd001",
-        "email": "user001@test.com",
-        "registrationTime": "2024-05-13T12:07:40",
-        "phoneNumber": "0987654321",
+    "message": "Get user data success.",
+    "data": {
+        "userId": 19,
+        "account": "Test002",
+        "userName": "userTest",
+        "email": "Test002@gmail.com",
+        "registrationTime": "2024-05-27T04:06:36",
+        "phoneNumber": "0909893352",
         "creditCard": {
             "cardNumber": null,
             "expirationDate": null
         },
         "memberCard": {
-            "cardNumber": "0000111100001113",
-            "expirationDate": "0425",
+            "cardNumber": null,
+            "expirationDate": null,
             "vaild": true
         }
     }
@@ -109,23 +111,23 @@ POST /api/getUserPhoto
 Example input
 ```json
 {
-    "account": "acc001",
-    "password": "pwd001"
+    "account": "Test002",
+    "password": "test002"
 }
 ```
 
 Example Response
 ```json
-{
-    "status": true,
-    "message": "get user photo success",
-    "image":"your image's base64"
-}
+"status": true,
+    "message": "Get user photo success.",
+    "data": {
+        "image":"your image's base64"
+    }
 ```
 
 ### uploadUserPhoto
 ```
-POST /api/uploadUserPhoto
+PUT /api/uploadUserPhoto
 ```
 | Parameter |  Type  | Description   |
 | --------- | :----: | ------------- |
@@ -135,8 +137,8 @@ POST /api/uploadUserPhoto
 Example input
 ```json
 {
-    "account": "acc001",
-    "password": "pwd001",
+    "account": "Test002",
+    "password": "test002",
     "image":"your image's base64"
 }
 ```
@@ -144,8 +146,9 @@ Example input
 Example Response
 ```json
 {
-    "status":true,
-    "message":"upload image success"
+    "status": true,
+    "message": "Update user photo success.",
+    "data": true
 }
 ```
 
@@ -166,11 +169,11 @@ Example input
 
 ```json
 {
-    "account": "acc001",
-    "password": "pwd001",
-    "userName": "user111",
+    "account":"Test002",
+    "password":"test002",
+    "userName": "userTest",
     "email": "user001@test.com",
-    "phoneNumber": "0987654320"
+    "phoneNumber": "0987654321"
 }
 ```
 
@@ -179,11 +182,12 @@ Example Response
 ```json
 {
     "status": true,
-    "message": "update success"
+    "message": "Update user data success.",
+    "data": true
 }
 ```
 
-## API Reference Payment
+## API Reference UserPayment
 
 ### bindCreditCard
 ```
@@ -197,23 +201,19 @@ POST /api/bindCreditCard
 Example Input
 ```json
 {
-    "user":{
-        "account": "acc001",
-        "password": "pwd001"
-    },
-    "creditCard":{
-        "cardNumber": "0000111100001111",
-        "expirationDate": "0425",
-        "cardHolderName": "acc001",
-        "cvv": "000"
-    }
+    "account": "Test002",
+    "password": "test002",
+    "cardNumber": "2222333322223333",
+    "expirationDate": "0528",
+    "cardHolderName": "userTest",
+    "cvv": "520"
 }
 ```
 Example Response
 ```json
 {
     "status": true,
-    "message":"Binding credit card success."
+    "message": "Bind credit card success."
 }
 ```
 
@@ -229,15 +229,15 @@ POST /api/unbindCreditCard
 Example Input
 ```json
 {
-    "account": "acc001",
-    "password": "pwd001"
+    "account": "Test002",
+    "password": "test002"
 }
 ```
 Example Response
 ```json
 {
     "status": true,
-    "message":"Unbind credit card success."
+    "message": "unbind credit card success."
 }
 ```
 
@@ -253,51 +253,52 @@ POST /api/bindMemberCard
 Example Input
 ```json
 {
-    "user":{
-        "account": "acc001",
-        "password": "pwd001"
-    },
-    "memberCard":{
-        "cardNumber": "0000111100001111",
-        "expirationDate": "0425"
-    }
+    "account": "Test002",
+    "password": "test002",
+    "cardNumber": "4444888844448888",
+    "expirationDate": "0425"
 }
 ```
 Example Response
 ```json
 {
     "status": true,
-    "message":"Binding member card success."
+    "message": "Bind member card success."
 }
 ```
 
-### getCards
+### getUserPayment
 ```
-POST /api/getCards
+POST /api/getUserPayment
 ```
-| Parameter |  Type  | Description   |
-| --------- | :----: | ------------- |
-| account   | String | **Required.** |
+| Parameter  |    Type    | Description   |
+| ---------  | :--------: | ------------- |
+| user       | User       | **Required.** |
+| memberCard | MemberCard | **Required.** |
 
 Example Input
 ```json
 {
-    "account": "acc001",
+    "account": "Test002",
+    "password": "test002"
 }
 ```
 Example Response
 ```json
 {
     "status": true,
-    "message":"gets cards information success.",
-    "creditCard": {
-        "cardNumber": "0000111100001111",
-        "expirationDate": "0425",
-        "cardHolderName": "acc001"
-    },
-    "memberCard": {
-        "cardNumber": "0000111100001111",
-        "expirationDate": "0425"
+    "message": "get user payment success.",
+    "data": {
+        "creditCard": {
+            "cardNumber": null,
+            "expirationDate": null,
+            "cardHolderName": null
+        },
+        "memberCard": {
+            "cardNumber": "4444888844448888",
+            "expirationDate": "0425",
+            "vaild": true
+        }
     }
 }
 ```
@@ -325,8 +326,8 @@ Example Response
 ```json
 {
     "status": true,
-    "message": "return rental record",
-    "rentalRecords": [
+    "message": "Get rental records success.",
+    "data": [
         {
             "userId": 6,
             "escooterId": "A_09",
@@ -383,15 +384,14 @@ Example Input
 Example Response
 ```json
 {
-{
     "status": true,
-    "message": "return escooters",
-    "escooters": [
+    "message": "Get rentable escooter success.",
+    "data": [
         {
             "escooterId": "TEST_00",
             "modelId": "TEST",
             "status": "Available",
-            "batteryLevel": 100,
+            "batteryLevel": 79,
             "feePerMinutes": 0.5,
             "maintenanceRecords": null,
             "gps": {
@@ -403,7 +403,7 @@ Example Response
             "escooterId": "DH_04",
             "modelId": "TEST",
             "status": "Available",
-            "batteryLevel": 100,
+            "batteryLevel": 70,
             "feePerMinutes": 0.5,
             "maintenanceRecords": null,
             "gps": {
@@ -415,7 +415,7 @@ Example Response
             "escooterId": "DA_05",
             "modelId": "TEST",
             "status": "Available",
-            "batteryLevel": 100,
+            "batteryLevel": 63,
             "feePerMinutes": 0.5,
             "maintenanceRecords": null,
             "gps": {
@@ -427,7 +427,7 @@ Example Response
             "escooterId": "EL_07",
             "modelId": "TEST",
             "status": "Available",
-            "batteryLevel": 100,
+            "batteryLevel": 54,
             "feePerMinutes": 0.5,
             "maintenanceRecords": null,
             "gps": {
@@ -439,7 +439,7 @@ Example Response
             "escooterId": "EM_08",
             "modelId": "TEST",
             "status": "Available",
-            "batteryLevel": 100,
+            "batteryLevel": 26,
             "feePerMinutes": 0.5,
             "maintenanceRecords": null,
             "gps": {
@@ -448,22 +448,10 @@ Example Response
             }
         },
         {
-            "escooterId": "GA_06",
-            "modelId": "TEST",
-            "status": "Available",
-            "batteryLevel": 100,
-            "feePerMinutes": 0.5,
-            "maintenanceRecords": null,
-            "gps": {
-                "longitude": 120.534982,
-                "latitude": 23.691336
-            }
-        },
-        {
             "escooterId": "PD_11",
             "modelId": "TEST",
             "status": "Available",
-            "batteryLevel": 100,
+            "batteryLevel": 25,
             "feePerMinutes": 0.5,
             "maintenanceRecords": null,
             "gps": {
@@ -475,7 +463,7 @@ Example Response
             "escooterId": "G_02",
             "modelId": "LCE151",
             "status": "Available",
-            "batteryLevel": 100,
+            "batteryLevel": 43,
             "feePerMinutes": 0.3,
             "maintenanceRecords": null,
             "gps": {
@@ -484,22 +472,10 @@ Example Response
             }
         },
         {
-            "escooterId": "A_09",
-            "modelId": "LCE151",
-            "status": "Available",
-            "batteryLevel": 100,
-            "feePerMinutes": 0.3,
-            "maintenanceRecords": null,
-            "gps": {
-                "longitude": 120.535527,
-                "latitude": 23.689927
-            }
-        },
-        {
             "escooterId": "C_01",
             "modelId": "LCE151",
             "status": "Available",
-            "batteryLevel": 100,
+            "batteryLevel": 96,
             "feePerMinutes": 0.3,
             "maintenanceRecords": null,
             "gps": {
@@ -524,30 +500,26 @@ POST /api/rentEscooter
 Example Input
 ```json
 {
-  "user": {
-        "account": "acc001",
-        "password": "pwd001"
-    },
-    "escooter": {
-        "escooterId": "EL_07"
-    }
+    "account": "Test002",
+    "password": "test002",
+    "escooterId": "C_01"
 }
 ```
 Example Response
 ```json
 {
     "status": true,
-    "message": "rent escooter success",
-    "escooter": {
-        "escooterId": "EL_07",
-        "modelId": "TEST",
+    "message": "Rent escooter success.",
+    "data": {
+        "escooterId": "C_01",
+        "modelId": "LCE151",
         "status": "Rented",
-        "batteryLevel": 100,
+        "batteryLevel": 96,
         "feePerMinutes": 0,
         "maintenanceRecords": null,
         "gps": {
-            "longitude": 120.535822,
-            "latitude": 23.693859
+            "longitude": 120.534454,
+            "latitude": 23.689305
         }
     }
 }
@@ -564,16 +536,17 @@ PUT /api/updateEscooterParkStatus
 
 Example Input
 ```json
-{ 
-    "account": "acc001",
-    "password": "pwd001"
+{
+    "account": "Test002",
+    "password": "test002"
 }
 ```
 Example Response
 ```json
 {
     "status": true,
-    "message": "update escooter park status success"
+    "message": "Update escooter park status success.",
+    "data": true
 }
 ```
 
@@ -588,9 +561,9 @@ POST /api/returnEscooter
 
 Example Input
 ```json
-{ 
-    "account": "acc001",
-    "password": "pwd001"
+{
+    "account": "Test002",
+    "password": "test002"
 }
 ```
 Example Response
@@ -601,10 +574,10 @@ Example Response
 }
 ```
 
-## API Reference Escooter
-### isRent
+## API Reference Escooter Management
+### addEscooter
 ```
-POST /api/isRent
+POST /api/addEscooter
 ```
 | Parameter  |  Type  | Description   |
 | ---------- | :----: | ------------- |
@@ -625,105 +598,6 @@ Example Response
 ```
 
 
-### isReturn
-```
-POST /api/isReturn
-```
-| Parameter  |  Type  | Description   |
-| ---------- | :----: | ------------- |
-| escooterId | String | **Required.** |
-
-Example Input
-```json
-{
-    "escooterId": "4"
-}
-```
-Example Response
-```json
-{
-    "status": false,
-    "message": "escooter status is Rented"
-}
-```
-
-### getParkingStatus
-```
-POST /api/getParkingStatus
-```
-| Parameter  |  Type  | Description   |
-| ---------- | :----: | ------------- |
-| escooterId | String | **Required.** |
-
-Example Input
-```json
-{
-    "escooterId": "4"
-}
-```
-Example Response
-```json
-{
-    "status": true,
-    "message": "escooter is parking"
-}
-```
-
-### updateGps 
-```
-PUT /api/updateGps
-```
-| Parameter  |  Type  | Description   |
-| ---------- | :----: | ------------- |
-| escooterId | String | **Required.** |
-| longitude  | double | **Required.** |
-| latitude   | double | **Required.** |
-
-Example Input
-```json
-{
-    "escooter": {
-        "escooterId": "4"
-    },
-    "gps": {
-        "longitude": 124,
-        "latitude": 24
-    }
-}
-```
-Example Response
-```json
-{
-    "status": true,
-    "message": "GPS update success"
-}
-```
-
-### updateBetteryLevel
-```
-PUT /api/updateBetteryLevel
-```
-| Parameter    |  Type  | Description   |
-| ------------ | :----: | ------------- |
-| escooterId   | String | **Required.** |
-| batteryLevel |  Int   | **Required.** |
-
-
-Example Input
-```json
-{
-    "escooterId": "4",
-    "batteryLevel":90
-}
-```
-Example Response
-```json
-{
-    "status": true,
-    "message": "Battery Level update success"
-}
-```
-
 ### getEscooterIdList
 ```
 GET /api/getEscooterIdList
@@ -732,8 +606,8 @@ Example Response
 ```json
 {
     "status": true,
-    "message": "get escooter ID list sucess",
-    "escooterId": [
+    "message": "Get e-scooter ID list success",
+    "data": [
         {
             "escooterId": "A_09"
         },
@@ -771,5 +645,104 @@ Example Response
             "escooterId": "TEST_00"
         }
     ]
+}
+```
+
+### getEscooterStatus
+```
+POST /api/getEscooterStatus
+```
+| Parameter  |  Type  | Description   |
+| ---------- | :----: | ------------- |
+| escooterId | String | **Required.** |
+
+Example Input
+```json
+{
+    "escooterId": "AI_10"
+}
+```
+Example Response
+```json
+{
+    "status": true,
+    "message": "Get status success",
+    "data": "Rented"
+}
+```
+
+### getEscooterGps 
+```
+PUT /api/getEscooterGps
+```
+| Parameter  |  Type  | Description   |
+| ---------- | :----: | ------------- |
+| escooterId | String | **Required.** |
+
+Example Input
+```json
+{
+    "escooterId": "AI_10"
+}
+```
+Example Response
+```json
+{
+    "status": true,
+    "message": "Get escooter gps success",
+    "data": {
+        "longitude": 120.537809,
+        "latitude": 23.690466
+    }
+}
+```
+
+### updateBetteryLevel
+```
+PUT /api/updateGps
+```
+| Parameter    |  Type  | Description   |
+| ------------ | :----: | ------------- |
+| escooterId   | String | **Required.** |
+| batteryLevel |  Int   | **Required.** |
+
+
+Example Input
+```json
+{
+    "escooterId": "AI_10",
+    "longitude": 120.537810,
+    "latitude": 23.690467
+}
+```
+Example Response
+```json
+{
+    "status": true,
+    "message": "GPS update success"
+}
+```
+
+### updateBatteryLevel
+```
+PUT /api/updateBatteryLevel
+```
+| Parameter    |  Type  | Description   |
+| ------------ | :----: | ------------- |
+| escooterId   | String | **Required.** |
+| batteryLevel |  Int   | **Required.** |
+
+Example Input
+```json
+{
+    "escooterId": "AI_10",
+    "batteryLevel":90
+}
+
+Example Response
+```json
+{
+    "status": true,
+    "message": "Battery Level update success"
 }
 ```

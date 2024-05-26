@@ -4,11 +4,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.escooter.api.model.MemberCard;
+
+
 
 /**
  * Repository for managing member card data in the database.
@@ -75,13 +78,16 @@ public class MemberCardRepository {
 	 * @return The user's member card.
 	 */
 	public MemberCard getMemberCard(String account) {
-		String sql = 
-		"SELECT membercard_id, expiration_date " +
-		"FROM escooter_rental.member_card " +
-		"WHERE membercard_id = (SELECT membercard_id FROM escooter_rental.user WHERE account = ?)";
-		MemberCard memberCard = jdbcTemplate.queryForObject(sql,new MemberCardRowMapper(),new Object[]{account});
-		return memberCard;
-	}
+        String sql = 
+        "SELECT membercard_id, expiration_date " +
+        "FROM escooter_rental.member_card " +
+        "WHERE membercard_id = (SELECT membercard_id FROM escooter_rental.user WHERE account = ?)";
+        try {
+            return jdbcTemplate.queryForObject(sql,new MemberCardRowMapper(),new Object[]{account});
+        } catch (EmptyResultDataAccessException e) {
+            return new MemberCard();
+        }
+    }
 
 	private static class MemberCardRowMapper implements RowMapper<MemberCard> {
 
@@ -92,7 +98,7 @@ public class MemberCardRepository {
 		 * @return a member card object.
 		 */
 		@Override
-		public MemberCard mapRow(ResultSet rs, int rowNum) throws SQLException {
+		public MemberCard mapRow(@SuppressWarnings("null") ResultSet rs, int rowNum) throws SQLException {
 			MemberCard memberCard = new MemberCard();
 			memberCard.setCardNumber(rs.getString("membercard_id"));
 			memberCard.setExpirationDate(rs.getString("expiration_date"));

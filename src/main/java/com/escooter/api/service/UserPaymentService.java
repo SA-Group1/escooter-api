@@ -9,7 +9,7 @@ import com.escooter.api.exceptions.UserCredentialsException;
 import com.escooter.api.model.CreditCard;
 import com.escooter.api.model.MemberCard;
 import com.escooter.api.model.UserCredentials;
-import com.escooter.api.repository.UserRepository;
+
 
 @Service
 public class UserPaymentService {
@@ -21,8 +21,7 @@ public class UserPaymentService {
     private MemberCardService memberCardService;
 	@Autowired
 	private UserCredentialService userCredentialService;
-	@Autowired
-	private UserRepository userRepository;
+
 
     /**
 	 * Bind a credit card to the user.

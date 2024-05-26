@@ -79,14 +79,9 @@ public class UserRepository {
      * @return the User object if found, otherwise null
      */
 	public int queryUserIdByAccount(String account) {
-		String sql = """
-			SELECT
-				user.user_id,
-			FROM escooter_rental.user
-			WHERE account = ?
-		""";
+        String sql = "SELECT user_id FROM escooter_rental.user WHERE account = ?";
         return jdbcTemplate.queryForObject(sql,int.class, new Object[]{account});
-	}
+    }
 
 	/**
      * Adds a new User to the database.
