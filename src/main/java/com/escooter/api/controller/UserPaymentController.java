@@ -42,7 +42,7 @@ public class UserPaymentController {
      * @param bindCreditCardDTO User and credit card data including CVV.
      * @return A ResponseEntity with HTTP status and message.
      */
-	@PostMapping("bindCreditCard")
+	@PostMapping("/bindCreditCard")
 	public ResponseEntity<String> bindCreditCard(@RequestBody BindCreditCardDTO bindCreditCardDTO) {
 		CreditCard creditCard = bindCreditCardDTO.getCreditCard();
 		String cvv = bindCreditCardDTO.getCvv();
@@ -71,7 +71,7 @@ public class UserPaymentController {
 	 * @param userCredentialsDTO The user's credentials.
 	 * @return A ResponseEntity with http status and message.
 	 */
-	@PostMapping("unbindCreditCard")
+	@PostMapping("/unbindCreditCard")
 	public ResponseEntity<String> unbindCreditCard(@RequestBody UserCredentialsDTO userCredentialsDTO) {
 		try {
 			userPaymentService.unbindCreditCard(userCredentialsDTO.getUserCredentials());
@@ -90,7 +90,7 @@ public class UserPaymentController {
 	 * @param bindMemberCardDTO Member card data.
 	 * @return A ResponseEntity with http status and message.
 	 */
-	@PostMapping("bindMemberCard")
+	@PostMapping("/bindMemberCard")
 	public ResponseEntity<String> bindMemberCard(@RequestBody BindMemberCardDTO bindMemberCardDTO) {
 
 		MemberCard memberCard = bindMemberCardDTO.getMemberCard();
@@ -116,7 +116,7 @@ public class UserPaymentController {
 	 * @param userCredentialsDTO User's account.
 	 * @return A ResponseEntity with http status and result message.
 	 */
-	@PostMapping("getUserPayment")
+	@PostMapping("/getUserPayment")
 	public ResponseEntity<String> getUserPayment(@RequestBody UserCredentialsDTO userCredentialsDTO) {
 		try {
 

@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.escooter.api.dto.UserCredentialsDTO;
 import com.escooter.api.dto.UserDTO;
@@ -12,6 +14,9 @@ import com.escooter.api.exceptions.UserCredentialsException;
 import com.escooter.api.service.AccountService;
 import com.escooter.api.utils.JsonResponseBuilder;
 
+
+@RestController
+@RequestMapping("/api")
 public class AccountController {
     @Autowired
     AccountService accountService;
@@ -22,7 +27,7 @@ public class AccountController {
 	 * @param userDTO User data.
 	 * @return A ResponseEntity with HTTP status and message.
 	 */
-    @PostMapping("register")
+    @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
         try {
             accountService.register(userDTO.getAccount(), userDTO.getPassword(), userDTO.getUserName(), userDTO.getEmail(), userDTO.getPhoneNumber());
@@ -38,7 +43,7 @@ public class AccountController {
      * @param userDTO User data.
      * @return A ResponseEntity with HTTP status and message.
      */
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserCredentialsDTO userCredentialsDTO) {
 
         try {

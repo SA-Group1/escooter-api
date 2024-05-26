@@ -225,5 +225,18 @@ public class EscooterRepository {
         return true;
     }
 
+    public GPS getEscooterGpsById(String escooterId){
+        String sql = "SELECT escooter_gps_longitude , escooter_gps_latitude FROM escooter_rental.escooter WHERE escooter_id = ?";
+        RowMapper<GPS> rowMapper = (rs, rowNum) -> {
+			GPS gps = new GPS(rs.getDouble("escooter_gps_longitude"), rs.getDouble("escooter_gps_latitude"));
+            return gps;
+        };
+		try {
+			return jdbcTemplate.queryForObject(sql, rowMapper, escooterId);
+		} catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
     
 }

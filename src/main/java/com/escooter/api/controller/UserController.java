@@ -45,7 +45,7 @@ public class UserController {
      * @param userDTO User data.
      * @return A ResponseEntity with HTTP status and user data.
      */
-    @PostMapping("getUserData")
+    @PostMapping("/getUserData")
     public ResponseEntity<String> getUserData(@RequestBody UserCredentialsDTO userCredentialsDTO) {
         // Calls service to retrieve user data
 
@@ -73,7 +73,7 @@ public class UserController {
      * @param userDTO User data.
      * @return A ResponseEntity with HTTP status and message.
      */
-    @PutMapping("updateUserData")
+    @PutMapping("/updateUserData")
     public ResponseEntity<String> updateUserData(@RequestBody UserDTO userDTO) {
         try {
             boolean res = userService.updateUserData(new UserCredentials(userDTO.getAccount(), userDTO.getPassword()) , userDTO.getUser());
@@ -89,7 +89,7 @@ public class UserController {
      * @param userDTO User data.
      * @return A ResponseEntity with HTTP status and message.
      */
-    @PutMapping("uploadUserPhoto")
+    @PutMapping("/uploadUserPhoto")
     public ResponseEntity<String> uploadUserPhoto(@RequestBody UploadUserPhotoDTO uploadUserPhotoDTO){
         try {
             boolean res = userService.uploadUserPhoto(uploadUserPhotoDTO.getUserCredentials(), uploadUserPhotoDTO.getImage());
@@ -107,7 +107,7 @@ public class UserController {
      * @param userDTO User data.
      * @return A ResponseEntity with user photo.
      */
-    @PostMapping("getUserPhoto")
+    @PostMapping("/getUserPhoto")
     public ResponseEntity<String> getUserPhoto(@RequestBody UserCredentialsDTO userCredentialsDTO) {
         try {
             User user = userService.getUserPhoto(userCredentialsDTO.getUserCredentials());

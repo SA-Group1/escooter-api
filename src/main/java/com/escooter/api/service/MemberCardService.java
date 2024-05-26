@@ -5,12 +5,14 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.escooter.api.exceptions.CardExpiredException;
 import com.escooter.api.exceptions.UserCredentialsException;
 import com.escooter.api.model.MemberCard;
 import com.escooter.api.repository.MemberCardRepository;
 
+@Service
 public class MemberCardService {
     @Autowired
     private MemberCardRepository memberCardRepository;

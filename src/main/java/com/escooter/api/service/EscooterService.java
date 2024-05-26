@@ -31,6 +31,10 @@ public class EscooterService {
         return escooterRepository.addEscooter(modelId);
     }
 
+    public GPS getEscooterGpsById(String escooterId){
+        return escooterRepository.getEscooterGpsById(escooterId);
+    }
+
     /**
      * Retrieves an e-scooter by its ID.
      * @param scooterId The ID of the e-scooter.

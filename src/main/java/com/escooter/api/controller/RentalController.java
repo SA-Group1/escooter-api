@@ -42,7 +42,7 @@ public class RentalController {
      * @param gpsDTO GPS data 
 	 * @return A ResponseEntity with http status and message
 	 */
-    @PostMapping("getRentableEscooterList")
+    @PostMapping("/getRentableEscooterList")
     public ResponseEntity<String> getRentableEscooterList(@RequestBody GpsDTO gpsDTO) {
         List<Escooter> escooters = rentalService.showAvailableEscooter(new GPS(gpsDTO.getLongitude(), gpsDTO.getLatitude()));
 

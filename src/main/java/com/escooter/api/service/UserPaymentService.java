@@ -1,6 +1,7 @@
 package com.escooter.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.escooter.api.exceptions.CardExpiredException;
 import com.escooter.api.exceptions.CreditCardCvvException;
@@ -10,6 +11,7 @@ import com.escooter.api.model.MemberCard;
 import com.escooter.api.model.UserCredentials;
 import com.escooter.api.repository.UserRepository;
 
+@Service
 public class UserPaymentService {
 
 
@@ -69,6 +71,7 @@ public class UserPaymentService {
 	 * @param userCredentials The user who wants to bind a member card.
 	 * @param memberCard The member card to bind.
 	 * @return True if binding is successful.
+     * @throws com.escooter.api.exceptions.UserCredentialsException
 	 */
 	public boolean bindMemberCard(UserCredentials userCredentials, MemberCard memberCard) throws UserCredentialsException, CardExpiredException {
 
@@ -106,6 +109,7 @@ public class UserPaymentService {
 	 * get the credit card from the user.
 	 * @param userCredentials The user who wants to get their credit card.
 	 * @return The user's credit card.
+     * @throws com.escooter.api.exceptions.UserCredentialsException
 	 */
 	public CreditCard getCreditCard(UserCredentials userCredentials) throws UserCredentialsException {
 		if(!userCredentialService.verifyUserCredentials(userCredentials)){

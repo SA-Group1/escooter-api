@@ -1,13 +1,14 @@
 package com.escooter.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.escooter.api.dto.UserDTO;
 import com.escooter.api.exceptions.UserCredentialsException;
 import com.escooter.api.model.User;
 import com.escooter.api.model.UserCredentials;
 import com.escooter.api.repository.UserRepository;
 
+@Service
 public class UserService {
 
     @Autowired
