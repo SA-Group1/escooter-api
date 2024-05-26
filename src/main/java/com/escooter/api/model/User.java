@@ -1,7 +1,4 @@
 package com.escooter.api.model;
-
-
-
 /*
 * Represents a User.
 */
@@ -12,10 +9,8 @@ public class User {
     private String email;
     private String registrationTime;
     private String phoneNumber;
-    //private Escooter rentingEscooter;
     private CreditCard creditCard;
     private MemberCard memberCard;
-    //private List<RentalRecord> rentalRecords;
     private byte[] image;
 
     public void setUserId(int userId) {

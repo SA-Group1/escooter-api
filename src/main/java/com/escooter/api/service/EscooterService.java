@@ -1,11 +1,8 @@
 package com.escooter.api.service;
 
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.escooter.api.model.Escooter;
 import com.escooter.api.model.GPS;
 import com.escooter.api.repository.EscooterRepository;
@@ -31,12 +28,19 @@ public class EscooterService {
         return escooterRepository.addEscooter(modelId);
     }
 
+    /**
+     * Retrieves the GPS coordinates of an e-scooter by its ID.
+     *
+     * @param escooterId The ID of the e-scooter.
+     * @return The GPS coordinates of the e-scooter.
+     */
     public GPS getEscooterGpsById(String escooterId){
         return escooterRepository.getEscooterGpsById(escooterId);
     }
 
     /**
      * Retrieves an e-scooter by its ID.
+     * 
      * @param scooterId The ID of the e-scooter.
      * @return The e-scooter if found, null otherwise.
      */
@@ -45,15 +49,24 @@ public class EscooterService {
         return escooter;
     }
 
+    /**
+     * Processes the return of an e-scooter.
+     * 
+     * @param userId The ID of the user returning the e-scooter.
+     * @param escooterId The ID of the e-scooter being returned.
+     * @param modelId The model ID of the e-scooter.
+     * @return true if the return is successful.
+     */
     public boolean returnEscooter(int userId, String escooterId, String modelId){
         return escooterRepository.returnEscooter(userId, escooterId, modelId);
     }
 
     /**
      * Updates the GPS location of an e-scooter.
+     * 
      * @param escooterId The ID of the e-scooter.
      * @param gps The new GPS location of the e-scooter.
-     * @return is update gps sucessful
+     * @return true if updating the GPS location is successful.
      */
     public boolean updateGps(String escooterId, GPS gps) {
         escooterRepository.updateGps(escooterId, gps);
@@ -61,29 +74,43 @@ public class EscooterService {
     }
 
     /**
-    * Checks if the specified e-scooter is currently rented.
-    *
-    * @param escooterId The ID of the e-scooter to check
-    * @return get escooter status
-    */
+     * Checks the status of an e-scooter.
+     *
+     * @param escooterId The ID of the e-scooter.
+     * @return The status of the e-scooter.
+     */  
     public String getEscooterStatus(String escooterId){
         Escooter escooter = escooterRepository.queryEscooterById(escooterId);
         return escooter.getStatus();
     }
 
+    /**
+     * Queries the rented e-scooter by account.
+     * 
+     * @param account The user account.
+     * @return The rented e-scooter.
+     */
     public Escooter queryRentedEscooterByAccount(String account){
         return escooterRepository.queryRentedEscooterByAccount(account);
     }
 
+    /**
+     * Updates the parking status of an e-scooter.
+     * 
+     * @param escooterId The ID of the e-scooter.
+     * @param status The new parking status.
+     * @return true if updating the parking status is successful.
+     */
     public boolean updateEscooterParkStatusbyId(String escooterId , String status){
         return escooterRepository.updateEscooterParkStatusbyId(escooterId, status);
     }
 
     /**
      * Rents an e-scooter to a user.
-     * @param user The user renting the e-scooter.
-     * @param escooter The e-scooter to be rented.
-     * @return A rental record of the transaction.
+     * 
+     * @param account The user account.
+     * @param escooterId The ID of the e-scooter to be rented.
+     * @return The rented e-scooter if the transaction is successful, null otherwise.
      */
     public Escooter rentEscooter(String account, String escooterId){
 
@@ -107,6 +134,7 @@ public class EscooterService {
 
     /**
      * Shows available e-scooters within a certain radius from the given GPS location.
+     * 
      * @param gps The GPS location to search around.
      * @return A list of available e-scooters within the specified radius.
      */
@@ -120,20 +148,21 @@ public class EscooterService {
     }
 
     /**
-    * Updates the battery level of the specified e-scooter.
-    *
-    * @param escooterId   The ID of the e-scooter to update
-    * @param batteryLevel The new battery level
-    * @return true if the battery level was successfully updated
-    */
+     * Updates the battery level of the specified e-scooter.
+     *
+     * @param escooterId The ID of the e-scooter to update.
+     * @param batteryLevel The new battery level.
+     * @return true if the battery level was successfully updated.
+     */
     public boolean updateBatteryLevel(String escooterId, int batteryLevel){
         return escooterRepository.updateBatteryLevel(escooterId,batteryLevel);
     }
 
     /**
-    * get all Escooter id.
-    * @return return escooter id list.
-    */
+     * Retrieves all e-scooter IDs.
+     *
+     * @return A list of all e-scooter IDs.
+     */
     public List<String> getEscooterId(){
         return escooterRepository.queryEscooters();
     }

@@ -1,17 +1,16 @@
 package com.escooter.api.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.escooter.api.exceptions.UserCredentialsException;
 import com.escooter.api.model.Escooter;
 import com.escooter.api.model.GPS;
 import com.escooter.api.model.UserCredentials;
 import com.escooter.api.repository.RentalRepository;
+
 /**
- * Service class for managing rental service.
+ * Service class for managing rental services.
  */
 @Service
 public class RentalService {
@@ -27,6 +26,7 @@ public class RentalService {
     
     /**
      * Shows available e-scooters within a certain radius from the given GPS location.
+     *
      * @param gps The GPS location to search around.
      * @return A list of available e-scooters within the specified radius.
      */
@@ -36,9 +36,11 @@ public class RentalService {
     
     /**
      * Rents an e-scooter to a user.
-     * @param user The user renting the e-scooter.
-     * @param escooter The e-scooter to be rented.
-     * @return A rental record of the transaction.
+     *
+     * @param userCredentials The user credentials.
+     * @param escooterId The ID of the e-scooter to be rented.
+     * @return The rented e-scooter if the transaction is successful, null otherwise.
+     * @throws UserCredentialsException If the user credentials are invalid.
      */
     public Escooter rentEscooter(UserCredentials userCredentials, String escooterId) throws UserCredentialsException {
 
@@ -52,12 +54,12 @@ public class RentalService {
     }
 
     /**
-    * Updates the parking status of the e-scooter associated with the given account.
-    *
-    * @param account  The account identifier of the user
-    * @param password The password of the user (not used in this method, consider security implications)
-    * @return true if the e-scooter's parking status was successfully updated, false otherwise
-    */
+     * Updates the parking status of the e-scooter associated with the given account.
+     *
+     * @param userCredentials The user credentials.
+     * @return true if the e-scooter's parking status was successfully updated, false otherwise.
+     * @throws UserCredentialsException If the user credentials are invalid.
+     */
     public boolean updateEscooterParkStatus(UserCredentials userCredentials) throws UserCredentialsException {
 
         if(!userCredentialService.verifyUserCredentials(userCredentials)){
@@ -78,9 +80,10 @@ public class RentalService {
 
     /**
      * Returns a rented e-scooter.
-     * @param user The user returning the e-scooter.
-     * @param escooter The e-scooter to be returned.
-     * @return 
+     *
+     * @param userCredentials The user credentials.
+     * @return true if the return is successful, false otherwise.
+     * @throws UserCredentialsException If the user credentials are invalid.
      */
     public boolean returnEscooter(UserCredentials userCredentials)throws UserCredentialsException {
 

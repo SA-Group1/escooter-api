@@ -21,8 +21,9 @@ public class EscooterRepository {
 
     /**
      * Adds a new e-scooter to the database.
-     * @param modelId the model name of the e-scooter
-     * @return is add escooter successful.
+     *
+     * @param modelId the model name of the e-scooter.
+     * @return true if adding the e-scooter is successful.
      */
     public boolean addEscooter(String modelId){
         String sql = "INSERT INTO escooter_rental.escooter (model_id) VALUES (?)";
@@ -30,12 +31,12 @@ public class EscooterRepository {
         return true;
     }
 
-    /**
+     /**
      * Updates the GPS coordinates of an e-scooter in the database.
-     * 
-     * @param escooterId the e-scooter identifier
-     * @param gps the GPS coordinates to update
-     * @return true if updating is successful, false otherwise
+     *
+     * @param escooterId the e-scooter identifier.
+     * @param gps the GPS coordinates to update.
+     * @return true if updating is successful, false otherwise.
      */
     public boolean updateGps(String escooterId, GPS gps) {
         String sql = "UPDATE escooter_rental.escooter SET escooter_gps_longitude = ?, escooter_gps_latitude = ? WHERE escooter_id = ?";
@@ -46,9 +47,9 @@ public class EscooterRepository {
 
     /**
      * Queries an e-scooter by its identifier from the database.
-     * 
-     * @param escooterId the e-scooter identifier
-     * @return the Escooter object if found, otherwise null
+     *
+     * @param escooterId the e-scooter identifier.
+     * @return the Escooter object if found, otherwise null.
      */
     public Escooter queryEscooterById(String escooterId) {
 		String sql = "SELECT * FROM escooter_rental.escooter WHERE escooter_id = ?";
@@ -70,7 +71,8 @@ public class EscooterRepository {
 
     /**
      * Queries all available e-scooters from the database.
-     * @return a list of all Escooter objects if found, otherwise null
+     *
+     * @return a list of all Escooter objects if found, otherwise null.
      */
     public List<String> queryEscooters() {
         String sql = "SELECT escooter_id FROM escooter_rental.escooter";
@@ -86,11 +88,10 @@ public class EscooterRepository {
 
     /**
      * Queries all available e-scooters within the specified radius from the database.
-     * 
-     * @param longitude the longitude coordinate of the center point
-     * @param latitude the latitude coordinate of the center point
-     * @param distance the maximum distance (in kilometers) from the center point to search for available e-scooters
-     * @return a list of available Escooter objects if found, otherwise null
+     *
+     * @param gps the GPS coordinates of the center point.
+     * @param distance the maximum distance (in kilometers) from the center point to search for available e-scooters.
+     * @return a list of available Escooter objects if found, otherwise null.
      */
     public List<Escooter> queryAvailableEscooters(GPS gps, double distance) {
         String sql = 
@@ -124,11 +125,11 @@ public class EscooterRepository {
     }
 
     /**
-     * Updates the GPS coordinates of an e-scooter in the database.
-     * 
-     * @param escooterId the e-scooter identifier
-     * @param status the GPS coordinates to update
-     * @return true if updating is successful, false otherwise
+     * Updates the status of an e-scooter in the database.
+     *
+     * @param escooterId the e-scooter identifier.
+     * @param status the new status to update.
+     * @return true if updating is successful, false otherwise.
      */
     public boolean updateStatus(String escooterId, String status) {
         String sql = "UPDATE escooter_rental.escooter SET escooter_status = ? WHERE escooter_id = ?";
@@ -137,12 +138,12 @@ public class EscooterRepository {
     }
 
     /**
-    * Updates the battery level of the specified e-scooter.
-    *
-    * @param escooterId   The ID of the e-scooter to update
-    * @param batteryLevel The new battery level
-    * @return true if the update was successful
-    */
+     * Updates the battery level of the specified e-scooter.
+     *
+     * @param escooterId the ID of the e-scooter to update.
+     * @param batteryLevel the new battery level.
+     * @return true if the update was successful.
+     */
     public boolean updateBatteryLevel(String escooterId, int batteryLevel){
         String sql = "UPDATE escooter_rental.escooter SET battery_level = ? WHERE escooter_id = ?";
         jdbcTemplate.update(sql, batteryLevel, escooterId);
@@ -150,11 +151,11 @@ public class EscooterRepository {
     }
     
     /**
-    * Queries the currently rented e-scooter for a given account.
-    *
-    * @param account The account identifier
-    * @return The rented e-scooter, or null if no e-scooter is rented by the account
-    */
+     * Queries the currently rented e-scooter for a given account.
+     *
+     * @param account the account identifier.
+     * @return the rented e-scooter, or null if no e-scooter is rented by the account.
+     */
     public Escooter queryRentedEscooterByAccount(String account) {
         String sql = "SELECT * FROM escooter_rental.escooter WHERE escooter_id = (SELECT escooter_id FROM escooter_rental.rental_record WHERE user_id = (SELECT user_id FROM escooter_rental.user WHERE account = ?) AND end_time IS NULL)";
         RowMapper<Escooter> rowMapper = (rs, rowNum) -> {
@@ -174,12 +175,12 @@ public class EscooterRepository {
     }
 
     /**
-    * Updates the parking status of the specified e-scooter.
-    *
-    * @param escooterId The ID of the e-scooter to update
-    * @param status     The new parking status
-    * @return true if the update was successful
-    */
+     * Updates the parking status of the specified e-scooter.
+     *
+     * @param escooterId the ID of the e-scooter to update.
+     * @param status the new parking status.
+     * @return true if the update was successful.
+     */
     public boolean updateEscooterParkStatusbyId(String escooterId, String status) {
         String sql = "UPDATE escooter_rental.escooter SET escooter_status = ? WHERE escooter_id = ?";
         jdbcTemplate.update(sql, status, escooterId);
@@ -187,13 +188,13 @@ public class EscooterRepository {
     }
 
     /**
-    * Processes the return of an e-scooter, updating its status and rental record.
-    *
-    * @param userId      The ID of the user returning the e-scooter
-    * @param escooterId  The ID of the e-scooter being returned
-    * @param modelId     The model ID of the e-scooter
-    * @return true if the return was processed successfully, false otherwise
-    */
+     * Processes the return of an e-scooter, updating its status and rental record.
+     *
+     * @param userId the ID of the user returning the e-scooter.
+     * @param escooterId the ID of the e-scooter being returned.
+     * @param modelId the model ID of the e-scooter.
+     * @return true if the return was processed successfully, false otherwise.
+     */
     public boolean returnEscooter(int userId, String escooterId, String modelId) {
         String updateSql1 = "UPDATE escooter_rental.escooter SET escooter_status = \"Available\" WHERE escooter_id = ? AND escooter_status = \"Rented\"";
         String updateSql2 = "UPDATE escooter_rental.rental_record SET end_time = NOW() WHERE escooter_id = ? AND ispaid = 0";
@@ -225,6 +226,12 @@ public class EscooterRepository {
         return true;
     }
 
+    /**
+     * Retrieves the GPS coordinates of an e-scooter by its identifier.
+     *
+     * @param escooterId the e-scooter identifier.
+     * @return the GPS coordinates if found, otherwise null.
+     */
     public GPS getEscooterGpsById(String escooterId){
         String sql = "SELECT escooter_gps_longitude , escooter_gps_latitude FROM escooter_rental.escooter WHERE escooter_id = ?";
         RowMapper<GPS> rowMapper = (rs, rowNum) -> {

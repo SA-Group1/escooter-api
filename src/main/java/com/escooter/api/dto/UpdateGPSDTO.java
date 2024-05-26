@@ -2,7 +2,7 @@ package com.escooter.api.dto;
 import com.escooter.api.model.GPS;
 
 /**
- * Data Transfer Object for updating GPS information.
+ * DTO(Data Transfer Object) for updating GPS information.
  * This class holds the data for an e-scooter and its GPS details.
  */
 public class UpdateGpsDTO {

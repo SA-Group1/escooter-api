@@ -13,8 +13,11 @@ public class BindMemberCardDTO {
 
     /**
      * Constructs a new BindMemberCardDTO with the specified details.
-     * @param userDTO The user data.
-     * @param memberCardDTO The member card data.
+     *
+     * @param account        User account for credentials.
+     * @param password       User password for credentials.
+     * @param cardNumber     Member card number.
+     * @param expirationDate Member card expiration date.
      */
     public BindMemberCardDTO(String account , String password, String cardNumber, String expirationDate){
         this.userCredentialsDTO = new UserCredentialsDTO(account , password);

@@ -1,10 +1,8 @@
 package com.escooter.api.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.escooter.api.exceptions.UserCredentialsException;
 import com.escooter.api.model.RentalRecord;
 import com.escooter.api.model.UserCredentials;
@@ -23,9 +21,10 @@ public class RentalRecordService {
 
     /**
      * Retrieves a list of rental records for a user based on account credentials.
-     * @param account The account identifier for the user.
-     * @param password The password for the user's account.
+     *
+     * @param userCredentials The user's credentials containing account and password.
      * @return A list of rental records associated with the user.
+     * @throws UserCredentialsException If the user credentials are invalid.
      */
     public List<RentalRecord> getRentalRecordList(UserCredentials userCredentials) throws UserCredentialsException {
 
@@ -36,6 +35,13 @@ public class RentalRecordService {
         return rentalRecordRepository.queryRentalRecordsByUserAccount(userCredentials.getAccount());
     }
 
+    /**
+     * Creates a rental record for the specified user and e-scooter.
+     *
+     * @param userId     The ID of the user renting the e-scooter.
+     * @param escooterId The ID of the e-scooter being rented.
+     * @return True if the rental record is successfully created.
+     */
     public boolean createRentalRecord(int userId, String escooterId){
 
         rentalRecordRepository.createRentalRecord(userId, escooterId);

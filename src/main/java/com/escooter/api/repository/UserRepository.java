@@ -1,17 +1,15 @@
 package com.escooter.api.repository;
 
-
 import java.sql.Blob;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
 import com.escooter.api.model.CreditCard;
 import com.escooter.api.model.MemberCard;
 import com.escooter.api.model.User;
+
 /**
  * Repository for managing user data in the database.
  */
@@ -22,9 +20,9 @@ public class UserRepository {
 	private JdbcTemplate jdbcTemplate;
 	/**
      * Queries the user by account from the database.
-     * 
-     * @param account the account identifier
-     * @return the User object if found, otherwise null
+     *
+     * @param account the account identifier.
+     * @return the User object if found, otherwise null.
      */
 	public User queryUserByAccount(String account) {
 		String sql = """
@@ -73,10 +71,10 @@ public class UserRepository {
 	}
 
 	/**
-     * Queries the user by account from the database.
-     * 
-     * @param account the account identifier
-     * @return the User object if found, otherwise null
+     * Queries the user ID by account from the database.
+     *
+     * @param account the account identifier.
+     * @return the user ID if found.
      */
 	public int queryUserIdByAccount(String account) {
         String sql = "SELECT user_id FROM escooter_rental.user WHERE account = ?";
@@ -85,12 +83,12 @@ public class UserRepository {
 
 	/**
      * Adds a new User to the database.
-     * 
-     * @param account the user's account identifier
-     * @param password the user's password
-     * @param userName the user's name
-     * @param email the user's email
-	 * @param phoneNumber the user's phone number
+     *
+     * @param account     the user's account identifier.
+     * @param password    the user's password.
+     * @param userName    the user's name.
+     * @param email       the user's email.
+     * @param phoneNumber the user's phone number.
      * @return True if adding is successful, false otherwise.
      */
 	public boolean createUser(String account, String password, String userName, String email, String phoneNumber) {
@@ -101,8 +99,8 @@ public class UserRepository {
 
 	/**
      * Updates user data in the database.
-     * 
-     * @param userDTO the user data transfer object containing updated user information
+     *
+     * @param user the user object containing updated user information.
      * @return True if updating is successful, false otherwise.
      */
 	public boolean updateUserData(User user) {
@@ -111,7 +109,13 @@ public class UserRepository {
 		return true;
 	}
 
-
+	/**
+     * Uploads a user's photo to the database.
+     *
+     * @param account the user's account identifier.
+     * @param image   the user's photo as a byte array.
+     * @return True if uploading is successful, false otherwise.
+     */
 	public boolean uploadUserPhoto(String account, byte[]image) {
         String sql = "UPDATE user SET user_photo = ? WHERE account = ?";
         jdbcTemplate.update(sql, image, account);

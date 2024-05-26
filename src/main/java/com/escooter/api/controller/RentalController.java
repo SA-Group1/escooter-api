@@ -39,7 +39,7 @@ public class RentalController {
     /**
 	 * Adding rental data to database and returns a successful message
 	 *
-     * @param gpsDTO GPS data 
+   * @param gpsDTO GPS data 
 	 * @return A ResponseEntity with http status and message
 	 */
     @PostMapping("/getRentableEscooterList")
@@ -94,7 +94,7 @@ public class RentalController {
     * Updates the parking status of the e-scooter associated with the provided user account.
     *
     * @param userDTO User data transfer object containing account and password
-     * @return A ResponseEntity with HTTP status and message
+    * @return A ResponseEntity with HTTP status and message
     */
     @PutMapping("/updateEscooterParkStatus")
     public ResponseEntity<String> updateEscooterParkStatus(@RequestBody UserCredentialsDTO userCredentialsDTO) {

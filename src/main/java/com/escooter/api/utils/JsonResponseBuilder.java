@@ -6,6 +6,9 @@ import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 
+/**
+ * Utility class for building JSON responses.
+ */
 public class JsonResponseBuilder {
     private static final Logger logger = LoggerFactory.getLogger(JsonResponseBuilder.class);
 
@@ -33,6 +36,14 @@ public class JsonResponseBuilder {
         return buildResponse(false, message , null);
     }
 
+    /**
+     * Builds a JSON response.
+     *
+     * @param status  The status of the response (true for success, false for error).
+     * @param message The message of the response.
+     * @param data    The data of the response.
+     * @return The JSON response as a string.
+     */
     private static String buildResponse(boolean status, String message, Object data) {
         JSONObject jsonResponse = new JSONObject();
         try {

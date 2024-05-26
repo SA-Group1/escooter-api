@@ -20,9 +20,9 @@ public class RentalRecordRepository {
 
     /**
      * Queries rental records by the user's account.
-     * 
-     * @param account the user's account identifier
-     * @return a list of RentalRecord objects if found, otherwise null
+     *
+     * @param account the user's account identifier.
+     * @return a list of RentalRecord objects if found, otherwise null.
      */
     public List<RentalRecord> queryRentalRecordsByUserAccount(String account) {
         String sql = """
@@ -61,11 +61,12 @@ public class RentalRecordRepository {
     }
 
     /**
-    * Creates a new rental record for the specified user and e-scooter.
-    * @param userId     The ID of the user renting the e-scooter
-    * @param escooterId The ID of the e-scooter being rented
-    * @return true if the rental record was successfully created
-    */
+     * Creates a new rental record for the specified user and e-scooter.
+     *
+     * @param userId     The ID of the user renting the e-scooter.
+     * @param escooterId The ID of the e-scooter being rented.
+     * @return true if the rental record was successfully created.
+     */
     public boolean createRentalRecord(int userId, String escooterId) {
         String sql = "INSERT INTO escooter_rental.rental_record (user_id, escooter_id, start_time) VALUES (?, ?, NOW())";
         jdbcTemplate.update(sql, userId, escooterId);

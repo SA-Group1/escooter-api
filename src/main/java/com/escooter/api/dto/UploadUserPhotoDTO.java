@@ -2,11 +2,20 @@ package com.escooter.api.dto;
 
 import com.escooter.api.model.UserCredentials;
 
+/**
+ * DTO (Data Transfer Object) for uploading user photo.
+ */
 public class UploadUserPhotoDTO {
     private UserCredentialsDTO userCredentialsDTO;
     private byte[] image;
 
-
+    /**
+     * Constructs a new UploadUserPhotoDTO with the specified details.
+     *
+     * @param account  The user account.
+     * @param password The user password.
+     * @param image    The user's photo as a byte array.
+     */
     public UploadUserPhotoDTO(String account, String password, byte[] image){
         this.userCredentialsDTO = new UserCredentialsDTO(account, password);
         this.image = image;

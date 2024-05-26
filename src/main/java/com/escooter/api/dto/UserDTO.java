@@ -21,6 +21,7 @@ public class UserDTO {
 
     /**
      * Constructs a UserDTO with the specified account.
+     *
      * @param account The user account.
      */
     public UserDTO(String account){
@@ -28,8 +29,9 @@ public class UserDTO {
     }
 
     /**
-     * Constructs a UserDTO with the specified account.
-     * @param account The user account.
+     * Constructs a UserDTO with the specified account and password.
+     *
+     * @param account  The user account.
      * @param password The user password.
      */
     public UserDTO(String account, String password) {
@@ -39,10 +41,11 @@ public class UserDTO {
 
     /**
      * Constructs a UserDTO with the specified account, username, password, and email.
-     * @param account The user account.
+     *
+     * @param account  The user account.
      * @param userName The user username.
      * @param password The user password.
-     * @param email The user email.
+     * @param email    The user email.
      */
     public UserDTO(String account, String userName, String password, String email) {
         this.account = account;
@@ -53,12 +56,13 @@ public class UserDTO {
 
      /**
      * Constructs a UserDTO with all fields.
-     * @param account The user account.
-     * @param userName The user username.
-     * @param password The user password.
-     * @param email The user email.
+     *
+     * @param account     The user account.
+     * @param userName    The user username.
+     * @param password    The user password.
+     * @param email       The user email.
      * @param phoneNumber The user phone number.
-     * @param image The user image in BLOB format.
+     * @param image       The user image in BLOB format.
      */
     public UserDTO(String account, String userName, String password, String email, String phoneNumber, byte[] image) {
         this.account = account;

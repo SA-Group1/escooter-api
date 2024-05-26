@@ -26,18 +26,10 @@ public class MemberCard {
         this.cardNumber = cardNumber;
     }
 
-    /**
-     * Returns the member card number.
-     * @return The member card number.
-     */
     public String getCardNumber() {
         return cardNumber;
     }
 
-    /**
-     * Returns the expiration date of the member card.
-     * @return The expiration date.
-     */
     public String getExpirationDate() {
         return expirationDate;
     }
@@ -50,20 +42,11 @@ public class MemberCard {
         // Logic of vaild member card
         return true;
     }
-    /**
-    * Sets the credit card number.
-    *
-    * @param cardNumber The credit card number to set
-    */
+
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
     }
 
-    /**
-    * Sets the expiration date of the credit card.
-    *
-    * @param expirationDate The expiration date to set in MM/YY format
-    */
     public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
     }

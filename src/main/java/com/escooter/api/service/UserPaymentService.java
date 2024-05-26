@@ -2,7 +2,6 @@ package com.escooter.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.escooter.api.exceptions.CardExpiredException;
 import com.escooter.api.exceptions.CreditCardCvvException;
 import com.escooter.api.exceptions.UserCredentialsException;
@@ -10,10 +9,11 @@ import com.escooter.api.model.CreditCard;
 import com.escooter.api.model.MemberCard;
 import com.escooter.api.model.UserCredentials;
 
-
+/**
+ * Service class for managing user payment operations, including binding and unbinding credit cards and member cards.
+ */
 @Service
 public class UserPaymentService {
-
 
     @Autowired
     private CreditCardService creditCardService;
@@ -22,17 +22,17 @@ public class UserPaymentService {
 	@Autowired
 	private UserCredentialService userCredentialService;
 
-
     /**
-	 * Bind a credit card to the user.
-	 * @param userCredentials The user who wants to bind a credit card.
-	 * @param creditCard The credit card to bind.
-	 * @param cvv The CVV (Card Verification Value) of the credit card.
-	 * @return True if binding is successful.
-     * @throws UserCredentialsException
-     * @throws CardExpiredException 
-     * @throws CreditCardCvvException 
-	 */
+     * Binds a credit card to the user.
+     *
+     * @param userCredentials The user credentials.
+     * @param creditCard      The credit card to bind.
+     * @param cvv             The CVV (Card Verification Value) of the credit card.
+     * @return True if binding is successful.
+     * @throws UserCredentialsException If the user credentials are invalid.
+     * @throws CardExpiredException     If the credit card is expired.
+     * @throws CreditCardCvvException   If the credit card CVV is invalid.
+     */
 	public boolean bindCreditCard(UserCredentials userCredentials, CreditCard creditCard , String cvv) throws UserCredentialsException, CardExpiredException, CreditCardCvvException {
 
 		if(!userCredentialService.verifyUserCredentials(userCredentials)){
@@ -46,16 +46,17 @@ public class UserPaymentService {
         } catch (CreditCardCvvException creditCardCvvException){
             throw new CreditCardCvvException("Invalid card cvv.");
         }
-		
+
 		return true;
 	}
 
     /**
-	 * Unbinds a credit card for the user.
-	 * @param userCredentials The user credentials who wants to unbind a credit card.
-	 * @return True if unbinding is successful.
-     * @throws com.escooter.api.exceptions.UserCredentialsException
-	 */
+     * Unbinds a credit card for the user.
+     *
+     * @param userCredentials The user credentials.
+     * @return True if unbinding is successful.
+     * @throws UserCredentialsException If the user credentials are invalid.
+     */
 	public boolean unbindCreditCard(UserCredentials userCredentials) throws UserCredentialsException {
 		if(!userCredentialService.verifyUserCredentials(userCredentials)){
 			throw new UserCredentialsException("Invalid credentials.");
@@ -66,12 +67,14 @@ public class UserPaymentService {
 	}
 
 	/**
-	 * Bind a member card to the user.
-	 * @param userCredentials The user who wants to bind a member card.
-	 * @param memberCard The member card to bind.
-	 * @return True if binding is successful.
-     * @throws com.escooter.api.exceptions.UserCredentialsException
-	 */
+     * Binds a member card to the user.
+     *
+     * @param userCredentials The user credentials.
+     * @param memberCard      The member card to bind.
+     * @return True if binding is successful.
+     * @throws UserCredentialsException If the user credentials are invalid.
+     * @throws CardExpiredException     If the member card is expired.
+     */
 	public boolean bindMemberCard(UserCredentials userCredentials, MemberCard memberCard) throws UserCredentialsException, CardExpiredException {
 
 		if(!userCredentialService.verifyUserCredentials(userCredentials)){
@@ -87,12 +90,13 @@ public class UserPaymentService {
 		return true;
 	}
 
-
 	/**
-	 * Unbinds a member card for the user.
-	 * @param user The user who wants to unbind a member card.
-	 * @return True if unbinding is successful.
-	 */
+     * Unbinds a member card for the user.
+     *
+     * @param userCredentials The user credentials.
+     * @return True if unbinding is successful.
+     * @throws UserCredentialsException If the user credentials are invalid.
+     */
 	public boolean unbindMemberCard(UserCredentials userCredentials) throws UserCredentialsException {
 		if(!userCredentialService.verifyUserCredentials(userCredentials)){
 			throw new UserCredentialsException("Invalid credentials.");
@@ -102,14 +106,13 @@ public class UserPaymentService {
 		return true;
 	}
 
-	
-
 	/**
-	 * get the credit card from the user.
-	 * @param userCredentials The user who wants to get their credit card.
-	 * @return The user's credit card.
-     * @throws com.escooter.api.exceptions.UserCredentialsException
-	 */
+     * Retrieves the credit card of the user.
+     *
+     * @param userCredentials The user credentials.
+     * @return The user's credit card.
+     * @throws UserCredentialsException If the user credentials are invalid.
+     */
 	public CreditCard getCreditCard(UserCredentials userCredentials) throws UserCredentialsException {
 		if(!userCredentialService.verifyUserCredentials(userCredentials)){
 			throw new UserCredentialsException("Invalid credentials.");
@@ -119,10 +122,12 @@ public class UserPaymentService {
 	}
 
 	/**
-	 * get the member card from the user.
-	 * @param userCredentials The user who wants to get their member card.
-	 * @return The user's member card.
-	 */
+     * Retrieves the member card of the user.
+     *
+     * @param userCredentials The user credentials.
+     * @return The user's member card.
+     * @throws UserCredentialsException If the user credentials are invalid.
+     */
 	public MemberCard getMemberCard(UserCredentials userCredentials) throws UserCredentialsException {
 		if(!userCredentialService.verifyUserCredentials(userCredentials)){
 			throw new UserCredentialsException("Invalid credentials.");

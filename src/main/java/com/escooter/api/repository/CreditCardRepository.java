@@ -22,11 +22,12 @@ public class CreditCardRepository {
 	private JdbcTemplate jdbcTemplate;
 	
 	/**
-	 * Adds a new credit card to the database.
-	 * @param creditCard The credit card to add.
-	 * @return True if adding is successful, false otherwise.
-	 *  @throws DuplicateKeyException Throws when the credit card is already in the database.
-	 */
+     * Adds a new credit card to the database.
+     * 
+     * @param creditCard The credit card to add.
+     * @return True if adding is successful, false otherwise.
+     * @throws DuplicateKeyException Throws when the credit card is already in the database.
+     */
 	public boolean addCreditCard(CreditCard creditCard) throws DuplicateKeyException {
 		System.out.println("EXCUTE INSERT MEMBER");
 		
@@ -37,10 +38,11 @@ public class CreditCardRepository {
 	}
 
 	/**
-	 * Gets the credit card by account.
-	 * @param account The user's account.
-	 * @return The user's credit card.
-	 */
+     * Gets the credit card by account.
+     * 
+     * @param account The user's account.
+     * @return The user's credit card.
+     */
 	public CreditCard getCreditCard(String account) {
         String sql = 
         "SELECT creditcard_id, expiration_date, card_holder_name " +
@@ -55,12 +57,12 @@ public class CreditCardRepository {
     }
 
 	/**
-	 * Binds a credit card to the user.
-	 * 
-	 * @param account the user's account.
-	 * @param cardNumber the credit card number.
-	 * @return True if binding is successful.
-	 */
+     * Binds a credit card to the user.
+     * 
+     * @param account The user's account.
+     * @param cardNumber The credit card number.
+     * @return True if binding is successful.
+     */
 	public boolean bindCreditCard(String account, String cardNumber) {
 		String sql = "UPDATE `escooter_rental`.`user` SET `creditcard_id` = ? WHERE (`account` = ?)";
 		jdbcTemplate.update(sql, cardNumber, account);
@@ -68,11 +70,11 @@ public class CreditCardRepository {
 	}
 
 	/**
-	 * Unbinds a credit card for the user.
-	 * 
-	 * @param account the user's account.
-	 * @return True if unbinding is successful.
-	 */
+     * Unbinds a credit card from the user.
+     * 
+     * @param account The user's account.
+     * @return The unbound credit card number.
+     */
 	public String unbindCreditCard(String account) {
 
 		String sql = "SELECT creditcard_id FROM `escooter_rental`.`user` WHERE (`account` = ?)";
@@ -85,21 +87,31 @@ public class CreditCardRepository {
 		return cardNumber;
 	}
 
+	/**
+     * Deletes a credit card from the database.
+     * 
+     * @param cardNumber The credit card number.
+     * @return True if deletion is successful, false otherwise.
+     */
 	public boolean deleteCreditCard(String cardNumber){
 		String sql = "DELETE FROM `escooter_rental`.`credit_card` WHERE `creditcard_id` = ?";
 		int rowsAffected = jdbcTemplate.update(sql, cardNumber);
 		return rowsAffected > 0;
 	}
 
-
+	/**
+     * RowMapper implementation for mapping a row in the result set to a CreditCard object.
+     */
 	private static class CreditCardRowMapper implements RowMapper<CreditCard> {
 
 		/**
-		 * The map for construct a credit card object using data gets from database.
-		 * @param rs For selecting column.
-		 * @param rowNum For selecting row.
-		 * @return a credit card object.
-		 */		
+         * Maps a row in the result set to a CreditCard object.
+         * 
+         * @param rs The ResultSet to map (pre-initialized for the current row).
+         * @param rowNum The number of the current row.
+         * @return The mapped CreditCard object.
+         * @throws SQLException If an SQLException is encountered getting column values.
+         */	
 		@Override
 		public CreditCard mapRow(@SuppressWarnings("null") ResultSet rs, int rowNum) throws SQLException {
 			CreditCard creditCard = new CreditCard();

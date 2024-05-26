@@ -9,7 +9,8 @@ public class MemberCardDTO {
     
     /**
      * Constructs a new MemberCardDTO with the specified card details.
-     * @param cardNumber The member card number.
+     *
+     * @param cardNumber     The member card number.
      * @param expirationDate The expiration date of the member card.
      */
     public MemberCardDTO(String cardNumber, String expirationDate) {

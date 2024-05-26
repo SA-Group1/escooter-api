@@ -11,8 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.escooter.api.model.MemberCard;
 
-
-
 /**
  * Repository for managing member card data in the database.
  */
@@ -23,10 +21,11 @@ public class MemberCardRepository {
 	private JdbcTemplate jdbcTemplate;
 
 	/**
-	 * Adds a new member card to the database.
-	 * @param memberCard The member card to add.
-	 * @return True if adding is successful, false otherwise.
-	 */
+     * Adds a new member card to the database.
+     *
+     * @param memberCard The member card to add.
+     * @return True if adding is successful, false otherwise.
+     */
 	public boolean addMemberCard(MemberCard memberCard) {
 		System.out.println("EXCUTE INSERT MEMBER");
 		
@@ -36,12 +35,12 @@ public class MemberCardRepository {
 	}
 
 	/**
-	 * Binds a member card to the user.
-	 * 
-	 * @param account the user's account.
-	 * @param cardNumber the member card number.
-	 * @return True if binding is successful.
-	 */
+     * Binds a member card to the user.
+     *
+     * @param account    the user's account.
+     * @param cardNumber the member card number.
+     * @return True if binding is successful.
+     */
 	public boolean bindMemberCard(String account, String cardNumber) {
 		String sql = "UPDATE `escooter_rental`.`user` SET `membercard_id` = ? WHERE (`account` = ?)";
 		jdbcTemplate.update(sql, cardNumber, account);
@@ -49,11 +48,11 @@ public class MemberCardRepository {
 	}
 
 	/**
-	 * Unbinds a credit card for the user.
-	 * 
-	 * @param account the user's account.
-	 * @return True if unbinding is successful.
-	 */
+     * Unbinds a credit card for the user.
+     *
+     * @param account the user's account.
+     * @return The unbound member card number.
+     */
 	public String unbindMemberCard(String account) {
 
 		String sql = "SELECT membercard_id FROM `escooter_rental`.`user` WHERE (`account` = ?)";
@@ -66,6 +65,12 @@ public class MemberCardRepository {
 		return cardNumber;
 	}
 
+	/**
+     * Deletes a member card from the database.
+     *
+     * @param cardNumber the member card number.
+     * @return True if deletion is successful, false otherwise.
+     */
 	public boolean deleteMemberCard(String cardNumber){
 		String sql = "DELETE FROM `escooter_rental`.`member_card` WHERE `membercard_id` = ?";
 		int rowsAffected = jdbcTemplate.update(sql, cardNumber);
@@ -73,10 +78,11 @@ public class MemberCardRepository {
 	}
 
 	/**
-	 * Gets the member card by account.
-	 * @param account The user's account.
-	 * @return The user's member card.
-	 */
+     * Gets the member card by account.
+     *
+     * @param account The user's account.
+     * @return The user's member card.
+     */
 	public MemberCard getMemberCard(String account) {
         String sql = 
         "SELECT membercard_id, expiration_date " +
@@ -89,14 +95,19 @@ public class MemberCardRepository {
         }
     }
 
+	/**
+     * RowMapper implementation for mapping rows of a ResultSet to MemberCard objects.
+     */
 	private static class MemberCardRowMapper implements RowMapper<MemberCard> {
 
 		/**
-		 * The map for construct a member card object using data gets from database.
-		 * @param rs For selecting column.
-		 * @param rowNum For selecting row.
-		 * @return a member card object.
-		 */
+         * Maps a row of a ResultSet to a MemberCard object.
+         *
+         * @param rs      the ResultSet.
+         * @param rowNum  the number of the current row.
+         * @return a MemberCard object.
+         * @throws SQLException if a SQLException is encountered getting column values.
+         */
 		@Override
 		public MemberCard mapRow(@SuppressWarnings("null") ResultSet rs, int rowNum) throws SQLException {
 			MemberCard memberCard = new MemberCard();

@@ -3,7 +3,7 @@ package com.escooter.api.dto;
 import com.escooter.api.model.UserCredentials;
 
 /**
- * DTO (Data Transfer Object) for binding credit card to user.
+ * DTO (Data Transfer Object) for renting an e-scooter.
  */
 public class RentEscooterDTO {
 
@@ -12,8 +12,10 @@ public class RentEscooterDTO {
 
     /**
      * Constructs a new RentEscooterDTO with the specified details.
-     * @param userDTO The user data.
-     * @param escooterDTO The escooter data.
+     *
+     * @param account     The user account.
+     * @param password    The user password.
+     * @param escooterId  The e-scooter ID.
      */
     public RentEscooterDTO(String account , String password, String escooterId){
         this.userCredentialsDTO = new UserCredentialsDTO(account, password);
