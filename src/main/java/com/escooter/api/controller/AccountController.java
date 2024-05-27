@@ -14,33 +14,36 @@ import com.escooter.api.exceptions.UserCredentialsException;
 import com.escooter.api.service.AccountService;
 import com.escooter.api.utils.JsonResponseBuilder;
 
-
+/**
+ * Controller for handling user account.
+ */
 @RestController
 @RequestMapping("/api")
 public class AccountController {
+
     @Autowired
     AccountService accountService;
-    
+
     /**
-	 * Adds user data to the database and returns a success message.
-	 *
-	 * @param userDTO User data.
-	 * @return A ResponseEntity with HTTP status and message.
-	 */
+     * Adds user data to the database and returns a success message.
+     *
+     * @param userDTO User data.
+     * @return A ResponseEntity with HTTP status and message.
+     */
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
         try {
             accountService.register(userDTO.getAccount(), userDTO.getPassword(), userDTO.getUserName(), userDTO.getEmail(), userDTO.getPhoneNumber());
-            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Create user success."),HttpStatus.OK);
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Create user success."), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Create user failed."),HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Create user failed."), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     /**
      * Authenticates user login.
      *
-     * @param userDTO User data.
+     * @param userCredentialsDTO User data.
      * @return A ResponseEntity with HTTP status and message.
      */
     @PostMapping("/login")
@@ -48,9 +51,9 @@ public class AccountController {
 
         try {
             boolean res = accountService.login(userCredentialsDTO.getUserCredentials());
-            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Login success.",res),HttpStatus.OK);
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Login success.", res), HttpStatus.OK);
         } catch (UserCredentialsException ex) {
             return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Invalid user credentials."), HttpStatus.UNAUTHORIZED);
-		}
+        }
     }
 }

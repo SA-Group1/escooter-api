@@ -3,6 +3,7 @@ package com.escooter.api.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +18,11 @@ import com.escooter.api.dto.UpdateGpsDTO;
 import com.escooter.api.model.GPS;
 import com.escooter.api.service.EscooterService;
 import com.escooter.api.utils.JsonResponseBuilder;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Controller for handling e-scooter related requests.
+ * Controller for handling e-scooter sync requests.
  */
 @RestController
 @RequestMapping("/api")
@@ -47,7 +49,7 @@ public class EscooterSyncController {
                 return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("E-scooter not found"), HttpStatus.NOT_FOUND);
             }
 
-            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Get status success" , escooterStatus), HttpStatus.OK);
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Get status success", escooterStatus), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Failed to get status", ex);
             return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Failed to get status"), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -56,6 +58,7 @@ public class EscooterSyncController {
 
     /**
      * Gets the status of the e-scooter and returns the status.
+     *
      * @param escooterDTO E-scooter data transfer object
      * @return A ResponseEntity with HTTP status and message
      */
@@ -65,12 +68,11 @@ public class EscooterSyncController {
             GPS escooterGps = escooterService.getEscooterGpsById(escooterDTO.getEscooterId());
 
             ObjectMapper objectMapper = new ObjectMapper();
-            String jsonString = "{}";
-            jsonString = objectMapper.writeValueAsString(escooterGps);
+            String jsonString = objectMapper.writeValueAsString(escooterGps);
             JSONObject jsonObject = new JSONObject(jsonString);
 
-            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Get escooter gps success" , jsonObject), HttpStatus.OK);
-        } catch (Exception ex) {
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Get escooter gps success", jsonObject), HttpStatus.OK);
+        } catch (JsonProcessingException | JSONException ex) {
             logger.error("Failed to get status", ex);
             return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Failed to get escooter gps"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -90,7 +92,7 @@ public class EscooterSyncController {
 
             escooterService.updateGps(escooterId, gps);
 
-            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse( "GPS update success"), HttpStatus.OK);
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("GPS update success"), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Failed to update GPS", ex);
             return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Failed to update GPS"), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -111,7 +113,7 @@ public class EscooterSyncController {
 
             escooterService.updateBatteryLevel(escooterId, batteryLevel);
 
-            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse( "Battery Level update success"), HttpStatus.OK);
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Battery Level update success"), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Failed to update battery level", ex);
             return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Failed to update battery level"), HttpStatus.INTERNAL_SERVER_ERROR);

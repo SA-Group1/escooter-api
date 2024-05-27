@@ -2,6 +2,7 @@ package com.escooter.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.escooter.api.exceptions.UserCredentialsException;
 import com.escooter.api.model.User;
 import com.escooter.api.model.UserCredentials;
@@ -24,7 +25,7 @@ public class UserService {
      * @param account The account identifier for the user.
      * @return The user if found, null otherwise.
      */
-    public User queryUserByAccount(String account){
+    public User queryUserByAccount(String account) {
         return userRepository.queryUserByAccount(account);
     }
 
@@ -34,36 +35,37 @@ public class UserService {
      * @param account The account identifier for the user.
      * @return The user ID if found.
      */
-    public int queryUserIdByAccount(String account){
+    public int queryUserIdByAccount(String account) {
         return userRepository.queryUserIdByAccount(account);
     }
 
     /**
      * Creates a new user.
      *
-     * @param account     The user's account identifier.
-     * @param password    The user's password.
-     * @param userName    The user's name.
-     * @param email       The user's email.
+     * @param account The user's account identifier.
+     * @param password The user's password.
+     * @param userName The user's name.
+     * @param email The user's email.
      * @param phoneNumber The user's phone number.
      * @return True if the user is successfully created.
      */
-    public boolean createUser(String account, String password, String userName, String email, String phoneNumber){
+    public boolean createUser(String account, String password, String userName, String email, String phoneNumber) {
         return userRepository.createUser(account, password, userName, email, phoneNumber);
     }
 
     /**
      * Retrieves user data.
      *
-     * @param userCredentials The user credentials containing account and password.
+     * @param userCredentials The user credentials containing account and
+     * password.
      * @return The user data.
      * @throws UserCredentialsException If the user credentials are invalid.
      */
     public User getUserData(UserCredentials userCredentials) throws UserCredentialsException {
 
-        if(!userCredentialService.verifyUserCredentials(userCredentials)){
-			throw new UserCredentialsException("Invalid credentials.");
-		}
+        if (!userCredentialService.verifyUserCredentials(userCredentials)) {
+            throw new UserCredentialsException("Invalid credentials.");
+        }
 
         return userRepository.queryUserByAccount(userCredentials.getAccount());
     }
@@ -72,15 +74,15 @@ public class UserService {
      * Updates user data.
      *
      * @param userCredentials The user credentials.
-     * @param user            The user data to update.
+     * @param user The user data to update.
      * @return True if the update is successful, false otherwise.
      * @throws UserCredentialsException If the user credentials are invalid.
      */
     public boolean updateUserData(UserCredentials userCredentials, User user) throws UserCredentialsException {
 
-        if(!userCredentialService.verifyUserCredentials(userCredentials)){
-			throw new UserCredentialsException("Invalid credentials.");
-		}
+        if (!userCredentialService.verifyUserCredentials(userCredentials)) {
+            throw new UserCredentialsException("Invalid credentials.");
+        }
 
         return userRepository.updateUserData(user);
     }
@@ -89,17 +91,17 @@ public class UserService {
      * Uploads user photo.
      *
      * @param userCredentials The user credentials.
-     * @param image           The user photo as a byte array.
+     * @param image The user photo as a byte array.
      * @return True if the update is successful, false otherwise.
      * @throws UserCredentialsException If the user credentials are invalid.
      */
-    public boolean uploadUserPhoto(UserCredentials userCredentials,byte[] image) throws UserCredentialsException {
+    public boolean uploadUserPhoto(UserCredentials userCredentials, byte[] image) throws UserCredentialsException {
 
-        if(!userCredentialService.verifyUserCredentials(userCredentials)){
-			throw new UserCredentialsException("Invalid credentials.");
-		}
+        if (!userCredentialService.verifyUserCredentials(userCredentials)) {
+            throw new UserCredentialsException("Invalid credentials.");
+        }
 
-        return userRepository.uploadUserPhoto(userCredentials.getAccount(),image);
+        return userRepository.uploadUserPhoto(userCredentials.getAccount(), image);
     }
 
     /**
@@ -124,7 +126,6 @@ public class UserService {
         return user;
     }
 
-
     /**
      * Retrieves user photo.
      *
@@ -134,11 +135,11 @@ public class UserService {
      */
     public User getUserPhoto(UserCredentials userCredentials) throws UserCredentialsException {
 
-        if(!userCredentialService.verifyUserCredentials(userCredentials)){
-			throw new UserCredentialsException("Invalid credentials.");
-		}
+        if (!userCredentialService.verifyUserCredentials(userCredentials)) {
+            throw new UserCredentialsException("Invalid credentials.");
+        }
 
         return userRepository.queryUserByAccount(userCredentials.getAccount());
     }
-    
+
 }

@@ -118,11 +118,13 @@ Example input
 
 Example Response
 ```json
-"status": true,
+{
+    "status": true,
     "message": "Get user photo success.",
     "data": {
         "image":"your image's base64"
     }
+}
 ```
 
 ### uploadUserPhoto
@@ -349,17 +351,6 @@ Example Response
             "feePerMinutes": 0.5,
             "duration": 0,
             "totalFee": 0
-        },
-        {
-            "userId": 6,
-            "escooterId": "AI_10",
-            "startTime": "2024-05-21T04:34:37",
-            "endTime": "2024-05-21T05:42:12",
-            "isPaid": true,
-            "modelId": "TEST",
-            "feePerMinutes": 0.5,
-            "duration": 67,
-            "totalFee": 33
         }
     ]
 }
@@ -409,78 +400,6 @@ Example Response
             "gps": {
                 "longitude": 120.533755,
                 "latitude": 23.692902
-            }
-        },
-        {
-            "escooterId": "DA_05",
-            "modelId": "TEST",
-            "status": "Available",
-            "batteryLevel": 63,
-            "feePerMinutes": 0.5,
-            "maintenanceRecords": null,
-            "gps": {
-                "longitude": 120.534923,
-                "latitude": 23.692616
-            }
-        },
-        {
-            "escooterId": "EL_07",
-            "modelId": "TEST",
-            "status": "Available",
-            "batteryLevel": 54,
-            "feePerMinutes": 0.5,
-            "maintenanceRecords": null,
-            "gps": {
-                "longitude": 120.535822,
-                "latitude": 23.693859
-            }
-        },
-        {
-            "escooterId": "EM_08",
-            "modelId": "TEST",
-            "status": "Available",
-            "batteryLevel": 26,
-            "feePerMinutes": 0.5,
-            "maintenanceRecords": null,
-            "gps": {
-                "longitude": 120.535519,
-                "latitude": 23.695188
-            }
-        },
-        {
-            "escooterId": "PD_11",
-            "modelId": "TEST",
-            "status": "Available",
-            "batteryLevel": 25,
-            "feePerMinutes": 0.5,
-            "maintenanceRecords": null,
-            "gps": {
-                "longitude": 120.536782,
-                "latitude": 23.691812
-            }
-        },
-        {
-            "escooterId": "G_02",
-            "modelId": "LCE151",
-            "status": "Available",
-            "batteryLevel": 43,
-            "feePerMinutes": 0.3,
-            "maintenanceRecords": null,
-            "gps": {
-                "longitude": 120.534336,
-                "latitude": 23.689858
-            }
-        },
-        {
-            "escooterId": "C_01",
-            "modelId": "LCE151",
-            "status": "Available",
-            "batteryLevel": 96,
-            "feePerMinutes": 0.3,
-            "maintenanceRecords": null,
-            "gps": {
-                "longitude": 120.534454,
-                "latitude": 23.689305
             }
         }
     ]
@@ -582,18 +501,20 @@ POST /api/addEscooter
 | Parameter  |  Type  | Description   |
 | ---------- | :----: | ------------- |
 | escooterId | String | **Required.** |
+| modelId    | String | **Required.** |
 
 Example Input
 ```json
 {
-    "escooterId": "PD11"
+    "escooterId": "PD11",
+    "modelId":"TEST",
 }
 ```
 Example Response
 ```json
 {
     "status": true,
-    "message": "escooter is rentable"
+    "message": "Adding e-scooter success"
 }
 ```
 
@@ -613,36 +534,6 @@ Example Response
         },
         {
             "escooterId": "C_01"
-        },
-        {
-            "escooterId": "D_03"
-        },
-        {
-            "escooterId": "G_02"
-        },
-        {
-            "escooterId": "AI_10"
-        },
-        {
-            "escooterId": "DA_05"
-        },
-        {
-            "escooterId": "DH_04"
-        },
-        {
-            "escooterId": "EL_07"
-        },
-        {
-            "escooterId": "EM_08"
-        },
-        {
-            "escooterId": "GA_06"
-        },
-        {
-            "escooterId": "PD_11"
-        },
-        {
-            "escooterId": "TEST_00"
         }
     ]
 }

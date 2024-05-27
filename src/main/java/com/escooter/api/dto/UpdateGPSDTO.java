@@ -1,11 +1,13 @@
 package com.escooter.api.dto;
+
 import com.escooter.api.model.GPS;
 
 /**
- * DTO(Data Transfer Object) for updating GPS information.
- * This class holds the data for an e-scooter and its GPS details.
+ * DTO(Data Transfer Object) for updating GPS information. This class holds the
+ * data for an e-scooter and its GPS details.
  */
 public class UpdateGpsDTO {
+
     private final String escooterId;
     private final GpsDTO gpsDTO;
 
@@ -25,7 +27,7 @@ public class UpdateGpsDTO {
         return escooterId;
     }
 
-    public GPS getGps(){
-        return new GPS(gpsDTO.getLongitude(),gpsDTO.getLatitude());
+    public GPS getGps() {
+        return new GPS(gpsDTO.getLongitude(), gpsDTO.getLatitude());
     }
 }

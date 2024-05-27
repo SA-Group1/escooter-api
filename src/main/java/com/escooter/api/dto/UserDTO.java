@@ -6,6 +6,7 @@ import com.escooter.api.model.User;
  * DTO (Data Transfer Object) for representing User information.
  */
 public class UserDTO {
+
     private String account;
     private String userName;
     private String password;
@@ -13,25 +14,25 @@ public class UserDTO {
     private String phoneNumber;
     private byte[] image;
 
-
     /**
      * Default constructor for UserDTO.
      */
-    public UserDTO() {}
+    public UserDTO() {
+    }
 
     /**
      * Constructs a UserDTO with the specified account.
      *
      * @param account The user account.
      */
-    public UserDTO(String account){
+    public UserDTO(String account) {
         this.account = account;
     }
 
     /**
      * Constructs a UserDTO with the specified account and password.
      *
-     * @param account  The user account.
+     * @param account The user account.
      * @param password The user password.
      */
     public UserDTO(String account, String password) {
@@ -40,12 +41,13 @@ public class UserDTO {
     }
 
     /**
-     * Constructs a UserDTO with the specified account, username, password, and email.
+     * Constructs a UserDTO with the specified account, username, password, and
+     * email.
      *
-     * @param account  The user account.
+     * @param account The user account.
      * @param userName The user username.
      * @param password The user password.
-     * @param email    The user email.
+     * @param email The user email.
      */
     public UserDTO(String account, String userName, String password, String email) {
         this.account = account;
@@ -54,15 +56,15 @@ public class UserDTO {
         this.email = email;
     }
 
-     /**
+    /**
      * Constructs a UserDTO with all fields.
      *
-     * @param account     The user account.
-     * @param userName    The user username.
-     * @param password    The user password.
-     * @param email       The user email.
+     * @param account The user account.
+     * @param userName The user username.
+     * @param password The user password.
+     * @param email The user email.
      * @param phoneNumber The user phone number.
-     * @param image       The user image in BLOB format.
+     * @param image The user image in BLOB format.
      */
     public UserDTO(String account, String userName, String password, String email, String phoneNumber, byte[] image) {
         this.account = account;
@@ -73,7 +75,7 @@ public class UserDTO {
         this.image = image;
     }
 
-    public User getUser(){
+    public User getUser() {
         User user = new User();
         user.setAccount(account);
         user.setUserName(userName);
@@ -103,7 +105,7 @@ public class UserDTO {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-    
+
     public void setImage(byte[] image) {
         this.image = image;
     }

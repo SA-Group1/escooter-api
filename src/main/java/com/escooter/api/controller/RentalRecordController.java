@@ -21,20 +21,20 @@ import com.escooter.api.utils.JsonResponseBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 /**
- * Controller for handling rental record-related requests.
+ * Controller for handling rental requests.
  */
 @RestController
 @RequestMapping("/api")
 public class RentalRecordController {
+
     @Autowired
     private RentalRecordService rentalRecordService;
-    
+
     /**
      * Retrieves rental records for a user.
      *
-     * @param userDTO User data.
+     * @param userCredentialsDTO User data.
      * @return A ResponseEntity with HTTP status and rental records.
      */
     @PostMapping("/getRentalRecordList")
@@ -49,11 +49,11 @@ public class RentalRecordController {
                 JSONObject rentalRecordJson = new JSONObject(jsonString);
                 jsonArray.put(rentalRecordJson);
             }
-            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Get rental records success.",jsonArray),HttpStatus.OK);
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Get rental records success.", jsonArray), HttpStatus.OK);
         } catch (JsonProcessingException | JSONException e) {
-            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Get rental records failed."),HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Get rental records failed."), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (UserCredentialsException ex) {
             return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Invalid user credentials."), HttpStatus.UNAUTHORIZED);
-		}
-	}
+        }
+    }
 }
