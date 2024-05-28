@@ -7,30 +7,26 @@ import com.escooter.api.model.UserCredentials;
  */
 public class RentEscooterDTO {
 
-    private UserCredentialsDTO userCredentialsDTO;
-    private String escooterId;
+    private final UserCredentialsDTO userCredentialsDTO;
+    private final String escooterId;
 
     /**
      * Constructs a new RentEscooterDTO with the specified details.
      *
-     * @param account     The user account.
-     * @param password    The user password.
-     * @param escooterId  The e-scooter ID.
+     * @param account The user account.
+     * @param password The user password.
+     * @param escooterId The e-scooter ID.
      */
-    public RentEscooterDTO(String account , String password, String escooterId){
+    public RentEscooterDTO(String account, String password, String escooterId) {
         this.userCredentialsDTO = new UserCredentialsDTO(account, password);
         this.escooterId = escooterId;
     }
 
     public UserCredentials getUserCredentials() {
-        return new UserCredentials(userCredentialsDTO.getAccount(),userCredentialsDTO.getPassword());
+        return new UserCredentials(userCredentialsDTO.getAccount(), userCredentialsDTO.getPassword());
     }
 
     public String getEscooterId() {
         return escooterId;
     }
 }
-
-
-
-

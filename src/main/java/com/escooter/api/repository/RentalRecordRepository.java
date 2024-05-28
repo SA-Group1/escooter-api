@@ -15,6 +15,7 @@ import com.escooter.api.model.RentalRecord;
  */
 @Repository
 public class RentalRecordRepository {
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -39,7 +40,7 @@ public class RentalRecordRepository {
             ON escooter_model_type.model_id = escooter.model_id
             WHERE user_id = (SELECT user_id FROM escooter_rental.user WHERE account = ?) AND end_time IS NOT NULL
         """;
-        RowMapper<RentalRecord> rowMapper = (rs,rowNum) -> {
+        RowMapper<RentalRecord> rowMapper = (rs, rowNum) -> {
             RentalRecord rentalRecord = new RentalRecord();
             rentalRecord.setUserId(rs.getInt("user_id"));
             rentalRecord.setEscooterId(rs.getString("escooter_id"));
@@ -50,20 +51,20 @@ public class RentalRecordRepository {
             rentalRecord.setFeePerMinutes(rs.getDouble("fee_perminute"));
             rentalRecord.setDuration(rs.getInt("rental_duration"));
             rentalRecord.setTotalFee(rs.getInt("rental_cost"));
-            
+
             return rentalRecord;
         };
         try {
-			return jdbcTemplate.query(sql, rowMapper, account);
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
+            return jdbcTemplate.query(sql, rowMapper, account);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     /**
      * Creates a new rental record for the specified user and e-scooter.
      *
-     * @param userId     The ID of the user renting the e-scooter.
+     * @param userId The ID of the user renting the e-scooter.
      * @param escooterId The ID of the e-scooter being rented.
      * @return true if the rental record was successfully created.
      */
@@ -72,4 +73,5 @@ public class RentalRecordRepository {
         jdbcTemplate.update(sql, userId, escooterId);
         return true;
     }
+
 }

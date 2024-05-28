@@ -14,22 +14,22 @@ public class BindMemberCardDTO {
     /**
      * Constructs a new BindMemberCardDTO with the specified details.
      *
-     * @param account        User account for credentials.
-     * @param password       User password for credentials.
-     * @param cardNumber     Member card number.
+     * @param account User account for credentials.
+     * @param password User password for credentials.
+     * @param cardNumber Member card number.
      * @param expirationDate Member card expiration date.
      */
-    public BindMemberCardDTO(String account , String password, String cardNumber, String expirationDate){
-        this.userCredentialsDTO = new UserCredentialsDTO(account , password);
+    public BindMemberCardDTO(String account, String password, String cardNumber, String expirationDate) {
+        this.userCredentialsDTO = new UserCredentialsDTO(account, password);
         this.memberCardDTO = new MemberCardDTO(cardNumber, expirationDate);
     }
 
-    public UserCredentials getUserCredentials(){
-        UserCredentials userCredentials= new UserCredentials(userCredentialsDTO.getAccount(), userCredentialsDTO.getPassword());
+    public UserCredentials getUserCredentials() {
+        UserCredentials userCredentials = new UserCredentials(userCredentialsDTO.getAccount(), userCredentialsDTO.getPassword());
         return userCredentials;
     }
 
-    public MemberCard getMemberCard(){
+    public MemberCard getMemberCard() {
         MemberCard memberCard = new MemberCard();
         memberCard.setCardNumber(memberCardDTO.getCardNumber());
         memberCard.setExpirationDate(memberCardDTO.getExpirationDate());

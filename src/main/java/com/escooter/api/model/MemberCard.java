@@ -4,12 +4,16 @@ package com.escooter.api.model;
  * Represents a member card.
  */
 public class MemberCard {
+
     private String cardNumber;
     private String expirationDate;
-    
-    public MemberCard(){}
+
+    public MemberCard() {
+    }
+
     /**
      * Constructs a new MemberCard with the specified card details.
+     *
      * @param cardNumber The member card number.
      * @param expirationDate The expiration date of the member card.
      */
@@ -20,6 +24,7 @@ public class MemberCard {
 
     /**
      * Constructs a new MemberCard with the specified card details.
+     *
      * @param cardNumber The member card number.
      */
     public MemberCard(String cardNumber) {
@@ -36,6 +41,7 @@ public class MemberCard {
 
     /**
      * Checks if the member card is valid.
+     *
      * @return True if the member card is valid, false otherwise.
      */
     public boolean isVaild() {

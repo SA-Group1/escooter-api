@@ -1,8 +1,10 @@
 package com.escooter.api.model;
+
 /*
 * Represents a User.
-*/
+ */
 public class User {
+
     private int userId;
     private String account;
     private String userName;
@@ -57,27 +59,27 @@ public class User {
         return registrationTime;
     }
 
-    public CreditCard getCreditCard(){
+    public CreditCard getCreditCard() {
         return creditCard;
     }
 
-    public MemberCard getmemberCard(){
+    public MemberCard getmemberCard() {
         return memberCard;
     }
 
-    public void setCreditCard(CreditCard creditCard){
+    public void setCreditCard(CreditCard creditCard) {
         this.creditCard = creditCard;
     }
-    
-    public void setMemberCard(MemberCard memberCard){
+
+    public void setMemberCard(MemberCard memberCard) {
         this.memberCard = memberCard;
     }
-    
-    public String getPhoneNumber(){
+
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber){
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

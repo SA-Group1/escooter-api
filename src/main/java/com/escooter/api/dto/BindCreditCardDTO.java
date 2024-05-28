@@ -13,6 +13,7 @@ public class BindCreditCardDTO {
 
     /**
      * Constructs a new BindCreditCardDTO with the specified details.
+     *
      * @param account User account for credentials.
      * @param password User password for credentials.
      * @param cardNumber
@@ -20,17 +21,17 @@ public class BindCreditCardDTO {
      * @param cardHolderName
      * @param cvv
      */
-    public BindCreditCardDTO(String account , String password, String cardNumber, String expirationDate , String cardHolderName , String cvv){
-        this.userCredentialsDTO = new UserCredentialsDTO(account , password);
-        this.creditCardDTO = new CreditCardDTO(cardNumber, expirationDate , cardHolderName , cvv);
+    public BindCreditCardDTO(String account, String password, String cardNumber, String expirationDate, String cardHolderName, String cvv) {
+        this.userCredentialsDTO = new UserCredentialsDTO(account, password);
+        this.creditCardDTO = new CreditCardDTO(cardNumber, expirationDate, cardHolderName, cvv);
     }
 
-    public UserCredentials getUserCredentials(){
-        UserCredentials userCredentials= new UserCredentials(userCredentialsDTO.getAccount(), userCredentialsDTO.getPassword());
+    public UserCredentials getUserCredentials() {
+        UserCredentials userCredentials = new UserCredentials(userCredentialsDTO.getAccount(), userCredentialsDTO.getPassword());
         return userCredentials;
     }
 
-    public CreditCard getCreditCard(){
+    public CreditCard getCreditCard() {
         CreditCard creditCard = new CreditCard();
         creditCard.setCardNumber(creditCardDTO.getCardNumber());
         creditCard.setExpirationDate(creditCardDTO.getExpirationDate());
@@ -38,11 +39,7 @@ public class BindCreditCardDTO {
         return creditCard;
     }
 
-    public String getCvv(){
+    public String getCvv() {
         return creditCardDTO.getCvv();
     }
 }
-
-
-
-

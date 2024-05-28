@@ -1,37 +1,34 @@
 package com.escooter.api.model;
 
-import java.util.List;
-
 /**
  * Represents an electric scooter.
  */
 public class Escooter {
+
     private String escooterId;
     private String modelId;
     private String status;
     private int batteryLevel;
     private double feePerMinutes;
-    private List<MaintenanceRecord> maintenanceRecords;
     private GPS gps;
 
-    public void setEscooterId(String escooterId){
+    public void setEscooterId(String escooterId) {
         this.escooterId = escooterId;
     }
 
-    public void setModelId(String modelId){
+    public void setModelId(String modelId) {
         this.modelId = modelId;
     }
 
-    public void setStatus(String status){
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public void setBatteryLevel(int batteryLevel){
+    public void setBatteryLevel(int batteryLevel) {
         this.batteryLevel = batteryLevel;
     }
 
-    
-    public void setFeePerMinutes(double feePerMinutes){
+    public void setFeePerMinutes(double feePerMinutes) {
         this.feePerMinutes = feePerMinutes;
     }
 
@@ -39,33 +36,27 @@ public class Escooter {
         this.gps = new GPS(longitude, latitude);
     }
 
-    public String getEscooterId(){
+    public String getEscooterId() {
         return escooterId;
     }
-    
-    public String getStatus(){
+
+    public String getStatus() {
         return status;
     }
 
-    public String getModelId(){
+    public String getModelId() {
         return modelId;
     }
 
-    public int getBatteryLevel(){
+    public int getBatteryLevel() {
         return batteryLevel;
     }
 
-    public double getFeePerMinutes(){
+    public double getFeePerMinutes() {
         return feePerMinutes;
     }
 
-    public List<MaintenanceRecord> getMaintenanceRecords(){
-        return maintenanceRecords;
-    }
-    
     public GPS getGPS() {
         return gps;
     }
 }
-
-

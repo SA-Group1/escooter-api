@@ -4,13 +4,14 @@ package com.escooter.api.dto;
  * DTO (Data Transfer Object) for representing member card information.
  */
 public class MemberCardDTO {
-    private String cardNumber;
-    private String expirationDate;
-    
+
+    private final String cardNumber;
+    private final String expirationDate;
+
     /**
      * Constructs a new MemberCardDTO with the specified card details.
      *
-     * @param cardNumber     The member card number.
+     * @param cardNumber The member card number.
      * @param expirationDate The expiration date of the member card.
      */
     public MemberCardDTO(String cardNumber, String expirationDate) {

@@ -42,8 +42,9 @@ public class EscooterManagementController {
     public ResponseEntity<String> addEscooter(@RequestBody EscooterDTO escooterDTO) {
         try {
             String escooterModelId = escooterDTO.getModelId();
+            String escooterId = escooterDTO.getEscooterId();
 
-            escooterService.addEscooter(escooterModelId);
+            escooterService.addEscooter(escooterId, escooterModelId);
             return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Adding e-scooter success"), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Failed to add e-scooter", ex);
@@ -61,7 +62,7 @@ public class EscooterManagementController {
         try {
             List<String> escooterIds = escooterService.getEscooterId();
             JSONArray jsonArray = new JSONArray();
-            
+
             for (String escooterId : escooterIds) {
                 jsonArray.put(new JSONObject().put("escooterId", escooterId));
             }
