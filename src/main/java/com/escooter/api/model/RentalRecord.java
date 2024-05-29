@@ -5,6 +5,7 @@ package com.escooter.api.model;
  */
 public class RentalRecord {
 
+    private int rentalRecordId;
     private int userId;
     private String escooterId;
     private String startTime;
@@ -14,6 +15,10 @@ public class RentalRecord {
     private double feePerMinutes;
     private int duration;
     private int totalFee;
+
+    public int getRentalRecordId() {
+        return rentalRecordId;
+    }
 
     public int getUserId() {
         return userId;
@@ -49,6 +54,10 @@ public class RentalRecord {
 
     public int getTotalFee() {
         return totalFee;
+    }
+
+    public void setRentalRecordId(int rentalRecordId) {
+        this.rentalRecordId = rentalRecordId;
     }
 
     public void setUserId(int userId) {

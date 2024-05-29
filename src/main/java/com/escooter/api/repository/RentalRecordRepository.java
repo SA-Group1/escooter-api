@@ -28,6 +28,7 @@ public class RentalRecordRepository {
     public List<RentalRecord> queryRentalRecordsByUserAccount(String account) {
         String sql = """
             SELECT 
+                rental_record.rental_record_id,
                 rental_record.user_id,
                 rental_record.rental_record_id,
                 rental_record.escooter_id,
@@ -45,6 +46,7 @@ public class RentalRecordRepository {
         """;
         RowMapper<RentalRecord> rowMapper = (rs, rowNum) -> {
             RentalRecord rentalRecord = new RentalRecord();
+            rentalRecord.setRentalRecordId(rs.getInt("rental_record_id"));
             rentalRecord.setUserId(rs.getInt("user_id"));
             rentalRecord.setEscooterId(rs.getString("escooter_id"));
             rentalRecord.setStartTime(rs.getString("start_time"));
