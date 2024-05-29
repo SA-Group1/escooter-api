@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.escooter.api.dto.EscooterDTO;
 import com.escooter.api.dto.UpdateGpsDTO;
+import com.escooter.api.model.Escooter;
 import com.escooter.api.model.GPS;
 import com.escooter.api.service.EscooterService;
 import com.escooter.api.utils.JsonResponseBuilder;
@@ -53,6 +54,33 @@ public class EscooterSyncController {
         } catch (Exception ex) {
             logger.error("Failed to get status", ex);
             return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Failed to get status"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Gets the status of the e-scooter and returns the status.
+     *
+     * @param escooterDTO E-scooter data transfer object
+     * @return A ResponseEntity with HTTP status and message
+     */
+    @PostMapping("/getEscooter")
+    public ResponseEntity<String> getEscooter(@RequestBody EscooterDTO escooterDTO) {
+        try {
+            String escooterId = escooterDTO.getEscooterId();
+            Escooter escooter = escooterService.getEscooter(escooterId);
+
+            if (escooter == null) {
+                return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("E-scooter not found"), HttpStatus.NOT_FOUND);
+            }
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonString = objectMapper.writeValueAsString(escooter);
+            JSONObject jsonObject = new JSONObject(jsonString);
+
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Get escooter success", jsonObject), HttpStatus.OK);
+        } catch (JsonProcessingException | JSONException ex) {
+            logger.error("Failed to get escooter", ex);
+            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Failed to get escooter"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

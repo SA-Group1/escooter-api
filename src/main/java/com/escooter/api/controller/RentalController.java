@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.escooter.api.dto.GpsDTO;
 import com.escooter.api.dto.RentEscooterDTO;
 import com.escooter.api.dto.UserCredentialsDTO;
+import com.escooter.api.exceptions.EscooterNotInReturnAreaException;
 import com.escooter.api.exceptions.EscooterOutOfServiceException;
 import com.escooter.api.exceptions.RentEscooterFailException;
 import com.escooter.api.exceptions.UserCredentialsException;
 import com.escooter.api.model.Escooter;
 import com.escooter.api.model.GPS;
+import com.escooter.api.model.RentalRecord;
 import com.escooter.api.service.RentalService;
 import com.escooter.api.utils.JsonResponseBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -66,8 +68,7 @@ public class RentalController {
             return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Get rentable escooter success.", jsonArray),
                     HttpStatus.OK);
         } catch (JSONException | JsonProcessingException e) {
-            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Get rentable escooter failed."),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Get rentable escooter failed."), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -133,12 +134,21 @@ public class RentalController {
     @PostMapping("/returnEscooter")
     public ResponseEntity<String> returnEscooter(@RequestBody UserCredentialsDTO userCredentialsDTO) {
         try {
-            boolean res = rentalService.returnEscooter(userCredentialsDTO.getUserCredentials());
-            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Return escooter success.", res),
+            RentalRecord res = rentalService.returnEscooter(userCredentialsDTO.getUserCredentials());
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonString = objectMapper.writeValueAsString(res);
+            JSONObject jsonObject = new JSONObject(jsonString);
+
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Return escooter success.", jsonObject),
                     HttpStatus.OK);
         } catch (UserCredentialsException ex) {
             return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Invalid user credentials."),
                     HttpStatus.UNAUTHORIZED);
+        } catch (JsonProcessingException | JSONException ex) {
+            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Return escooter failed."), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (EscooterNotInReturnAreaException ex) {
+            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Escooter is not in the return area."), HttpStatus.BAD_REQUEST);
         }
     }
 }

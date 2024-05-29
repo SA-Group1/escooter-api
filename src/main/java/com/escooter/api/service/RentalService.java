@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.escooter.api.exceptions.EscooterNotInReturnAreaException;
 import com.escooter.api.exceptions.EscooterOutOfServiceException;
 import com.escooter.api.exceptions.RentEscooterFailException;
 import com.escooter.api.exceptions.UserCredentialsException;
 import com.escooter.api.model.Escooter;
 import com.escooter.api.model.GPS;
+import com.escooter.api.model.RentalRecord;
 import com.escooter.api.model.UserCredentials;
 import com.escooter.api.repository.RentalRepository;
 
@@ -108,8 +110,9 @@ public class RentalService {
      * @param userCredentials The user credentials.
      * @return true if the return is successful, false otherwise.
      * @throws UserCredentialsException If the user credentials are invalid.
+     * @throws EscooterNotInReturnAreaException
      */
-    public boolean returnEscooter(UserCredentials userCredentials) throws UserCredentialsException {
+    public RentalRecord returnEscooter(UserCredentials userCredentials) throws UserCredentialsException, EscooterNotInReturnAreaException {
 
         if (!userCredentialService.verifyUserCredentials(userCredentials)) {
             throw new UserCredentialsException("Invalid credentials.");
@@ -118,13 +121,13 @@ public class RentalService {
         int userId = userService.queryUserIdByAccount(userCredentials.getAccount());
         Escooter escooter = escooterService.queryRentedEscooterByAccount(userCredentials.getAccount());
         if (escooter == null) {
-            return false;
+            throw new UserCredentialsException("Invalid credentials.");
         }
 
         GPS gps = escooter.getGPS();
         boolean res = rentalRepository.checkWithinReturnArea(gps.getLongitude(), gps.getLatitude());
         if (!res) {
-            return false;
+            throw new EscooterNotInReturnAreaException("Invalid area.");
         }
 
         String escooterId = escooter.getEscooterId();
