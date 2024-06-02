@@ -8,6 +8,7 @@ import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,7 @@ import com.escooter.api.exceptions.UserCredentialsException;
 import com.escooter.api.model.Escooter;
 import com.escooter.api.model.GPS;
 import com.escooter.api.model.RentalRecord;
+import com.escooter.api.model.ReturnArea;
 import com.escooter.api.service.RentalService;
 import com.escooter.api.utils.JsonResponseBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -69,6 +71,39 @@ public class RentalController {
                     HttpStatus.OK);
         } catch (JSONException | JsonProcessingException e) {
             return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Get rentable escooter failed."), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Get escooter return area list.
+     *
+     * @return list of return area.
+     */
+    @GetMapping("/getReturnAreas")
+    public ResponseEntity<String> getReturnAreas() {
+        List<ReturnArea> returnAreas = rentalService.getReturnAreas();
+
+        if (returnAreas.isEmpty()) {
+            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Return area not found."),
+                    HttpStatus.NO_CONTENT);
+        }
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JSONArray jsonArray = new JSONArray();
+
+            for (ReturnArea returnArea : returnAreas) {
+                JSONObject jsonObject = new JSONObject(objectMapper.writeValueAsString(returnArea));
+                jsonArray.put(jsonObject);
+            }
+
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Get return area success.", jsonArray),
+                    HttpStatus.OK);
+        } catch (JSONException | JsonProcessingException e) {
+            System.out.println(e);
+
+            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Get return area failed."),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

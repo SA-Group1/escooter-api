@@ -1,5 +1,13 @@
 package com.escooter.api.repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -7,6 +15,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.escooter.api.model.RentalRecord;
+import com.escooter.api.model.ReturnArea;
 
 /**
  * Repository for managing rental-related data in the database.
@@ -33,6 +42,16 @@ public class RentalRepository {
         } catch (EmptyResultDataAccessException e) {
             return false;
         }
+    }
+
+    /**
+     * Get escooter return area list.
+     *
+     * @return list of return area.
+     */
+    public List<ReturnArea> getReturnAreas() {
+        String sql = "SELECT idreturn_area ,ST_AsText(area_point) as area_point FROM escooter_rental.return_area;";
+        return jdbcTemplate.query(sql, new ReturnAreaRowMapper());
     }
 
     /**
@@ -93,6 +112,38 @@ public class RentalRepository {
 
         } catch (EmptyResultDataAccessException e) {
             return null;
+        }
+    }
+
+    /**
+     * Reutrn area row mapper
+     *
+     * @return return area.
+     */
+    public class ReturnAreaRowMapper implements RowMapper<ReturnArea> {
+
+        @Override
+        public ReturnArea mapRow(@SuppressWarnings("null") ResultSet rs, int rowNum) throws SQLException {
+            ReturnArea returnArea = new ReturnArea();
+            returnArea.setIdreturnArea(rs.getInt("idreturn_area"));
+
+            String value = rs.getString("area_point");
+            String valuereal = value.replaceAll("[^0-9 .,]+", "");
+            ArrayList<String> polygonList = new ArrayList<>(Arrays.asList(valuereal.split(",")));
+
+            ArrayList<Map<String, String>> areaPointList = new ArrayList<>();
+            for (String point : polygonList) {
+                String[] latLng = point.trim().split(" ");
+                if (latLng.length == 2) {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("latitude", latLng[0]);
+                    map.put("longitude", latLng[1]);
+                    areaPointList.add(map);
+                }
+            }
+            returnArea.setAreaPoint(areaPointList);
+
+            return returnArea;
         }
     }
 }

@@ -406,6 +406,71 @@ Example Response
 }
 ```
 
+### getReturnAreas
+
+```
+GET /api/getReturnAreas
+```
+Example Response
+```json
+{
+    "status": true,
+    "message": "Get return area success.",
+    "data": [
+        {
+            "idreturnArea": 5,
+            "areaPoint": [
+                {
+                    "latitude": "23.693372",
+                    "longitude": "120.532235"
+                },
+                {
+                    "latitude": "23.693132",
+                    "longitude": "120.532297"
+                },
+                {
+                    "latitude": "23.693056",
+                    "longitude": "120.53183"
+                },
+                {
+                    "latitude": "23.693311",
+                    "longitude": "120.531784"
+                },
+                {
+                    "latitude": "23.693372",
+                    "longitude": "120.532235"
+                }
+            ]
+        },
+        {
+            "idreturnArea": 6,
+            "areaPoint": [
+                {
+                    "latitude": "23.695156",
+                    "longitude": "120.533231"
+                },
+                {
+                    "latitude": "23.695684",
+                    "longitude": "120.533166"
+                },
+                {
+                    "latitude": "23.69576",
+                    "longitude": "120.533648"
+                },
+                {
+                    "latitude": "23.695243",
+                    "longitude": "120.533762"
+                },
+                {
+                    "latitude": "23.695156",
+                    "longitude": "120.533231"
+                }
+            ]
+        }
+    ]
+}
+```
+
 ### rentEscooter 
 ```
 POST /api/rentEscooter

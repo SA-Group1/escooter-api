@@ -105,28 +105,6 @@ public class UserService {
     }
 
     /**
-     * Queries a user by their ID.
-     *
-     * @param id The ID of the user.
-     * @return The user if found, null otherwise.
-     */
-    public User queryUserById(Integer id) {
-        User user = new User();
-        return user;
-    }
-
-    /**
-     * Creates a user.
-     *
-     * @param user The user data to create.
-     * @return The created user.
-     */
-    public User createUser(User user) {
-        // Dummy implementation for example purposes
-        return user;
-    }
-
-    /**
      * Retrieves user photo.
      *
      * @param userCredentials The user credentials.

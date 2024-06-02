@@ -12,6 +12,7 @@ import com.escooter.api.exceptions.UserCredentialsException;
 import com.escooter.api.model.Escooter;
 import com.escooter.api.model.GPS;
 import com.escooter.api.model.RentalRecord;
+import com.escooter.api.model.ReturnArea;
 import com.escooter.api.model.UserCredentials;
 import com.escooter.api.repository.RentalRepository;
 
@@ -41,6 +42,15 @@ public class RentalService {
      */
     public List<Escooter> showAvailableEscooter(GPS gps) {
         return escooterService.showAvailableEscooter(gps);
+    }
+
+    /**
+     * Get escooter return area list.
+     *
+     * @return list of return area.
+     */
+    public List<ReturnArea> getReturnAreas() {
+        return rentalRepository.getReturnAreas();
     }
 
     /**
