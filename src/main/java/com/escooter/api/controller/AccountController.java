@@ -34,9 +34,11 @@ public class AccountController {
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
         try {
             accountService.register(userDTO.getAccount(), userDTO.getPassword(), userDTO.getUserName(), userDTO.getEmail(), userDTO.getPhoneNumber());
-            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Create user success."), HttpStatus.OK);
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Create user success."),
+                    HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Create user failed."), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Create user failed."),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -89,6 +89,30 @@ public class RentalService {
     }
 
     /**
+     * Rents an e-scooter to a user.
+     *
+     * @param userCredentials The user credentials.
+     * @param escooterId The ID of the e-scooter to be rented.
+     * @return The rented e-scooter if the transaction is successful, null
+     * otherwise.
+     * @throws UserCredentialsException If the user credentials are invalid.
+     * @throws com.escooter.api.exceptions.EscooterOutOfServiceException
+     */
+    public Escooter getRentedEscooter(UserCredentials userCredentials) throws UserCredentialsException {
+
+        if (!userCredentialService.verifyUserCredentials(userCredentials)) {
+            throw new UserCredentialsException("Invalid credentials.");
+        }
+
+        Escooter rentedEscooter = escooterService.queryRentedEscooterByAccount(userCredentials.getAccount());
+        if (rentedEscooter == null) {
+            return null;
+        }
+
+        return rentedEscooter;
+    }
+
+    /**
      * Updates the parking status of the e-scooter associated with the given
      * account.
      *

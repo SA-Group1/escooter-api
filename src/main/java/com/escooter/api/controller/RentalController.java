@@ -108,6 +108,41 @@ public class RentalController {
     }
 
     /**
+     * Rents an e-scooter to a user.
+     *
+     * @param userCredentials The user credentials.
+     * @param escooterId The ID of the e-scooter to be rented.
+     * @return The rented e-scooter if the transaction is successful, null
+     * otherwise.
+     * @throws UserCredentialsException If the user credentials are invalid.
+     * @throws com.escooter.api.exceptions.EscooterOutOfServiceException
+     */
+    @PostMapping("/getRentedEscooter")
+    public ResponseEntity<String> getRentedEscooter(@RequestBody UserCredentialsDTO userCredentialsDTO) {
+
+        try {
+            Escooter rentedEscooter = rentalService.getRentedEscooter(userCredentialsDTO.getUserCredentials());
+            if (rentedEscooter == null) {
+                return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("get Rented escooter success.", "null"),
+                        HttpStatus.OK);
+            }
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonString = objectMapper.writeValueAsString(rentedEscooter);
+            JSONObject jsonObject = new JSONObject(jsonString);
+
+            return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("get Rented escooter success.", jsonObject),
+                    HttpStatus.OK);
+        } catch (UserCredentialsException ex) {
+            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Invalid user credentials."),
+                    HttpStatus.UNAUTHORIZED);
+        } catch (JsonProcessingException | JSONException e) {
+            return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("get Rented escooter failed."),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
      * Rents an e-scooter.
      *
      * @param rentEscooterDTO DTO containing e-scooter and user data.
