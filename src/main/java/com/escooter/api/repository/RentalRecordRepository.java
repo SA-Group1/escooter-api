@@ -37,7 +37,7 @@ public class RentalRecordRepository {
                 rental_record.ispaid,
                 escooter.model_id,
                 escooter_model_type.fee_perminute,
-                TIMESTAMPDIFF(MINUTE, rental_record.start_time, rental_record.end_time) AS duration,
+                TIMESTAMPDIFF(SECOND, rental_record.start_time, rental_record.end_time) AS duration,
                 CEIL(TIMESTAMPDIFF(SECOND, rental_record.start_time, rental_record.end_time) * escooter_model_type.fee_perminute) AS total_fee
             FROM escooter_rental.rental_record
             JOIN escooter_rental.escooter ON rental_record.escooter_id = escooter.escooter_id
