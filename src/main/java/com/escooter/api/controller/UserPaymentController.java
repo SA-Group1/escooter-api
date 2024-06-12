@@ -96,10 +96,10 @@ public class UserPaymentController {
     public ResponseEntity<String> bindMemberCard(@RequestBody BindMemberCardDTO bindMemberCardDTO) {
 
         MemberCard memberCard = bindMemberCardDTO.getMemberCard();
-        UserCredentials userCredentials = bindMemberCardDTO.getUserCredentials();
+        String account = bindMemberCardDTO.getAccount();
 
         try {
-            userPaymentService.bindMemberCard(userCredentials, memberCard);
+            userPaymentService.bindMemberCard(account, memberCard);
             return new ResponseEntity<>(JsonResponseBuilder.buildSuccessResponse("Bind member card success."), HttpStatus.ACCEPTED);
         } catch (UserCredentialsException e) {
             return new ResponseEntity<>(JsonResponseBuilder.buildErrorResponse("Invalid user credentials."), HttpStatus.UNAUTHORIZED);

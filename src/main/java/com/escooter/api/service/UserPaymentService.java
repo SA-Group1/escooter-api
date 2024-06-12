@@ -77,14 +77,10 @@ public class UserPaymentService {
      * @throws UserCredentialsException If the user credentials are invalid.
      * @throws CardExpiredException If the member card is expired.
      */
-    public boolean bindMemberCard(UserCredentials userCredentials, MemberCard memberCard) throws UserCredentialsException, CardExpiredException {
-
-        if (!userCredentialService.verifyUserCredentials(userCredentials)) {
-            throw new UserCredentialsException("Invalid credentials.");
-        }
+    public boolean bindMemberCard(String account, MemberCard memberCard) throws UserCredentialsException, CardExpiredException {
 
         try {
-            memberCardService.bindMemberCard(userCredentials.getAccount(), memberCard);
+            memberCardService.bindMemberCard(account, memberCard);
         } catch (CardExpiredException cardExpiredException) {
             throw new CardExpiredException("Invalid card Expired.");
         }
